@@ -27,7 +27,7 @@ public class Enemy_Seacher : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         
         RestSearch();
@@ -37,7 +37,7 @@ public class Enemy_Seacher : MonoBehaviour
             SearchUser();
         }
         
-    }
+    }*/
 
     public void OnSerchUser()
     {
