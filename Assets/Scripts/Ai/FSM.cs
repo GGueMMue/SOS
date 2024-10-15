@@ -248,12 +248,16 @@ public class FSM : MonoBehaviour
                 break;
 
             case STATE.DEAD:
-                this.gameObject.transform.Rotate(90, 0, 0);
+                //this.gameObject.transform.Rotate(90, 0, 0);
                 Destroy(range.gameObject);
 
-                if(GetComponent<Rigidbody>() == null) 
+                if (GetComponent<Rigidbody>() == null)
+                {
                     gameObject.AddComponent<Rigidbody>();
-
+                    this.gameObject.GetComponent<Rigidbody>().mass = 3;
+                    nav.enabled = false;
+                }
+                    //this.GetComponent<Rigidbody>(). = true;
 
                 //return;
 

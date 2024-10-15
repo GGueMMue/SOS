@@ -93,7 +93,7 @@ public class Player_Controller : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
                 Kill_Confirm(other.gameObject);
         }
-    } // 현재 정상작동 되지 않음.
+    } // 현재 키가 씹히는 문제가 있음.
 
     void PlayerMove()
     {
