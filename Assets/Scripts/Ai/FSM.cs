@@ -7,7 +7,7 @@ public class FSM : MonoBehaviour
 {
     public float max_Angle = 205f;
     public float min_Angle = 35f;
-    public float roar_Deviation = 1.5f;
+    public float roamer_Deviation = 1.5f;
 
     int[] rotationlist = new int[4] {-90, 90, 180, -180 };
 
@@ -15,21 +15,21 @@ public class FSM : MonoBehaviour
     {
         IDLE = 0,
         IDLE_PATROL,
-        ROAR,
+        ROAMER,
         FIND,
         ATTACK,
         DEAD
     }
     public GameObject[] patrolPoints;
 
-    int roarCount = 0;
-    Vector3 roarPoints;
+    int roamerCount = 0;
+    Vector3 roamerPoints;
 
     Vector3 startPoint;
 
     public float rotationTimer = 0f;
 
-    public float roarTimer = 0f;
+    public float roamerTimer = 0f;
     public float follow_Spare_Time = 0f;
 
     public bool lostUser = false;
@@ -48,11 +48,11 @@ public class FSM : MonoBehaviour
     {
         state = STATE.FIND;
     }
-    void SetRoarDestination()
+    void SetroamerDestination()
     {
-        //if(roarCount < 4)
+        //if(roamerCount < 4)
         //{
-        roarCount++;
+        roamerCount++;
 
         nav.isStopped = true;
 
@@ -64,10 +64,10 @@ public class FSM : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 50f, LayerMask.GetMask("Wall")))
         {
-            roarPoints = hit.collider.transform.position;
+            roamerPoints = hit.collider.transform.position;
         }
 
-        nav.SetDestination(roarPoints);
+        nav.SetDestination(roamerPoints);
 
         nav.isStopped = false;
             
@@ -107,11 +107,11 @@ public class FSM : MonoBehaviour
         }
 
     }*/
-    bool IsReachedRoarDestination()
+    bool IsReachedroamerDestination()
     {
-        float dis = Vector3.Distance(this.transform.position, roarPoints);
+        float dis = Vector3.Distance(this.transform.position, roamerPoints);
 
-        if (dis < roar_Deviation)
+        if (dis < roamer_Deviation)
         {
             nav.velocity = nav.desiredVelocity;
             //needNewRocation = true;
@@ -167,8 +167,11 @@ public class FSM : MonoBehaviour
         if (state != STATE.FIND)
             follow_Spare_Time = 0;
 
-        if (state != STATE.ROAR)
-            roarTimer = 0;
+        if (state != STATE.ROAMER)
+        {
+            roamerCount = 0;
+            roamerTimer = 0;
+        }
 
 
         switch (state)
@@ -176,30 +179,28 @@ public class FSM : MonoBehaviour
             case STATE.IDLE:
                 rotationTimer += Time.deltaTime;
 
-                roarCount = 0;
                 nav.SetDestination(startPoint);
                 RotationIdle();
 
                 break;
             case STATE.IDLE_PATROL:
-                roarCount = 0;
                 //PatrolEnemy(patrolPoints);
 
                 break;
-            case STATE.ROAR:
-                roarTimer += Time.deltaTime;
+            case STATE.ROAMER:
+                roamerTimer += Time.deltaTime;
 
-                if (roarCount < 10 && roarTimer <= 8f)
+                if (roamerCount < 10 && roamerTimer <= 8f)
                 {
-                    if (roarCount == 0)
+                    if (roamerCount == 0)
                     {
-                        SetRoarDestination();
+                        SetroamerDestination();
                     }
                     else
                     {
-                        if(IsReachedRoarDestination())
+                        if(IsReachedroamerDestination())
                         {
-                            SetRoarDestination();
+                            SetroamerDestination();
                         }
                     }
                 }
@@ -228,7 +229,7 @@ public class FSM : MonoBehaviour
                     }
                     else
                     {
-                        state = STATE.ROAR;
+                        state = STATE.ROAMER;
                     }
                 }
 
