@@ -7,7 +7,9 @@ public class FSM : MonoBehaviour
 {
     public float max_Angle = 205f;
     public float min_Angle = 35f;
-    public float roar_Deviation = 3.5f;
+    public float roar_Deviation = 1.5f;
+
+    int[] rotationlist = new int[4] {-90, 90, 180, -180 };
 
     public enum STATE
     {
@@ -18,13 +20,19 @@ public class FSM : MonoBehaviour
         ATTACK,
         DEAD
     }
-    Vector3[] patrolPoints;
+    public GameObject[] patrolPoints;
 
     int roarCount = 0;
     Vector3 roarPoints;
 
+    Vector3 startPoint;
 
-    float roarTimer = 0f;
+    public float rotationTimer = 0f;
+
+    public float roarTimer = 0f;
+    public float follow_Spare_Time = 0f;
+
+    public bool lostUser = false;
     public bool isPatrol;
     public bool nowDead = false;
     public bool needNewRocation = false;
@@ -36,6 +44,10 @@ public class FSM : MonoBehaviour
     public Enemy_Seacher es;
     public NavMeshAgent nav;
 
+    public void SetStateFInd()
+    {
+        state = STATE.FIND;
+    }
     void SetRoarDestination()
     {
         //if(roarCount < 4)
@@ -47,7 +59,7 @@ public class FSM : MonoBehaviour
         transform.Rotate(0, Random.Range(min_Angle, max_Angle), 0);
 
         
-        nav.speed = 10f;
+        nav.speed = 7f;
 
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 50f, LayerMask.GetMask("Wall")))
@@ -63,16 +75,65 @@ public class FSM : MonoBehaviour
         //}
     }
 
+    /*
+    bool IsReachedPatrolDestination(Transform t)
+    {
+        float dis = Vector3.Distance(this.transform.position, t.position);
+
+        if(dis < 0.5f)
+        {
+            return true;
+        }
+
+        return false;
+    }*/
+
+    /*
+    void PatrolEnemy(GameObject[] location)
+    {
+        foreach (GameObject t in location)
+        {
+            nav.speed = 5f;
+            nav.velocity = nav.desiredVelocity;
+
+            nav.SetDestination(t.transform.position);
+
+            Debug.Log(t.name);
+            
+            while(IsReachedPatrolDestination(t.transform))
+            {
+                //nav.SetDestination(t.transform.position);
+            }
+        }
+
+    }*/
     bool IsReachedRoarDestination()
     {
         float dis = Vector3.Distance(this.transform.position, roarPoints);
 
         if (dis < roar_Deviation)
         {
+            nav.velocity = nav.desiredVelocity;
             //needNewRocation = true;
             return true;
         }
         else return false; 
+    }
+
+    void RotationIdle()
+    {
+        if (rotationTimer > 3f)
+        {
+            //this.gameObject.transform.rotation
+            //    = Quaternion.Slerp(this.gameObject.transform.rotation,
+            //                    Quaternion.Euler(this.transform.rotation.x, 
+            //                                    this.gameObject.transform.rotation.y + rotationlist[Random.Range(0, 3)],
+            //                                    this.gameObject.transform.rotation.z),
+            //                    0.1f);
+
+            this.transform.Rotate(0, rotationlist[Random.Range(0, 3)], 0);
+            rotationTimer = 0;
+        }
     }
 
     // Start is called before the first frame update
@@ -81,9 +142,19 @@ public class FSM : MonoBehaviour
         tr = GetComponent<Transform>();
         es = GetComponent<Enemy_Seacher>();
         nav = GetComponent<NavMeshAgent>();
+        
+        startPoint = this.transform.position;
 
-        if (patrolPoints == null) isPatrol = false;
-        else isPatrol = true;
+        if (patrolPoints == null)
+        {
+            state = STATE.IDLE;
+            isPatrol = false;
+        }
+        else
+        {
+            state = STATE.IDLE_PATROL;
+            isPatrol = true;
+        }
 
     }
 
@@ -91,23 +162,34 @@ public class FSM : MonoBehaviour
     void Update()
     {
         if (nowDead)
-            return;
+            state = STATE.DEAD;
+
+        if (state != STATE.FIND)
+            follow_Spare_Time = 0;
+
+        if (state != STATE.ROAR)
+            roarTimer = 0;
 
 
         switch (state)
         {
             case STATE.IDLE:
+                rotationTimer += Time.deltaTime;
+
                 roarCount = 0;
+                nav.SetDestination(startPoint);
+                RotationIdle();
 
                 break;
             case STATE.IDLE_PATROL:
                 roarCount = 0;
+                //PatrolEnemy(patrolPoints);
 
                 break;
             case STATE.ROAR:
                 roarTimer += Time.deltaTime;
 
-                if (roarCount < 4 && roarTimer <= 5f)
+                if (roarCount < 10 && roarTimer <= 8f)
                 {
                     if (roarCount == 0)
                     {
@@ -129,7 +211,26 @@ public class FSM : MonoBehaviour
 
                 break;
             case STATE.FIND:
+                if(!lostUser)
+                {
+                    follow_Spare_Time = 0;
 
+                    es.RotateToUser();
+                    es.FollowUser();
+                }
+                else
+                {
+                    follow_Spare_Time += Time.deltaTime;
+                    if(follow_Spare_Time <= 3.5f)
+                    {
+                        es.RotateToUser();
+                        es.FollowUser();
+                    }
+                    else
+                    {
+                        state = STATE.ROAR;
+                    }
+                }
 
                 break;
             case STATE.ATTACK:
@@ -138,6 +239,8 @@ public class FSM : MonoBehaviour
                 break;
 
             case STATE.DEAD:
+                return;
+
                 break;
             default:
                 break;

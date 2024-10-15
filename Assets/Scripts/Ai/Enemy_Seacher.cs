@@ -39,24 +39,25 @@ public class Enemy_Seacher : MonoBehaviour
         
     }*/
 
-    public void OnSerchUser()
-    {
-        searchUser = true;
-    }
+    //public void OnSerchUser()
+    //{
+    //    searchUser = true;
+    //}
 
-    public void HeardShotSound()
-    {
-        FollowUser();
-    }
+    //public void HeardShotSound()
+    //{
+    //    FollowUser();
+    //}
 
-    public void OffSerchUser()
-    {
-        searchUser = false ;
-    }
+    //public void OffSerchUser()
+    //{
+    //    searchUser = false ;
+    //}
 
     public void FollowUser()
     {
         agent.isStopped = false;
+        agent.speed = 13;
         agent.velocity = agent.desiredVelocity;
 
         //transform.LookAt(player.transform.position); // 움직임이 기괴함
@@ -80,24 +81,24 @@ public class Enemy_Seacher : MonoBehaviour
     }
     // 기괴한 NavMesh 특유의 회전 사용 X
 
-    public void RestSearch()
-    {
-        if (find_)
-        {
-            time -= Time.deltaTime;
+    //public void RestSearch()
+    //{
+    //    if (find_)
+    //    {
+    //        time -= Time.deltaTime;
 
-            if (time < 0)
-            {
-                find_ = false;
-                UnFollowUser();
-            }
-            else
-            {
-                RotateToUser();
-                FollowUser();
-            }
-        }
-    } // 범위에서 사라져도 3초간 더 추격
+    //        if (time < 0)
+    //        {
+    //            find_ = false;
+    //            UnFollowUser();
+    //        }
+    //        else
+    //        {
+    //            RotateToUser();
+    //            FollowUser();
+    //        }
+    //    }
+    //} // 범위에서 사라져도 3초간 더 추격
 
     public void UnFollowUser()
     {
@@ -105,7 +106,7 @@ public class Enemy_Seacher : MonoBehaviour
         agent.isStopped = true;
 
     } // 유저를 추격하지 않을 때
-    public void SearchUser()
+    public bool SearchUser()
     {
         RaycastHit hit;
 
@@ -123,21 +124,18 @@ public class Enemy_Seacher : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("Player"))
             {
 
-                time = 3f;
-                RotateToUser();
-                FollowUser();
-                find_ = true;
+                //time = 3f;
+                //RotateToUser();
+                //FollowUser();
+                //find_ = true;
                 
 
                 Debug.Log(hit.collider.gameObject.name);
                 //FollowUser();
-            }   
-            else 
-            {
-                //time = 3f;
-                //find_ = false;
-                UnFollowUser();
-            } // 유저 추격
-        } 
+
+                return true;
+            } 
+        }
+        return false;
     }
 }

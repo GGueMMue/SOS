@@ -18,6 +18,8 @@ public class Player_Controller : MonoBehaviour
 
     public bool nowReroadingRunAnimation = false;
     //private Enemy_Seacher[] es;
+
+    //FSM[] fsm;
     
     // Start is called before the first frame update
     void Start()
@@ -109,7 +111,7 @@ public class Player_Controller : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.tag == "Enemy")
             {
-                hit.collider.GetComponent<Enemy_Seacher>().HeardShotSound();
+                hit.collider.GetComponent<FSM>().SetStateFInd();
                 Debug.Log("적에게 알림");
             }
         }

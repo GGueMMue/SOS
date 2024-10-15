@@ -6,12 +6,14 @@ public class Finder : MonoBehaviour
 {
     public GameObject parent;
     public Enemy_Seacher es;
+    FSM fsm;
 
 
     // Start is called before the first frame update
     void Start()
     {
-       // es = GetComponentInParent<Enemy_Seacher>();
+        fsm = GetComponentInParent<FSM>();
+        es = GetComponentInParent<Enemy_Seacher>();
     }
 
     // Update is called once per frame
@@ -23,13 +25,19 @@ public class Finder : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //eS.SearchUser(other.transform);
-        es.OnSerchUser();
-        //Debug.Log(other.gameObject.tag);
-    }
+        if (es.SearchUser())
+        {
+            fsm.lostUser = false;
+            fsm.SetStateFInd();
+        }
+
+            //eS.SearchUser(other.transform);
+            //es.OnSerchUser();
+            //Debug.Log(other.gameObject.tag);
+        }
     private void OnTriggerExit(Collider other)
     {
-        es.OffSerchUser();
+        fsm.lostUser = true;
     }
 
 }
