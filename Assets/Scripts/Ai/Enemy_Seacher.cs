@@ -9,12 +9,7 @@ public class Enemy_Seacher : MonoBehaviour
     public bool searchUser = false;
     GameObject player;
     Transform enTR;
-    float speed = 30.0f;
-    float rotationSpeed = 10f;
-    float time = 3f;
     // rotationTime = 10f;
-    bool find_ = false;
-    bool heardShotSound = false;
 
     NavMeshAgent agent;
     // Start is called before the first frame update

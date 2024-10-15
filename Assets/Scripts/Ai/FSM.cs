@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +12,9 @@ public class FSM : MonoBehaviour
     public float min_Angle = 35f;
     public float roamer_Deviation = 1.5f;
 
-    int[] rotationlist = new int[4] {-90, 90, 180, -180 };
+    int[] rotationlist = new int[4] { -90, 90, 180, -180 };
+
+    public GameObject range;
 
     public enum STATE
     {
@@ -120,6 +125,11 @@ public class FSM : MonoBehaviour
         else return false; 
     }
 
+    public void SetStateDead()
+    {
+        nowDead = true;
+    }
+
     void RotationIdle()
     {
         if (rotationTimer > 3f)
@@ -145,15 +155,13 @@ public class FSM : MonoBehaviour
         
         startPoint = this.transform.position;
 
-        if (patrolPoints == null)
+        if (!isPatrol)
         {
             state = STATE.IDLE;
-            isPatrol = false;
         }
         else
         {
             state = STATE.IDLE_PATROL;
-            isPatrol = true;
         }
 
     }
@@ -240,7 +248,14 @@ public class FSM : MonoBehaviour
                 break;
 
             case STATE.DEAD:
-                return;
+                this.gameObject.transform.Rotate(90, 0, 0);
+                Destroy(range.gameObject);
+
+                if(GetComponent<Rigidbody>() == null) 
+                    gameObject.AddComponent<Rigidbody>();
+
+
+                //return;
 
                 break;
             default:

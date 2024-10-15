@@ -160,8 +160,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_Angle: 205
   min_Angle: 35
-  roar_Deviation: 3.5
-  roarTimer: 0
+  roamer_Deviation: 1.5
+  range: {fileID: 7378766333986816689}
+  patrolPoints: []
+  rotationTimer: 0
+  roamerTimer: 0
   follow_Spare_Time: 0
   lostUser: 0
   isPatrol: 0

@@ -40,6 +40,7 @@ public class Gun : GunControllerManager
             {
                 if (get_hit_info.collider.CompareTag("Enemy"))
                 {
+                    get_hit_info.collider.GetComponent<FSM>().SetStateDead();
                     Debug.Log("ภ๛ ป๓ลย Dead");
                 }
             }

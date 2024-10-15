@@ -7,14 +7,16 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
+    Player_LookAtController childLC;
 
     public float speed = 5f;
-    Player_LookAtController childLC;
     public Transform shotRocation;
     public Gun gun;
 
     public bool isMelee = true;
     float timechecker = 0;
+
+    public bool possible_Kill_Confirm = false;
 
     public bool nowReroadingRunAnimation = false;
     //private Enemy_Seacher[] es;
@@ -39,15 +41,20 @@ public class Player_Controller : MonoBehaviour
         {
             AlertToEnemy();
             timechecker = 0;
-            Debug.Log("사격");
-            
+            Debug.Log("사격");            
         }
+
 
         PlayerMove();
         childLC.PlayerRotate();//PlayerRotate(childTR);
         Debug.DrawRay(shotRocation.position, shotRocation.forward, Color.red);
 
         // 현재 테스트용. 추후 총기의 연사력을 기준으로 GetKey 상태일 때 총알이 레이케스트로 나가야 함.
+    }
+
+    void Kill_Confirm(GameObject go)
+    {
+        Destroy(go.gameObject);
     }
 
     /*
@@ -75,7 +82,20 @@ public class Player_Controller : MonoBehaviour
         nowReroadingRunAnimation = false;
     }
 
-    public void PlayerMove()
+    public void OnTriggerStay(Collider other)
+    {
+        if(!other.gameObject.CompareTag("Player"))
+            Debug.Log(other.tag);
+
+        if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<FSM>().state == FSM.STATE.DEAD)
+        {
+            //Destroy(other.gameObject);
+            if(Input.GetKeyDown(KeyCode.E))
+                Kill_Confirm(other.gameObject);
+        }
+    } // 현재 정상작동 되지 않음.
+
+    void PlayerMove()
     {
         float transform_z = Input.GetAxis("Vertical") * speed;
         float transform_x = Input.GetAxis("Horizontal") * speed;
@@ -102,7 +122,7 @@ public class Player_Controller : MonoBehaviour
     }
     */
 
-    public void AlertToEnemy()
+    void AlertToEnemy()
     {
         //총을 쏠 때, 테스트용
         RaycastHit[] hits;
@@ -111,7 +131,7 @@ public class Player_Controller : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.tag == "Enemy")
             {
-                hit.collider.GetComponent<FSM>().SetStateFInd();
+                hit.collider.GetComponent<FSM>().SetStateFInd();                
                 Debug.Log("적에게 알림");
             }
         }
