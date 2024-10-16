@@ -37,7 +37,7 @@ public class Camera_MoveMent : MonoBehaviour
             // 카메라의 위치를 업데이트 (Y축 고정)
             transform.position = new Vector3(newPos.x, fixed_Y, newPos.z);
         }
-    }
+    } // 죽여벌랑 진짜
 
     private void OnTriggerStay(Collider other)
     {
