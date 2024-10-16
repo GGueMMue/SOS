@@ -7,22 +7,19 @@ public class Gun : GunControllerManager
 {
     //총기들이 다 공통적으로 가지고 있는 특징을 포함하는 클래스
 
-    public string gunName; // 무기 이름
-
+    public                              string gunName; // 무기 이름
     // 현재 무기 유형 Inspector 창에서 미리 설정.
-    public bool isShotgun;
-    public bool isSMG;
-    public bool isRifle;
-    public bool isHandGun;
-
-    public bool now_Reroading = false; // 참일 때 장전 중, 거짓일 때 장전 아님.
-
-    public float rpm; // 연사력 초당 데미지. 사격 후 다음 사격까지의 그 시간 내에 애니메이션이 이뤄져야 함.
-    public float reRoadTime; // 장전시간
+    public                              bool isShotgun;
+    public                              bool isSMG;
+    public                              bool isRifle;
+    public                              bool isHandGun;
+    public                              bool now_Reroading = false; // 참일 때 장전 중, 거짓일 때 장전 아님.
+    public                              float rpm; // 연사력 초당 데미지. 사격 후 다음 사격까지의 그 시간 내에 애니메이션이 이뤄져야 함.
+    public                              float reRoadTime; // 장전시간
     // Invoke(함수, reRoadTIme); 으로 재장전 시간 구현
-    public int curBullet; // 현재 탄창에 남아 있는 총알
-    public int remainBullet; // 장전할 수 있는 남아 있는 총알
-    public int maxReroadableBullet; // 재장전 시 탄창에 삽입 되는 최대 총알
+    public                              int curBullet; // 현재 탄창에 남아 있는 총알
+    public                              int remainBullet; // 장전할 수 있는 남아 있는 총알
+    public                              int maxReroadableBullet; // 재장전 시 탄창에 삽입 되는 최대 총알
 
     public override bool Fire(float NowTIme)
     // NowTime에는 Time.deltaTime으로 받아온 타임워치 시간이 들어가야 함.

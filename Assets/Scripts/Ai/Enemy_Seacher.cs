@@ -6,12 +6,11 @@ using UnityEngine.AI;
 
 public class Enemy_Seacher : MonoBehaviour
 {
-    public bool searchUser = false;
-    GameObject player;
-    Transform enTR;
+    public                                   bool searchUser = false;
+    [SerializeField]                         GameObject player;
+    [SerializeField]                         Transform enTR;
     // rotationTime = 10f;
-
-    NavMeshAgent agent;
+    [SerializeField]                         NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {

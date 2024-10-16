@@ -7,22 +7,23 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
-    Player_LookAtController childLC;
 
-    public float speed = 5f;
-    public Transform shotRocation;
-    public Gun gun;
+    public                                      float speed = 5f;
+    public                                      Transform shotRocation;
+    public                                      Gun gun;
 
-    public bool isMelee = true;
-    float timechecker = 0;
+    public                                      bool isMelee = true;
+    public                                      bool possible_Kill_Confirm = false;
 
-    public bool possible_Kill_Confirm = false;
+    public                                      bool nowReroadingRunAnimation = false;
 
-    public bool nowReroadingRunAnimation = false;
+    [SerializeField]                            float timechecker = 0;
+    [SerializeField]                            Player_LookAtController childLC;
+
     //private Enemy_Seacher[] es;
 
     //FSM[] fsm;
-    
+
     // Start is called before the first frame update
     void Start()
     {

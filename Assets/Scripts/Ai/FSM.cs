@@ -8,13 +8,29 @@ using UnityEngine.AI;
 
 public class FSM : MonoBehaviour
 {
-    public float max_Angle = 205f;
-    public float min_Angle = 35f;
-    public float roamer_Deviation = 1.5f;
+    public                               float max_Angle = 205f;
+    public                               float min_Angle = 35f;
+    public                               float roamer_Deviation = 1.5f;
+    [SerializeField]                     int[] rotationlist = new int[4] { -90, 90, 180, -180 };
+    public                               GameObject range;
+    public                               GameObject[] patrolPoints;
+    [SerializeField]                     int roamerCount = 0;
+    [SerializeField]                     Vector3 roamerPoints;
+    [SerializeField]                     Vector3 startPoint;
+    [SerializeField]                     Transform tr;
+    public float rotationTimer = 0f;
+    public                               float roamerTimer = 0f;
+    public                               float follow_Spare_Time = 0f;
+    public                               bool lostUser = false;
+    public                               bool isPatrol;
+    public                               bool isRotateEnemy = false;
+    public                               bool nowDead = false;
+    public                               bool needNewRocation = false;
 
-    int[] rotationlist = new int[4] { -90, 90, 180, -180 };
-
-    public GameObject range;
+    public                               STATE state;
+    
+    public                               Enemy_Seacher es;
+    public                               NavMeshAgent nav;
 
     public enum STATE
     {
@@ -25,30 +41,6 @@ public class FSM : MonoBehaviour
         ATTACK,
         DEAD
     }
-    public GameObject[] patrolPoints;
-
-    int roamerCount = 0;
-    Vector3 roamerPoints;
-
-    Vector3 startPoint;
-
-    public float rotationTimer = 0f;
-
-    public float roamerTimer = 0f;
-    public float follow_Spare_Time = 0f;
-
-    public bool lostUser = false;
-    public bool isPatrol;
-    public bool isRotateEnemy = false;
-    public bool nowDead = false;
-    public bool needNewRocation = false;
-
-    public STATE state;
-
-    Transform tr;
-
-    public Enemy_Seacher es;
-    public NavMeshAgent nav;
 
     public void SetStateFInd()
     {

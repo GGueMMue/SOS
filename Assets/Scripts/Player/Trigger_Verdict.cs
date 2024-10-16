@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Trigger_Verdict : MonoBehaviour
 {
-    Player_Controller ps;
+    [SerializeField]                            Player_Controller ps;
 
     private void Start()
     {

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Finder : MonoBehaviour
 {
-    public GameObject parent;
-    public Enemy_Seacher es;
-    FSM fsm;
+    public                                  GameObject parent;
+    public                                  Enemy_Seacher es;
+    [SerializeField]                        FSM fsm;
 
 
     // Start is called before the first frame update

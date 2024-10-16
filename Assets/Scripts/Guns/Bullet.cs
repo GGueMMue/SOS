@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float force = 1500.0f;
-    private Rigidbody rb;
+    public                              float force = 1500.0f;
+    [SerializeField]                    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
