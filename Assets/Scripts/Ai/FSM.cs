@@ -56,7 +56,7 @@ public class FSM : MonoBehaviour
     {
         state = STATE.FIND;
     }
-    void SetroamerDestination()
+    void SetroamerDestination() // NavMesh 목적지 생성 및 이동 함수 (ROAMER 상태 시 사용)
     {
         //if(roamerCount < 4)
         //{
@@ -116,7 +116,7 @@ public class FSM : MonoBehaviour
 
     }*/
 
-    void AlertImDead()
+    void AlertImDead() // 적 유닛이 DEAD 상태일 때, 10f 내 인근 다른 적 유닛 ROAMER 상태로 (DEAD시 사용되는 함수)
     {
         RaycastHit[] hits;
 
@@ -139,7 +139,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    public void SetRoamerWithResetRoamerCount()
+    public void SetRoamerWithResetRoamerCount() // ROAMER에 사용되는 변수 리셋 (DEAD 상태일 때, 다른 적 유닛의 상태를 변환할 때 사용)
     {
         if (this.state != STATE.ROAMER)
             this.state = STATE.ROAMER;
@@ -152,7 +152,7 @@ public class FSM : MonoBehaviour
                 this.roamerTimer = 0f;
         }
     }
-    bool IsReachedroamerDestination()
+    bool IsReachedroamerDestination() // 목적지에 도착했는가? (ROAMER 시 사용)
     {
         float dis = Vector3.Distance(this.transform.position, roamerPoints);
 
@@ -170,7 +170,7 @@ public class FSM : MonoBehaviour
         nowDead = true;
     }
 
-    void RotationIdle()
+    void RotationIdle() // 적 유닛의 제자리 회전과 관련된 함수. isRotateEnemy 일 땐, IDLE 상태일 때 제자리 회전, 아닐 땐 회전 X (IDLE시 사용) 
     {
         if (rotationTimer > 3f)
         {
@@ -222,9 +222,18 @@ public class FSM : MonoBehaviour
         }
 
         if(nav.velocity != Vector3.zero) bugCountDown = 0;
+        // 해당 변수는 ROAMER 상태일 때 증가함.
+        // 따라서, 이동속도가 ROAMER 상태일 때, 0이 되면은 bugCountDown은 증가 시작
+        // 그게 아닐 땐, BugCountDown은 0으로 초기화
+
+
+        /*********************  FSM *********************/
+
 
         switch (state)
         {
+            /*********************  IDLE 상태 *********************/
+
             case STATE.IDLE:
                 rotationTimer += Time.deltaTime;
 
@@ -234,10 +243,22 @@ public class FSM : MonoBehaviour
                     RotationIdle();
 
                 break;
+
+
+
+
+            /*********************  IDLE_PATROL 상태 *********************/
+
             case STATE.IDLE_PATROL:
                 //PatrolEnemy(patrolPoints);
 
                 break;
+
+
+
+
+            /*********************  ROAMER 상태 *********************/
+
             case STATE.ROAMER:
                 roamerTimer += Time.deltaTime;
                 bugCountDown += Time.deltaTime;
@@ -269,6 +290,13 @@ public class FSM : MonoBehaviour
                 }
 
                 break;
+
+
+
+
+
+            /*********************  FIND 상태 *********************/
+
             case STATE.FIND:
                 if(!lostUser)
                 {
@@ -292,10 +320,22 @@ public class FSM : MonoBehaviour
                 }
 
                 break;
+
+
+
+
+
+            /*********************  ATTACT 상태 *********************/
+
             case STATE.ATTACK:
 
 
                 break;
+
+
+
+
+            /*********************  DEAD 상태 *********************/
 
             case STATE.DEAD:
                 //this.gameObject.transform.Rotate(90, 0, 0);
@@ -316,10 +356,5 @@ public class FSM : MonoBehaviour
             default:
                 break;
         }
-
-
-
-
-
     }
 }

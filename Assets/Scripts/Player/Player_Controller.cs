@@ -56,7 +56,7 @@ public class Player_Controller : MonoBehaviour
         // 현재 테스트용. 추후 총기의 연사력을 기준으로 GetKey 상태일 때 총알이 레이케스트로 나가야 함.
     }
 
-    void Kill_Confirm(GameObject go)
+    void Kill_Confirm(GameObject go) // 확인 사살과 관련된 함수. 추후 애니메이션 변수가 들어가야 함.
     {
         Destroy(go.gameObject);
     }
@@ -75,7 +75,7 @@ public class Player_Controller : MonoBehaviour
         }
     }*/
 
-    IEnumerator ReRoadingInvoke(float reroadingTime)
+    IEnumerator ReRoadingInvoke(float reroadingTime) // 재장전 IEnumerator
     {
         gun.now_Reroading = true;
         nowReroadingRunAnimation = true;
@@ -86,7 +86,7 @@ public class Player_Controller : MonoBehaviour
         nowReroadingRunAnimation = false;
     }
 
-    public void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other) // 적 유닛의 확인 사살을 위해 사용되는 Trigger 함수. 
     {
         if(!other.gameObject.CompareTag("Player"))
             Debug.Log(other.tag);
@@ -97,9 +97,9 @@ public class Player_Controller : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
                 Kill_Confirm(other.gameObject);
         }
-    } // 현재 키가 씹히는 문제가 있음.
+    } // 현재 키가 씹히는 문제가 있음. <- 해결
 
-    void PlayerMove()
+    void PlayerMove() // 플레이어 캐릭터의 ㄴ이동과 관련된 함수 
     {
         float transform_z = Input.GetAxis("Vertical") * speed;
         float transform_x = Input.GetAxis("Horizontal") * speed;
@@ -126,7 +126,7 @@ public class Player_Controller : MonoBehaviour
     }
     */
 
-    void AlertToEnemy()
+    void AlertToEnemy() // 총을 쏠 때, 20f 범위 내, 적에게 유저의 위치를 알리는 함수.
     {
         //총을 쏠 때, 테스트용
         RaycastHit[] hits;

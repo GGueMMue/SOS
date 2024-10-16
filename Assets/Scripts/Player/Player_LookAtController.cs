@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_LookAtController : MonoBehaviour
 {
-    public void PlayerRotate()
+    public void PlayerRotate() // 유저 캐릭터의 마우스 방향에 따른 회전 함수
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Trigger_Verdict : MonoBehaviour
 {
+    // 현재 미 사용 중인 스크립트
     [SerializeField]                            Player_Controller ps;
 
     private void Start()

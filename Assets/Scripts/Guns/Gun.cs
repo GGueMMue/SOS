@@ -74,7 +74,13 @@ public class Gun : GunControllerManager
 
     private void Awake()
     {
-        if(isSMG)
+        if (this.gameObject.CompareTag("SMG")) { this.isSMG = true; this.isRifle = false; this.isHandGun = false; this.isShotgun = false; }
+        if (this.gameObject.CompareTag("Rifle")) { this.isRifle = true; this.isSMG = false; this.isHandGun = false; this.isShotgun = false; }
+        if (this.gameObject.CompareTag("HandGun")) { this.isHandGun = true; this.isSMG = false; this.isRifle = false; this.isShotgun = false; }
+        if (this.gameObject.CompareTag("Shotgun")) { this.isShotgun = true; this.isSMG = false; this.isRifle = false; this.isHandGun = false; }
+
+
+        if (isSMG)
         {
             this.rpm = float.Parse(SMG[0]);
             this.reRoadTime = float.Parse(SMG[1]);
