@@ -8,29 +8,13 @@ using UnityEngine.AI;
 
 public class FSM : MonoBehaviour
 {
-    public                               float max_Angle = 205f;
-    public                               float min_Angle = 35f;
-    public                               float roamer_Deviation = 1.5f;
-    [SerializeField]                     int[] rotationlist = new int[4] { -90, 90, 180, -180 };
-    public                               GameObject range;
-    public                               GameObject[] patrolPoints;
-    [SerializeField]                     int roamerCount = 0;
-    [SerializeField]                     Vector3 roamerPoints;
-    [SerializeField]                     Vector3 startPoint;
-    [SerializeField]                     Transform tr;
-    public float rotationTimer = 0f;
-    public                               float roamerTimer = 0f;
-    public                               float follow_Spare_Time = 0f;
-    public                               bool lostUser = false;
-    public                               bool isPatrol;
-    public                               bool isRotateEnemy = false;
-    public                               bool nowDead = false;
-    public                               bool needNewRocation = false;
+    public                          float max_Angle = 205f;
+    public                          float min_Angle = 35f;
+    public                          float roamer_Deviation = 3f;
 
-    public                               STATE state;
-    
-    public                               Enemy_Seacher es;
-    public                               NavMeshAgent nav;
+    int[] rotationlist =            new int[4] { -90, 90, 180, -180 };
+
+    public                          GameObject range;
 
     public enum STATE
     {
@@ -41,6 +25,32 @@ public class FSM : MonoBehaviour
         ATTACK,
         DEAD
     }
+    public                          GameObject[] patrolPoints;
+
+    int                             roamerCount = 0;
+                                    Vector3 roamerPoints;
+
+                                    Vector3 startPoint;
+
+    public                          float rotationTimer = 0f;
+
+    public                          float roamerTimer = 0f;
+    public                          float follow_Spare_Time = 0f;
+
+    public                          bool lostUser = false;
+    public                          bool isPatrol;
+    public                          bool isRotateEnemy = false;
+    public                          bool nowDead = false;
+    public                          bool needNewRocation = false;
+
+    public                          STATE state;
+
+                                    Transform tr;
+
+    public                          Enemy_Seacher es;
+    public                          NavMeshAgent nav;
+
+    public                          float bugCountDown = 0f;
 
     public void SetStateFInd()
     {
@@ -211,6 +221,7 @@ public class FSM : MonoBehaviour
             roamerTimer = 0;
         }
 
+        if(nav.velocity != Vector3.zero) bugCountDown = 0;
 
         switch (state)
         {
@@ -229,8 +240,15 @@ public class FSM : MonoBehaviour
                 break;
             case STATE.ROAMER:
                 roamerTimer += Time.deltaTime;
+                bugCountDown += Time.deltaTime;
+                if (bugCountDown > 1.5f)
+                {
+                    SetroamerDestination();
+                }
+                // 안 움직이는 버그 원인 = 적 유닛끼리 낑기거나, 오브젝트에 낑기면 Navmesh의 목적지에 도달하지 못함.
+                // 1.5초간 서로 낑겨서 움직이지 못할 시 SetRoamerDestination()함수를 다시 불러 목적지 재설정으로 해결
 
-                if (roamerCount < 10 && roamerTimer <= 8f)
+                if (roamerCount < 10 || roamerTimer <= 8f)
                 {
                     if (roamerCount == 0)
                     {
