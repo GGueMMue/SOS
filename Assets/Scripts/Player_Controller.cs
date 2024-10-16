@@ -33,7 +33,14 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         timechecker += Time.deltaTime;
+
+
+        PlayerMove();
+        childLC.PlayerRotate();//PlayerRotate(childTR);
+        Debug.DrawRay(shotRocation.position, shotRocation.forward, Color.red);
+
         if (Input.GetKeyDown(KeyCode.R))
             ReRoadingInvoke(gun.reRoadTime);
 
@@ -43,11 +50,7 @@ public class Player_Controller : MonoBehaviour
             timechecker = 0;
             Debug.Log("사격");            
         }
-
-
-        PlayerMove();
-        childLC.PlayerRotate();//PlayerRotate(childTR);
-        Debug.DrawRay(shotRocation.position, shotRocation.forward, Color.red);
+         
 
         // 현재 테스트용. 추후 총기의 연사력을 기준으로 GetKey 상태일 때 총알이 레이케스트로 나가야 함.
     }

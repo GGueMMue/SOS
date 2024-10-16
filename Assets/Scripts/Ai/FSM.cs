@@ -112,6 +112,43 @@ public class FSM : MonoBehaviour
         }
 
     }*/
+
+    void AlertImDead()
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.SphereCastAll(transform.position, 10f, Vector3.up);
+        foreach (RaycastHit hit in hits) {
+            if (hit.collider != null 
+                && hit.collider.tag == "Enemy" 
+                && hit.collider.gameObject != this.gameObject
+                && 
+                    (
+                    hit.collider.GetComponent<FSM>().state == STATE.IDLE 
+                    || hit.collider.GetComponent<FSM>().state == STATE.IDLE_PATROL 
+                    || hit.collider.GetComponent<FSM>().state == STATE.ROAMER
+                    )                
+                )
+            {
+                hit.collider.GetComponent<FSM>().SetRoamerWithResetRoamerCount();
+                Debug.Log(hit.collider.tag);
+            }
+        }
+    }
+
+    public void SetRoamerWithResetRoamerCount()
+    {
+        if (this.state != STATE.ROAMER)
+            this.state = STATE.ROAMER;
+        else
+        {
+            if (this.roamerCount >= 10)
+                this.roamerCount = 0;
+
+            if (this.roamerTimer >= 8f)
+                this.roamerTimer = 0f;
+        }
+    }
     bool IsReachedroamerDestination()
     {
         float dis = Vector3.Distance(this.transform.position, roamerPoints);
@@ -250,6 +287,7 @@ public class FSM : MonoBehaviour
             case STATE.DEAD:
                 //this.gameObject.transform.Rotate(90, 0, 0);
                 Destroy(range.gameObject);
+                AlertImDead();
 
                 if (GetComponent<Rigidbody>() == null)
                 {
