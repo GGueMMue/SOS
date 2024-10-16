@@ -39,6 +39,7 @@ public class FSM : MonoBehaviour
 
     public bool lostUser = false;
     public bool isPatrol;
+    public bool isRotateEnemy = false;
     public bool nowDead = false;
     public bool needNewRocation = false;
 
@@ -225,7 +226,9 @@ public class FSM : MonoBehaviour
                 rotationTimer += Time.deltaTime;
 
                 nav.SetDestination(startPoint);
-                RotationIdle();
+
+                if(isRotateEnemy)
+                    RotationIdle();
 
                 break;
             case STATE.IDLE_PATROL:

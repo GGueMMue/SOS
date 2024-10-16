@@ -992,6 +992,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -1059684725400480305, guid: 34b80c45eb063ef4f86984f4c9edd0a3, type: 3}
+      propertyPath: nowDead
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1059684725400480305, guid: 34b80c45eb063ef4f86984f4c9edd0a3, type: 3}
+      propertyPath: isRotateEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1059684725400480305, guid: 34b80c45eb063ef4f86984f4c9edd0a3, type: 3}
       propertyPath: patrolPoints.Array.size
       value: 3
       objectReference: {fileID: 0}
