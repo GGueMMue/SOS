@@ -8,6 +8,9 @@ using UnityEngine.AI;
 
 public class FSM : MonoBehaviour
 {
+    Gun                             gun;
+
+
     public                          Enemy_Patrol_Node curnode;
     public                          Enemy_Patrol_Node backupNode;
     public                          Vector3 startpos;
@@ -186,6 +189,8 @@ public class FSM : MonoBehaviour
             //                                    this.gameObject.transform.rotation.z),
             //                    0.1f);
 
+            //this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(this.transform.position.x, rotationlist[Random.Range(0, 3)], this.transform.position.z), Time.deltaTime * 5f);
+
             this.transform.Rotate(0, rotationlist[Random.Range(0, 3)], 0);
             rotationTimer = 0;
         }
@@ -200,7 +205,7 @@ public class FSM : MonoBehaviour
         if (dir != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            this.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
     // Start is called before the first frame update
@@ -214,7 +219,8 @@ public class FSM : MonoBehaviour
         tr = GetComponent<Transform>();
         es = GetComponent<Enemy_Seacher>();
         nav = GetComponent<NavMeshAgent>();
-        
+        gun = GetComponentInChildren<Gun>();
+
         startPoint = this.transform.position;
 
         if (!isPatrol)
@@ -400,7 +406,45 @@ public class FSM : MonoBehaviour
             /*********************  ATTACT 상태 *********************/
 
             case STATE.ATTACK:
+                // gun class를 선언하고, start 또는 awake 함수에서 getcomponentchild를 통해 컴포넌트를 초기화한다.
+                // gun class에서 gunName을 받아온다.
+                // swicth 문으로 gunName을 넣고 각 문자열에 맞춰 공격 조정
+                // 만약 어떤 총도 아니라면, 밀리니 디폴트에 밀리 공격 넣기
+                // 밀리 공격은 애니메이션 속도 진행 변수를 넣어 해당 애니메이션 변수 초에 맞춰 sphereall을 불러 유저가 맞았는지 확인.
+                // 맞았으면 유저 사망.
+                // 씨발
 
+                switch (gun.gunName)
+                {
+                    case "SMG":  //SMG일 때
+
+
+                        break;
+
+
+                    case "Rifle":  // 라이플일 때
+
+
+                        break;
+
+
+                    case "HandGun": // 권총일 때
+
+
+                        break;
+
+
+                    case "Shotgun":  // 샷건일 때 (다른 총들과 달리 for문을 돌려 탄환을 여러개 발사)
+
+
+                        break;
+
+
+                    default: // 밀리 일 때
+
+
+                        break;
+                }
 
                 break;
 
