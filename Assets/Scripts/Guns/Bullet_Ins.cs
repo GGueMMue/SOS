@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Bullet_Ins : MonoBehaviour
 {
-    public                                  GameObject bullet;
-    public                                  Transform shotRocation;
+    public                                   GameObject bullet;
+    private                                  Transform shotRocation;
+
+    private void Awake()
+    {
+        shotRocation = this.transform;
+    }
 
     public void ShotBulletIns() // 적 유닛 전용. 유저는 레이케이스트 사용
     {

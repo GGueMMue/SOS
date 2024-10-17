@@ -65,8 +65,10 @@ public class Gun : GunControllerManager
     // NowTime에는 Time.deltaTime으로 받아온 타임워치 시간이 들어가야 함.
     // Enemy의 Fire.
     {
-        if (this.rpm >= NowTIme)
+
+        if (this.rpm <= NowTIme)
         {
+            Debug.Log("쏨");
             bullet_Ins.ShotBulletIns();
             return true;
         }
@@ -79,7 +81,7 @@ public class Gun : GunControllerManager
         if (this.gameObject.CompareTag("Rifle")) { this.isRifle = true; this.isSMG = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "Rifle"; }
         if (this.gameObject.CompareTag("HandGun")) { this.isHandGun = true; this.isSMG = false; this.isRifle = false; this.isShotgun = false; this.gunName = "HandGun"; }
         if (this.gameObject.CompareTag("Shotgun")) { this.isShotgun = true; this.isSMG = false; this.isRifle = false; this.isHandGun = false; this.gunName = "Shotgun"; }
-
+        if (this.gameObject.CompareTag("Untagged")) this.gunName = "Meele";
 
         if (isSMG)
         {

@@ -38,6 +38,7 @@ public class Finder : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         fsm.lostUser = true;
+        //fsm.canShot = false;
     }
 
 }

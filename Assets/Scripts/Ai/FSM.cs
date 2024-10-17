@@ -9,8 +9,8 @@ using UnityEngine.AI;
 public class FSM : MonoBehaviour
 {
     Gun                             gun;
-
-
+    Transform                       player;
+    public                          bool canShot = false;
     public                          Enemy_Patrol_Node curnode;
     public                          Enemy_Patrol_Node backupNode;
     public                          Vector3 startpos;
@@ -19,6 +19,7 @@ public class FSM : MonoBehaviour
     public                          float max_Angle = 205f;
     public                          float min_Angle = 35f;
     public                          float roamer_Deviation = 3f;
+    public                          float fireChecker = 0f;
 
     int[] rotationlist =            new int[4] { -90, 90, 180, -180 };
 
@@ -247,6 +248,9 @@ public class FSM : MonoBehaviour
 
         if(state != STATE.IDLE_PATROL) nav.autoBraking = false;
 
+        if (state != STATE.ATTACK) { fireChecker = 0; nav.isStopped = false;}
+
+
         if (state != STATE.ROAMER)
         {
             roamerCount = 0;
@@ -378,6 +382,10 @@ public class FSM : MonoBehaviour
             case STATE.FIND:
                 if(!lostUser)
                 {
+                    if(canShot)
+                    {
+                        this.state = STATE.ATTACK;
+                    }
                     follow_Spare_Time = 0;
 
                     es.RotateToUser();
@@ -412,14 +420,22 @@ public class FSM : MonoBehaviour
                 // 만약 어떤 총도 아니라면, 밀리니 디폴트에 밀리 공격 넣기
                 // 밀리 공격은 애니메이션 속도 진행 변수를 넣어 해당 애니메이션 변수 초에 맞춰 sphereall을 불러 유저가 맞았는지 확인.
                 // 맞았으면 유저 사망.
-                // 씨발
+                //this.transform.LookAt(player);
+
+                fireChecker += Time.deltaTime;
+                nav.isStopped = true;
 
                 switch (gun.gunName)
                 {
                     case "SMG":  //SMG일 때
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
 
-
-                        break;
+                        break; // 씨발 안 먹히는 중. 수정해야 함
 
 
                     case "Rifle":  // 라이플일 때
