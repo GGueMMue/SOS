@@ -9,6 +9,7 @@ TagManager:
   - Rifle
   - Shotgun
   - HandGun
+  - Node
   layers:
   - Default
   - TransparentFX

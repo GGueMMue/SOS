@@ -8,6 +8,11 @@ using UnityEngine.AI;
 
 public class FSM : MonoBehaviour
 {
+    public                          Enemy_Patrol_Node curnode;
+    public                          Enemy_Patrol_Node backupNode;
+    public                          Vector3 startpos;
+    public                          Vector3 nextpos; // 패트롤용 변수
+    public                          bool nullChecker = false;
     public                          float max_Angle = 205f;
     public                          float min_Angle = 35f;
     public                          float roamer_Deviation = 3f;
@@ -25,7 +30,7 @@ public class FSM : MonoBehaviour
         ATTACK,
         DEAD
     }
-    public                          GameObject[] patrolPoints;
+    //public                          GameObject[] patrolPoints;
 
     int                             roamerCount = 0;
                                     Vector3 roamerPoints;
@@ -186,7 +191,24 @@ public class FSM : MonoBehaviour
         }
     }
 
+    void RotationEnemy(Vector3 location) // 적 유닛의 회전과 관련된 함수
+    {
+        Vector3 dir = location - this.transform.position;
+        dir.y = 0;
+
+
+        if (dir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
+    }
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         tr = GetComponent<Transform>();
@@ -203,6 +225,8 @@ public class FSM : MonoBehaviour
         {
             state = STATE.IDLE_PATROL;
         }
+        startpos = this.transform.position;
+        //nextpos = curnode.Get_Now_Node();
 
     }
 
@@ -214,6 +238,8 @@ public class FSM : MonoBehaviour
 
         if (state != STATE.FIND)
             follow_Spare_Time = 0;
+
+        if(state != STATE.IDLE_PATROL) nav.autoBraking = false;
 
         if (state != STATE.ROAMER)
         {
@@ -251,6 +277,50 @@ public class FSM : MonoBehaviour
 
             case STATE.IDLE_PATROL:
                 //PatrolEnemy(patrolPoints);
+                nav.autoBraking = true;
+                nav.speed = 5f;
+                nav.velocity = nav.desiredVelocity;
+                if(nav.destination != null) RotationEnemy(nav.destination);
+                if (nullChecker)
+                {
+                    nav.SetDestination(startpos);
+                    //Debug.Log(nav.destination);
+                    if (Vector3.Distance(startpos, this.transform.position) < 1.5f)
+                    {
+                        Debug.Log(nav.destination);
+
+                        curnode = backupNode;
+                        nullChecker = false;
+                    }
+                }
+
+                else
+                {
+
+                    if (curnode.next_Node == null)
+                    {
+                        nav.SetDestination(curnode.Get_Now_Node());
+
+                        if (Vector3.Distance(curnode.Get_Now_Node(), this.transform.position) < 0.1f)
+                        {
+                            nullChecker = true;
+                        }
+                    }
+
+                    else
+                    {
+                        nextpos = curnode.Get_Next_Node();
+
+                        nav.SetDestination(nextpos);
+
+                        if (Vector3.Distance(nextpos, this.transform.position) < 0.1f)
+                        {
+                            curnode = curnode.next_Node;
+                            nextpos = curnode.Get_Now_Node();
+                        }
+                    }
+                }
+            
 
                 break;
 
@@ -260,6 +330,8 @@ public class FSM : MonoBehaviour
             /*********************  ROAMER 상태 *********************/
 
             case STATE.ROAMER:
+                if (nav.destination != null) RotationEnemy(nav.destination);
+
                 roamerTimer += Time.deltaTime;
                 bugCountDown += Time.deltaTime;
                 if (bugCountDown > 1.5f)
