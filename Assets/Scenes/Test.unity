@@ -1336,6 +1336,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1982867856 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7689146439141640410, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+  m_PrefabInstance: {fileID: 3266816876497211496}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983961906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,6 +1615,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2312532647851279918, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: Finder
+      value: 
+      objectReference: {fileID: 1982867856}
     - target: {fileID: 2948673264456860038, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
       propertyPath: m_Name
       value: Enemy_SMG

@@ -428,7 +428,7 @@ public class FSM : MonoBehaviour
                 
                 //this.transform.LookAt(player);
 
-                fireChecker += Time.deltaTime;
+                //fireChecker += Time.deltaTime;
                 nav.isStopped = true;
 
                 switch (gun.gunName)
@@ -478,6 +478,7 @@ public class FSM : MonoBehaviour
 
 
                     case "Shotgun":  // 샷건일 때 (다른 총들과 달리 for문을 돌려 탄환을 여러개 발사)
+                        // 동일 간격의 발사가 더 좋은가?
 
 
                         break;
