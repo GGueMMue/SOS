@@ -1,0 +1,31 @@
+근접 공격 방안
+
+1. 현재 코드처럼 스피어콜올로 해결한다.
+	-> 애니메이션과 동기화가 힘들 수도 있음.
+	-> 부자연스러울 수도 있음.
+
+2. 애니메이션이 만들어졌을 때, 밀리 무기가 휘둘러지는 그 타이밍에 무기가 유저와 닿으면 충돌 판정으로 유저를 사망시킨다.
+	-> 게임의 난이도가 너무 쉬워질 수 있음.
+
+
+
+=> 선택 방안 
+
+Raycast + 콜라이더
+
+로직
+
+if(유저의 위치를 찾는 Enemy_Seacher.SearchUser()의 hit.distance가 일정 범위보다 작다면)
+	
+	무기.Getcomponent<무기의 콜라이더>().SetDisable(false);
+	적의 애니메이터 관리 변수(STATE와 연동) = 밀리 공격 애니메이션 숫자로 초기화
+
+else 무기.Getcomponent<무기의 콜라이더>().SetDisable(true);
+
+
+근접 무기의 클래스
+
+OnTrrigerEnter()
+
+	if(coll.gameObject.CompareTag("Player"))
+		플레이어 사망처리

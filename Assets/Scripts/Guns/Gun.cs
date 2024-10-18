@@ -94,7 +94,7 @@ public class Gun : GunControllerManager
     } // 사용안함. IEnumerator의 적 공격을 사용
 
 
-    public IEnumerator Enemy_fire()
+    public IEnumerator Enemy_fire() // 총기 사격 함수, 적 전용
     {
         //if (coroutineChecker) yield break;
         //else
@@ -127,7 +127,7 @@ public class Gun : GunControllerManager
         //StartCoroutine(Enemy_fire());
     }
 
-    public IEnumerator Enemy_Shotgun_Fire()
+    public IEnumerator Enemy_Shotgun_Fire() // 샷건 사격 함수 적 전용
     {
         while (fsm.state == FSM.STATE.ATTACK)
         {

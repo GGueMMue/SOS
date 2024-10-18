@@ -20,7 +20,7 @@ public class Attack_Range : MonoBehaviour
         
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other) // 적의 공격 범위. 안에 들어 와 있을 때, FSM 상태 ATTACK
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -29,7 +29,7 @@ public class Attack_Range : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other) // 적의 공격 범위. 벗어나게 되면, FSM 상태 ATTACK 해제
     {
         if (other.gameObject.CompareTag("Player"))
         {

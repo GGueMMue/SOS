@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class Enemy_Seacher : MonoBehaviour
 {
     public                                   bool searchUser = false;
+    public                                   float raycastDistance_;
+
     [SerializeField]                         GameObject player;
     [SerializeField]                         Transform enTR;
     // rotationTime = 10f;
@@ -122,9 +124,11 @@ public class Enemy_Seacher : MonoBehaviour
                 //RotateToUser();
                 //FollowUser();
                 //find_ = true;
-                
+
+                raycastDistance_ = hit.distance;
 
                 Debug.Log(hit.collider.gameObject.name);
+                
                 //FollowUser();
 
                 return true;

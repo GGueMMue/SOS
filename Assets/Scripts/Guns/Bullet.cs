@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // 유저, 벽, 적을 만났을 때 총알 소모. 적끼리는 영향이 없음.
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Wall"))
         {

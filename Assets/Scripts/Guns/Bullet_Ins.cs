@@ -20,7 +20,7 @@ public class Bullet_Ins : MonoBehaviour
         bullet_.transform.rotation = shotRocation.rotation;
     }
 
-    public void ShotgunBulletIns(float rot) //, Vector3 spwanOffset)
+    public void ShotgunBulletIns(float rot) //, Vector3 spwanOffset) 샷건 사격 탄알 함수, 적 전용. 유저는 레이케스트 사격
     {
         GameObject bullet_ = Instantiate(bullet, shotRocation.position, shotRocation.rotation);
 

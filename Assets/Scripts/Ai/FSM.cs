@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
@@ -21,6 +22,8 @@ public class FSM : MonoBehaviour
     public                          float roamer_Deviation = 3f;
     public                          float fireChecker = 0f;
 
+    public                          float raycastDistance;
+    public float meeleTimer = 0;
     int[] rotationlist =            new int[4] { -90, 90, 180, -180 };
 
     public                          GameObject range;
@@ -385,6 +388,13 @@ public class FSM : MonoBehaviour
             /*********************  FIND 상태 *********************/
 
             case STATE.FIND:
+                if(gun.gunName == "Meele")
+                {
+                    raycastDistance = es.raycastDistance_;
+
+                    if (raycastDistance < 1.2f) state = STATE.ATTACK;
+                }
+
                 if(!lostUser)
                 {
                     if(canShot)
@@ -430,6 +440,9 @@ public class FSM : MonoBehaviour
 
                 //fireChecker += Time.deltaTime;
                 nav.isStopped = true;
+
+                if (lostUser) state = STATE.FIND;
+
 
                 switch (gun.gunName)
                 {
@@ -490,8 +503,25 @@ public class FSM : MonoBehaviour
 
 
                     default: // 밀리 일 때
+                        meeleTimer += Time.deltaTime;
 
+                        RaycastHit[] hits;
 
+                        if (0.3f < meeleTimer && meeleTimer <= 1f)
+                        {
+                            hits = Physics.SphereCastAll(transform.position, 1.5f, Vector3.forward, 1.5f);
+                            foreach (RaycastHit hit in hits)
+                            {
+                                if (hit.collider.CompareTag("Player") && hit.collider != null)
+                                {
+                                    Debug.Log("유저 사망");
+                                }
+
+                                else state = STATE.FIND;
+                            }
+                        }                       
+                        
+                        
                         break;
                 }
 
