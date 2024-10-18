@@ -4,10 +4,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : GunControllerManager
-{
+{  
+    public float[] shotgunRotationPos = { -10, 5, 0, 5, 10 };
+
     //총기들이 다 공통적으로 가지고 있는 특징을 포함하는 클래스
+    /*private Vector3[] spwanOffsets = new Vector3[]
+    {
+        new Vector3 (-.1f , 0, 0),
+        new Vector3 (-.05f, 0, 0),
+        new Vector3 (.1f, 0, 0),
+        new Vector3 (.05f, 0, 0)
+    };*/
+
+    private void Update()
+    {
+        //Debug.Log(spwanOffsets.Length);
+        Debug.Log (shotgunRotationPos.Length);
+    }
 
     private                             FSM fsm;
+
     //public                              Bullet_Ins bullet_Ins;
     public                              string gunName; // 무기 이름
     public                              bool coroutineChecker = false;
@@ -77,6 +93,7 @@ public class Gun : GunControllerManager
         else return false;
     } // 사용안함. IEnumerator의 적 공격을 사용
 
+
     public IEnumerator Enemy_fire()
     {
         //if (coroutineChecker) yield break;
@@ -110,6 +127,28 @@ public class Gun : GunControllerManager
         //StartCoroutine(Enemy_fire());
     }
 
+    public IEnumerator Enemy_Shotgun_Fire()
+    {
+        while (fsm.state == FSM.STATE.ATTACK)
+        {
+            if (!coroutineChecker)
+            {
+                for (int i = 0; i < shotgunRotationPos.Length; i++)
+                {
+                    Debug.Log("샷건 호출 확인");
+
+                    bullet_Ins.ShotgunBulletIns(shotgunRotationPos[i]); //, spwanOffsets[i]);
+
+                    //yield return new WaitForFixedUpdate();
+                }
+                coroutineChecker = true;
+                yield return new WaitForSeconds(this.rpm);
+                coroutineChecker = false;
+            }
+            else { yield return null; }
+
+        }
+    }
     private void Awake()
     {
         fsm = GetComponentInParent<FSM>();

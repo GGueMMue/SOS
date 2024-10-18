@@ -1575,6 +1575,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 620869973508542325, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: m_TagString
+      value: Shotgun
+      objectReference: {fileID: 0}
     - target: {fileID: 822576289608789139, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.41
@@ -1622,6 +1626,30 @@ PrefabInstance:
     - target: {fileID: 2948673264456860038, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
       propertyPath: m_Name
       value: Enemy_SMG
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.data[0]
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.data[1]
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432600031783036157, guid: 13be7c65683ef1540a8b278772da586a, type: 3}
+      propertyPath: shotgunRotationPos.Array.data[4]
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

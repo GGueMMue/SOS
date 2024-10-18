@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public                              float force = 10000.0f;
+    public                              float force = 1000.0f;
     /*[SerializeField]*/                      private Rigidbody rb;
 
     // Start is called before the first frame update

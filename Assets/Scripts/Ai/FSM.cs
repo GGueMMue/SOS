@@ -478,8 +478,13 @@ public class FSM : MonoBehaviour
 
 
                     case "Shotgun":  // 샷건일 때 (다른 총들과 달리 for문을 돌려 탄환을 여러개 발사)
-                        // 동일 간격의 발사가 더 좋은가?
-
+                                     // 동일 간격의 발사가 더 좋은가?
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else StartCoroutine(gun.Enemy_Shotgun_Fire());
 
                         break;
 
