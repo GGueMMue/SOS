@@ -26,7 +26,7 @@ public class Bullet_Ins : MonoBehaviour
 
         bullet_.transform.Rotate(Vector3.up, rot);
 
-        Vector3 bulletDirection = bullet_.transform.forward;
+        //Vector3 bulletDirection = bullet_.transform.forward;
         //bullet_.GetComponent<Rigidbody>().velocity = bulletDirection * bullet.GetComponent<Bullet>().force;
         //bullet.transform.rotation = shotRocation.rotation * Quaternion.Euler(0, rot, 0); <- ¹º°¡ »ß¸®ÇÔ
         //bullet.transform.rotation = shotRocation.rotation * Quaternion.AngleAxis(rot, Vector3.up);
