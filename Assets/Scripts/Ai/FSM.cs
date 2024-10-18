@@ -240,17 +240,22 @@ public class FSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(state);
+
         if (nowDead)
             state = STATE.DEAD;
 
-        if (state != STATE.FIND)
-            follow_Spare_Time = 0;
+        if (nav.enabled)
+        {
 
-        if(state != STATE.IDLE_PATROL) nav.autoBraking = false;
+            if (state != STATE.FIND)
+                follow_Spare_Time = 0;
 
-        if (state != STATE.ATTACK) { fireChecker = 0; nav.isStopped = false;}
+            if (state != STATE.IDLE_PATROL) nav.autoBraking = false;
 
+            if (state != STATE.ATTACK) { fireChecker = 0; nav.isStopped = false; }
 
+        }
         if (state != STATE.ROAMER)
         {
             roamerCount = 0;
@@ -420,6 +425,7 @@ public class FSM : MonoBehaviour
                 // 만약 어떤 총도 아니라면, 밀리니 디폴트에 밀리 공격 넣기
                 // 밀리 공격은 애니메이션 속도 진행 변수를 넣어 해당 애니메이션 변수 초에 맞춰 sphereall을 불러 유저가 맞았는지 확인.
                 // 맞았으면 유저 사망.
+                
                 //this.transform.LookAt(player);
 
                 fireChecker += Time.deltaTime;
@@ -428,24 +434,45 @@ public class FSM : MonoBehaviour
                 switch (gun.gunName)
                 {
                     case "SMG":  //SMG일 때
+                                 //if (!canShot)
+                                 //{
+                                 //    this.state = STATE.FIND;
+                                 //    break;
+                                 //}
+                                 //else StartCoroutine(gun.Enemy_fire());
+
                         if (!canShot)
                         {
                             this.state = STATE.FIND;
                             break;
                         }
-                        if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
+                        else StartCoroutine(gun.Enemy_fire());
 
-                        break; // 씨발 안 먹히는 중. 수정해야 함
+                        //if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
+
+                        break; // 됐다 신이 내린 선물이다 이건
 
 
                     case "Rifle":  // 라이플일 때
 
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else StartCoroutine(gun.Enemy_fire());
 
                         break;
 
 
                     case "HandGun": // 권총일 때
 
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else StartCoroutine(gun.Enemy_fire());
 
                         break;
 

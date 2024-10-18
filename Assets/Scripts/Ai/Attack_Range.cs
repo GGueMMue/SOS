@@ -7,6 +7,7 @@ public class Attack_Range : MonoBehaviour
 {
 
     FSM fsm;
+    public GameObject Finder;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +22,19 @@ public class Attack_Range : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //Finder.SetActive(false);
             fsm.canShot = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
+        {
+            //Finder.SetActive(true);
             fsm.canShot = false;
+        }
     }
 }
