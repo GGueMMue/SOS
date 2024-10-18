@@ -503,6 +503,16 @@ public class FSM : MonoBehaviour
 
 
                     default: // 밀리 일 때
+                        // 전부 삭제 후, 수정 예정. 애니메이션이 만들어지는 타이밍에 작성 예정.
+                        // 밀리일 때는, nav.isStoped = false. 적 유닛이 추격하면서 공격할 수 있어야 함.
+                        // 그 상태에서, 적 유닛이 일정 범위에 들어오게되면 근접 무기 공격 애니메이션이 실행되고,
+                        // 그 때, 적 유닛이 장착하고 있는 근접 무기의 collider 활성화,
+                        // 적 유닛이 들고 있는 근접 무기의 스크립트에 OnTrrigerEnter 함수 작성.
+                        // OnTrriger 함수 내에, 만약 Player가 존재한다면, 유저 사망 처리.
+                        // 만약 유저가 공격을 회피해 미스가 난 경우,
+                        // 다시 근접 무기의 collider 비활성화 후, 공격 범위 내 유저가 있는지 확인
+                        // 만일, 유저가 범위에 벗어 났으면 Find 상태로 전환.
+                        // 그게 아니라면, 다시 공격 진행.
                         meeleTimer += Time.deltaTime;
 
                         RaycastHit[] hits;
