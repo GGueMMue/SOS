@@ -11,6 +11,7 @@ public class FSM : MonoBehaviour
 {
     Gun                             gun;
     Transform                       player;
+    public Animator                        animator;
     public                          bool canShot = false;
     public                          Enemy_Patrol_Node curnode;
     public                          Enemy_Patrol_Node backupNode;
@@ -216,6 +217,7 @@ public class FSM : MonoBehaviour
 
     private void Awake()
     {
+        //animator = GetComponentInChildren<Animator>();
 
     }
     void Start()
@@ -227,12 +229,15 @@ public class FSM : MonoBehaviour
 
         startPoint = this.transform.position;
 
+        animator = GetComponentInChildren<Animator>();
+
         if (!isPatrol)
         {
             state = STATE.IDLE;
         }
         else
         {
+            animator.SetBool("isPatrol", true);
             state = STATE.IDLE_PATROL;
         }
         startpos = this.transform.position;
@@ -243,11 +248,15 @@ public class FSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(animator == null)Debug.Log("NULL");
+
         Debug.Log(state);
 
         if (nowDead)
+        {
+            animator.SetBool("isDead", true );
             state = STATE.DEAD;
-
+        }
         if (nav.enabled)
         {
 
@@ -279,6 +288,14 @@ public class FSM : MonoBehaviour
             /*********************  IDLE 상태 *********************/
 
             case STATE.IDLE:
+                if (animator != null)
+                {
+                    animator.SetInteger("State", 0);
+                }
+                else
+                {
+                    Debug.LogError("Animator is null in Update!");
+                }
                 rotationTimer += Time.deltaTime;
 
                 nav.SetDestination(startPoint);
@@ -294,6 +311,8 @@ public class FSM : MonoBehaviour
             /*********************  IDLE_PATROL 상태 *********************/
 
             case STATE.IDLE_PATROL:
+                animator.SetInteger("State", 0);
+
                 //PatrolEnemy(patrolPoints);
                 nav.autoBraking = true;
                 nav.speed = 5f;
@@ -348,6 +367,8 @@ public class FSM : MonoBehaviour
             /*********************  ROAMER 상태 *********************/
 
             case STATE.ROAMER:
+                animator.SetInteger("State", 1);
+
                 if (nav.destination != null) RotationEnemy(nav.destination);
 
                 roamerTimer += Time.deltaTime;
@@ -388,7 +409,9 @@ public class FSM : MonoBehaviour
             /*********************  FIND 상태 *********************/
 
             case STATE.FIND:
-                if(gun.gunName == "Meele")
+                animator.SetInteger("State", 1);
+
+                if (gun.gunName == "Meele")
                 {
                     raycastDistance = es.raycastDistance_;
 
@@ -429,13 +452,14 @@ public class FSM : MonoBehaviour
             /*********************  ATTACT 상태 *********************/
 
             case STATE.ATTACK:
+
                 // gun class를 선언하고, start 또는 awake 함수에서 getcomponentchild를 통해 컴포넌트를 초기화한다.
                 // gun class에서 gunName을 받아온다.
                 // swicth 문으로 gunName을 넣고 각 문자열에 맞춰 공격 조정
                 // 만약 어떤 총도 아니라면, 밀리니 디폴트에 밀리 공격 넣기
                 // 밀리 공격은 애니메이션 속도 진행 변수를 넣어 해당 애니메이션 변수 초에 맞춰 sphereall을 불러 유저가 맞았는지 확인.
                 // 맞았으면 유저 사망.
-                
+
                 //this.transform.LookAt(player);
 
                 //fireChecker += Time.deltaTime;
@@ -456,10 +480,16 @@ public class FSM : MonoBehaviour
 
                         if (!canShot)
                         {
+
                             this.state = STATE.FIND;
                             break;
                         }
-                        else StartCoroutine(gun.Enemy_fire());
+                        else
+                        {
+                            //animator.SetInteger("State", 2);
+
+                            StartCoroutine(gun.Enemy_fire());
+                        }
 
                         //if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
 
@@ -473,8 +503,12 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else StartCoroutine(gun.Enemy_fire());
+                        else
+                        {
+                            //animator.SetInteger("State", 2);
 
+                            StartCoroutine(gun.Enemy_fire());
+                        }
                         break;
 
 
@@ -485,8 +519,12 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else StartCoroutine(gun.Enemy_fire());
+                        else
+                        {
+                            //animator.SetInteger("State", 2);
 
+                            StartCoroutine(gun.Enemy_fire());
+                        }
                         break;
 
 
@@ -497,8 +535,12 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else StartCoroutine(gun.Enemy_Shotgun_Fire());
+                        else
+                        {
+                            //animator.SetInteger("State", 2);
 
+                            StartCoroutine(gun.Enemy_fire());
+                        }
                         break;
 
 
@@ -514,6 +556,8 @@ public class FSM : MonoBehaviour
                         // 만일, 유저가 범위에 벗어 났으면 Find 상태로 전환.
                         // 그게 아니라면, 다시 공격 진행.
                         meeleTimer += Time.deltaTime;
+
+                        animator.SetInteger("State", 2);
 
                         RaycastHit[] hits;
 
@@ -543,6 +587,8 @@ public class FSM : MonoBehaviour
             /*********************  DEAD 상태 *********************/
 
             case STATE.DEAD:
+                //animator.SetBool("isDead", true);
+
                 //this.gameObject.transform.Rotate(90, 0, 0);
                 Destroy(range.gameObject);
                 AlertImDead();

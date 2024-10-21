@@ -149,7 +149,7 @@ public class Gun : GunControllerManager
 
         }
     }
-    private void Awake()
+    private void Start()
     {
         fsm = GetComponentInParent<FSM>();
 
