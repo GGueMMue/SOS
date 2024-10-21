@@ -9,25 +9,25 @@ using UnityEngine.AI;
 
 public class FSM : MonoBehaviour
 {
-    Gun                             gun;
-    Transform                       player;
-    public Animator                        animator;
-    public                          bool canShot = false;
-    public                          Enemy_Patrol_Node curnode;
-    public                          Enemy_Patrol_Node backupNode;
-    public                          Vector3 startpos;
-    public                          Vector3 nextpos; // 패트롤용 변수
-    public                          bool nullChecker = false;
-    public                          float max_Angle = 205f;
-    public                          float min_Angle = 35f;
-    public                          float roamer_Deviation = 3f;
-    public                          float fireChecker = 0f;
+    Gun gun;
+    Transform player;
+    public Animator animator;
+    public bool canShot = false;
+    public Enemy_Patrol_Node curnode;
+    public Enemy_Patrol_Node backupNode;
+    public Vector3 startpos;
+    public Vector3 nextpos; // 패트롤용 변수
+    public bool nullChecker = false;
+    public float max_Angle = 205f;
+    public float min_Angle = 35f;
+    public float roamer_Deviation = 3f;
+    public float fireChecker = 0f;
 
-    public                          float raycastDistance;
+    public float raycastDistance;
     public float meeleTimer = 0;
-    int[] rotationlist =            new int[4] { -90, 90, 180, -180 };
+    int[] rotationlist = new int[4] { -90, 90, 180, -180 };
 
-    public                          GameObject range;
+    public GameObject range;
 
     public enum STATE
     {
@@ -40,30 +40,32 @@ public class FSM : MonoBehaviour
     }
     //public                          GameObject[] patrolPoints;
 
-    int                             roamerCount = 0;
-                                    Vector3 roamerPoints;
+    int roamerCount = 0;
+    Vector3 roamerPoints;
 
-                                    Vector3 startPoint;
+    Vector3 startPoint;
 
-    public                          float rotationTimer = 0f;
+    public float rotationTimer = 0f;
 
-    public                          float roamerTimer = 0f;
-    public                          float follow_Spare_Time = 0f;
+    public float roamerTimer = 0f;
+    public float follow_Spare_Time = 0f;
 
-    public                          bool lostUser = false;
-    public                          bool isPatrol;
-    public                          bool isRotateEnemy = false;
-    public                          bool nowDead = false;
-    public                          bool needNewRocation = false;
+    public bool lostUser = false;
+    public bool isPatrol;
+    public bool isRotateEnemy = false;
+    public bool nowDead = false;
+    public bool needNewRocation = false;
 
-    public                          STATE state;
+    public bool coroutineChecker = false;
 
-                                    Transform tr;
+    public STATE state;
 
-    public                          Enemy_Seacher es;
-    public                          NavMeshAgent nav;
+    Transform tr;
 
-    public                          float bugCountDown = 0f;
+    public Enemy_Seacher es;
+    public NavMeshAgent nav;
+
+    public float bugCountDown = 0f;
 
     public void SetStateFInd()
     {
@@ -79,7 +81,7 @@ public class FSM : MonoBehaviour
 
         transform.Rotate(0, Random.Range(min_Angle, max_Angle), 0);
 
-        
+
         nav.speed = 7f;
 
         RaycastHit hit;
@@ -91,7 +93,7 @@ public class FSM : MonoBehaviour
         nav.SetDestination(roamerPoints);
 
         nav.isStopped = false;
-            
+
         //Vector3 dir = this.transform.position
         //}
     }
@@ -135,15 +137,15 @@ public class FSM : MonoBehaviour
 
         hits = Physics.SphereCastAll(transform.position, 10f, Vector3.up);
         foreach (RaycastHit hit in hits) {
-            if (hit.collider != null 
-                && hit.collider.tag == "Enemy" 
+            if (hit.collider != null
+                && hit.collider.tag == "Enemy"
                 && hit.collider.gameObject != this.gameObject
-                && 
+                &&
                     (
-                    hit.collider.GetComponent<FSM>().state == STATE.IDLE 
-                    || hit.collider.GetComponent<FSM>().state == STATE.IDLE_PATROL 
+                    hit.collider.GetComponent<FSM>().state == STATE.IDLE
+                    || hit.collider.GetComponent<FSM>().state == STATE.IDLE_PATROL
                     || hit.collider.GetComponent<FSM>().state == STATE.ROAMER
-                    )                
+                    )
                 )
             {
                 hit.collider.GetComponent<FSM>().SetRoamerWithResetRoamerCount();
@@ -175,7 +177,7 @@ public class FSM : MonoBehaviour
             //needNewRocation = true;
             return true;
         }
-        else return false; 
+        else return false;
     }
 
     public void SetStateDead()
@@ -248,13 +250,13 @@ public class FSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(animator == null)Debug.Log("NULL");
+        if (animator == null) Debug.Log("NULL");
 
         Debug.Log(state);
 
         if (nowDead)
         {
-            animator.SetBool("isDead", true );
+            animator.SetBool("isDead", true);
             state = STATE.DEAD;
         }
         if (nav.enabled)
@@ -274,7 +276,7 @@ public class FSM : MonoBehaviour
             roamerTimer = 0;
         }
 
-        if(nav.velocity != Vector3.zero) bugCountDown = 0;
+        if (nav.velocity != Vector3.zero) bugCountDown = 0;
         // 해당 변수는 ROAMER 상태일 때 증가함.
         // 따라서, 이동속도가 ROAMER 상태일 때, 0이 되면은 bugCountDown은 증가 시작
         // 그게 아닐 땐, BugCountDown은 0으로 초기화
@@ -300,7 +302,7 @@ public class FSM : MonoBehaviour
 
                 nav.SetDestination(startPoint);
 
-                if(isRotateEnemy)
+                if (isRotateEnemy)
                     RotationIdle();
 
                 break;
@@ -317,7 +319,7 @@ public class FSM : MonoBehaviour
                 nav.autoBraking = true;
                 nav.speed = 5f;
                 nav.velocity = nav.desiredVelocity;
-                if(nav.destination != null) RotationEnemy(nav.destination);
+                if (nav.destination != null) RotationEnemy(nav.destination);
                 if (nullChecker)
                 {
                     nav.SetDestination(startpos);
@@ -357,7 +359,7 @@ public class FSM : MonoBehaviour
                         }
                     }
                 }
-            
+
 
                 break;
 
@@ -388,7 +390,7 @@ public class FSM : MonoBehaviour
                     }
                     else
                     {
-                        if(IsReachedroamerDestination())
+                        if (IsReachedroamerDestination())
                         {
                             SetroamerDestination();
                         }
@@ -411,16 +413,16 @@ public class FSM : MonoBehaviour
             case STATE.FIND:
                 animator.SetInteger("State", 1);
 
-                if (gun.gunName == "Meele")
-                {
-                    raycastDistance = es.raycastDistance_;
+                //if (gun.gunName == "Meele")
+                //{
+                //    raycastDistance = es.raycastDistance_;
 
-                    if (raycastDistance < 1.2f) state = STATE.ATTACK;
-                }
+                //    if (raycastDistance < 1.2f) state = STATE.ATTACK;
+                //}
 
-                if(!lostUser)
+                if (!lostUser)
                 {
-                    if(canShot)
+                    if (canShot)
                     {
                         this.state = STATE.ATTACK;
                     }
@@ -432,7 +434,7 @@ public class FSM : MonoBehaviour
                 else
                 {
                     follow_Spare_Time += Time.deltaTime;
-                    if(follow_Spare_Time <= 3.5f)
+                    if (follow_Spare_Time <= 3.5f)
                     {
                         es.RotateToUser();
                         es.FollowUser();
@@ -545,37 +547,46 @@ public class FSM : MonoBehaviour
 
 
                     default: // 밀리 일 때
-                        // 전부 삭제 후, 수정 예정. 애니메이션이 만들어지는 타이밍에 작성 예정.
-                        // 밀리일 때는, nav.isStoped = false. 적 유닛이 추격하면서 공격할 수 있어야 함.
-                        // 그 상태에서, 적 유닛이 일정 범위에 들어오게되면 근접 무기 공격 애니메이션이 실행되고,
-                        // 그 때, 적 유닛이 장착하고 있는 근접 무기의 collider 활성화,
-                        // 적 유닛이 들고 있는 근접 무기의 스크립트에 OnTrrigerEnter 함수 작성.
-                        // OnTrriger 함수 내에, 만약 Player가 존재한다면, 유저 사망 처리.
-                        // 만약 유저가 공격을 회피해 미스가 난 경우,
-                        // 다시 근접 무기의 collider 비활성화 후, 공격 범위 내 유저가 있는지 확인
-                        // 만일, 유저가 범위에 벗어 났으면 Find 상태로 전환.
-                        // 그게 아니라면, 다시 공격 진행.
-                        meeleTimer += Time.deltaTime;
+                             // 전부 삭제 후, 수정 예정. 애니메이션이 만들어지는 타이밍에 작성 예정.
+                             // 그 상태에서, 적 유닛이 일정 범위에 들어오게되면 근접 무기 공격 애니메이션이 실행되고,
+                             // 그 때, 적 유닛이 장착하고 있는 근접 무기의 collider 활성화,
+                             // 적 유닛이 들고 있는 근접 무기의 스크립트에 OnTrrigerEnter 함수 작성.
+                             // OnTrriger 함수 내에, 만약 Player가 존재한다면, 유저 사망 처리.
+                             // 만약 유저가 공격을 회피해 미스가 난 경우,
+                             // 다시 근접 무기의 collider 비활성화 후, 공격 범위 내 유저가 있는지 확인
+                             // 만일, 유저가 범위에 벗어 났으면 Find 상태로 전환.
+                             // 그게 아니라면, 다시 공격 진행.
 
-                        animator.SetInteger("State", 2);
-
-                        RaycastHit[] hits;
-
-                        if (0.3f < meeleTimer && meeleTimer <= 1f)
+                        if (!canShot)
                         {
-                            hits = Physics.SphereCastAll(transform.position, 1.5f, Vector3.forward, 1.5f);
-                            foreach (RaycastHit hit in hits)
-                            {
-                                if (hit.collider.CompareTag("Player") && hit.collider != null)
-                                {
-                                    Debug.Log("유저 사망");
-                                }
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else
+                        {
+                            //animator.SetInteger("State", 2);
 
-                                else state = STATE.FIND;
-                            }
-                        }                       
-                        
-                        
+                            StartCoroutine(MeeleAttack());
+                        }
+                        //StartCoroutine(MeeleAttack());
+
+                        //RaycastHit[] hits;
+
+                        //if (0.3f < meeleTimer && meeleTimer <= 1f)
+                        //{
+                        //    hits = Physics.SphereCastAll(transform.position, 1.5f, Vector3.forward, 1.5f);
+                        //    foreach (RaycastHit hit in hits)
+                        //    {
+                        //        if (hit.collider.CompareTag("Player") && hit.collider != null)
+                        //        {
+                        //            Debug.Log("유저 사망");
+                        //        }
+
+                        //        else state = STATE.FIND;
+                        //    }
+                        //}                       
+
+
                         break;
                 }
 
@@ -596,10 +607,13 @@ public class FSM : MonoBehaviour
                 if (GetComponent<Rigidbody>() == null)
                 {
                     gameObject.AddComponent<Rigidbody>();
-                    this.gameObject.GetComponent<Rigidbody>().mass = 3;
+                    //this.gameObject.GetComponent<Rigidbody>().mass = 3;
+                    this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    this.gameObject.GetComponent<CapsuleCollider>().radius = 1.5f;
                     nav.enabled = false;
                 }
-                    //this.GetComponent<Rigidbody>(). = true;
+                //this.GetComponent<Rigidbody>(). = true;
 
                 //return;
 
@@ -608,4 +622,37 @@ public class FSM : MonoBehaviour
                 break;
         }
     }
+
+
+    private IEnumerator MeeleAttack()
+    {
+        if(!coroutineChecker)
+        {
+
+            animator.SetInteger("State", 2);
+
+            coroutineChecker = true;
+            // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
+            yield return new WaitForSeconds(1.1f);
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up);
+
+            foreach(RaycastHit hit in hits)
+            {
+                if(hit.collider != null && hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log("유저사망");
+                }
+            }
+
+            coroutineChecker = false;
+            
+        }
+        else
+        {
+            yield return null;
+        }
+
+    }
+
 }

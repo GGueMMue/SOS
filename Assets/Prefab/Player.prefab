@@ -52,6 +52,8 @@ MonoBehaviour:
   isMelee: 1
   possible_Kill_Confirm: 0
   nowReroadingRunAnimation: 0
+  timechecker: 0
+  childLC: {fileID: 0}
 --- !u!65 &8324089941740954304
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +74,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2, y: 0.01, z: 2}
-  m_Center: {x: 0, y: -0.7, z: 0}
+  m_Center: {x: 0, y: -0.22, z: 0}
 --- !u!1 &4655526596626649939
 GameObject:
   m_ObjectHideFlags: 0
