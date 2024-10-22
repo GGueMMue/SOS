@@ -228,6 +228,7 @@ public class FSM : MonoBehaviour
         es = GetComponent<Enemy_Seacher>();
         nav = GetComponent<NavMeshAgent>();
         gun = GetComponentInChildren<Gun>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         startPoint = this.transform.position;
 
@@ -290,6 +291,7 @@ public class FSM : MonoBehaviour
             /*********************  IDLE ป๓ลย *********************/
 
             case STATE.IDLE:
+
                 if (animator != null)
                 {
                     animator.SetInteger("State", 0);
@@ -301,6 +303,16 @@ public class FSM : MonoBehaviour
                 rotationTimer += Time.deltaTime;
 
                 nav.SetDestination(startPoint);
+
+                float dis = Vector3.Distance(this.transform.position, startPoint);
+
+                if (dis > 1f)
+                {
+                    animator.SetInteger("State", 1);
+                    RotationEnemy(startPoint);
+                }
+                else animator.SetInteger("State", 0);
+
 
                 if (isRotateEnemy)
                     RotationIdle();
@@ -465,10 +477,9 @@ public class FSM : MonoBehaviour
                 //this.transform.LookAt(player);
 
                 //fireChecker += Time.deltaTime;
-                nav.isStopped = true;
+                //nav.isStopped = true;
 
                 if (lostUser) state = STATE.FIND;
-
 
                 switch (gun.gunName)
                 {
@@ -488,8 +499,8 @@ public class FSM : MonoBehaviour
                         }
                         else
                         {
-                            //animator.SetInteger("State", 2);
-
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
                             StartCoroutine(gun.Enemy_fire());
                         }
 
@@ -507,8 +518,8 @@ public class FSM : MonoBehaviour
                         }
                         else
                         {
-                            //animator.SetInteger("State", 2);
-
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
                             StartCoroutine(gun.Enemy_fire());
                         }
                         break;
@@ -523,8 +534,8 @@ public class FSM : MonoBehaviour
                         }
                         else
                         {
-                            //animator.SetInteger("State", 2);
-
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
                             StartCoroutine(gun.Enemy_fire());
                         }
                         break;
@@ -539,8 +550,8 @@ public class FSM : MonoBehaviour
                         }
                         else
                         {
-                            //animator.SetInteger("State", 2);
-
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
                             StartCoroutine(gun.Enemy_fire());
                         }
                         break;
@@ -564,7 +575,7 @@ public class FSM : MonoBehaviour
                         }
                         else
                         {
-                            //animator.SetInteger("State", 2);
+                            animator.SetInteger("State", 2);
 
                             StartCoroutine(MeeleAttack());
                         }

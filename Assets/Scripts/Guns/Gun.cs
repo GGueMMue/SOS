@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Gun : GunControllerManager
 {  
@@ -39,6 +40,8 @@ public class Gun : GunControllerManager
     public                              int curBullet; // 현재 탄창에 남아 있는 총알
     public                              int remainBullet; // 장전할 수 있는 남아 있는 총알
     public                              int maxReroadableBullet; // 재장전 시 탄창에 삽입 되는 최대 총알
+
+    //NavMeshAgent nav;
 
     public override bool Fire(float NowTIme)
     // NowTime에는 Time.deltaTime으로 받아온 타임워치 시간이 들어가야 함.
@@ -116,8 +119,12 @@ public class Gun : GunControllerManager
                 Debug.Log("호출 확인");
                 bullet_Ins.ShotBulletIns();
                 coroutineChecker = true;
+                //nav.isStopped = true;
+
                 yield return new WaitForSeconds(this.rpm);
                 coroutineChecker = false;
+                //nav.isStopped = false;
+
             }
             else
             {
@@ -142,7 +149,9 @@ public class Gun : GunControllerManager
                     //yield return new WaitForFixedUpdate();
                 }
                 coroutineChecker = true;
+                //nav.isStopped = true;
                 yield return new WaitForSeconds(this.rpm);
+                //nav.isStopped = false;
                 coroutineChecker = false;
             }
             else { yield return null; }
@@ -152,6 +161,7 @@ public class Gun : GunControllerManager
     private void Start()
     {
         fsm = GetComponentInParent<FSM>();
+        //nav = GetComponentInParent<NavMeshAgent>();
 
         if (this.gameObject.CompareTag("SMG")) { this.isSMG = true; this.isRifle = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "SMG"; }
         if (this.gameObject.CompareTag("Rifle")) { this.isRifle = true; this.isSMG = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "Rifle"; }

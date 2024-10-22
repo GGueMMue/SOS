@@ -25,6 +25,7 @@ public class Attack_Range : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             //Finder.SetActive(false);
+            
             fsm.canShot = true;
         }
     }

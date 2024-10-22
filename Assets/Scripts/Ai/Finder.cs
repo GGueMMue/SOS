@@ -28,7 +28,11 @@ public class Finder : MonoBehaviour
         if (es.SearchUser())
         {
             fsm.lostUser = false;
-            fsm.SetStateFInd();
+            if(fsm.state != FSM.STATE.ATTACK)
+            {
+                fsm.SetStateFInd();
+            }
+            else fsm.state = FSM.STATE.ATTACK;
         }
 
             //eS.SearchUser(other.transform);
