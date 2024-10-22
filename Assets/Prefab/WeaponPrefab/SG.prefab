@@ -127,10 +127,67 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b36fb41929fc22429f0083d817b8040, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7184875215729049843}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b36fb41929fc22429f0083d817b8040, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 859225206525546406}
   m_SourcePrefab: {fileID: 100100000, guid: 8b36fb41929fc22429f0083d817b8040, type: 3}
 --- !u!4 &2881549966206800559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b36fb41929fc22429f0083d817b8040, type: 3}
   m_PrefabInstance: {fileID: 2339596986014430532}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3221906352108193813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b36fb41929fc22429f0083d817b8040, type: 3}
+  m_PrefabInstance: {fileID: 2339596986014430532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &859225206525546406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221906352108193813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c33309b1b9f0024199feb06a5075813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleEffect: {fileID: 0}
+  muzzlePoint: {fileID: 7184875215729049843}
+  bullet_Ins: {fileID: 4132808320232686282}
+  SMG:
+  - 0.125
+  - 1.8
+  - 30
+  Handgun:
+  - 0.35
+  - 1.1
+  - 12
+  Rifle:
+  - 0.25
+  - 2.3
+  - 25
+  Shotgun:
+  - 1.0
+  - 3.5
+  - 6
+  shotgunRotationPos:
+  - -10
+  - 5
+  - 0
+  - 5
+  - 10
+  gunName: 
+  coroutineChecker: 0
+  isShotgun: 0
+  isSMG: 0
+  isRifle: 0
+  isHandGun: 0
+  now_Reroading: 0
+  rpm: 0
+  reRoadTime: 0
+  curBullet: 0
+  remainBullet: 0
+  maxReroadableBullet: 0
