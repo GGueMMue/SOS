@@ -552,7 +552,7 @@ public class FSM : MonoBehaviour
                         {
                             animator.SetInteger("State", 2);
                             RotationEnemy(player.transform.position);
-                            StartCoroutine(gun.Enemy_fire());
+                            StartCoroutine(gun.Enemy_Shotgun_Fire());
                         }
                         break;
 
