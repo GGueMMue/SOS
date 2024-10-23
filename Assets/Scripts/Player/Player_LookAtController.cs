@@ -22,6 +22,10 @@ public class Player_LookAtController : MonoBehaviour
 
     public Vector3 ReturnNormalDir()
     {
-        return new Vector3(dir.normalized.x, 0, dir.normalized.y);
+        return new Vector3(dir.normalized.x, 0, dir.normalized.z);
+    }
+    public Vector3 ReturnDir()
+    {
+        return new Vector3(dir.x, 0, dir.z);
     }
 }

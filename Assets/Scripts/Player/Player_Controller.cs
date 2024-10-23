@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.ProBuilder.MeshOperations;
 
 public class Player_Controller : MonoBehaviour
@@ -13,7 +14,7 @@ public class Player_Controller : MonoBehaviour
     public                                      Transform shotRocation;
     public                                      Gun gun;
 
-    public float margin_of_error = 0.15f;
+    public float margin_of_error = 0.3f;
 
     public bool isMelee = true;
     public                                      bool possible_Kill_Confirm = false;
@@ -113,13 +114,15 @@ public class Player_Controller : MonoBehaviour
         transform_z *= Time.deltaTime;
         transform_x *= Time.deltaTime;
 
-        Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z);
+
+        /*Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z);
         Vector3 nomalDir = new Vector3(playerMoveDir.normalized.x , 0, playerMoveDir.normalized.z);
 
         Vector3 getRotationVector = childLC.ReturnNormalDir();
 
         float angle = Vector3.Angle(getRotationVector, nomalDir);
 
+        Debug.Log(angle);
         if (transform_z == 0 && transform_x == 0)
         {
             dirpos = 5;
@@ -172,9 +175,111 @@ public class Player_Controller : MonoBehaviour
                     dirpos = 9;
                 }
             }
+        } // 1안*/
+
+        Vector3 playerMoveDir = transform.TransformDirection(new Vector3(transform_x, 0, transform_z)).normalized;
+
+        //Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z); // 플레이어 이동 방향
+        Vector3 getRotationVector = childLC.ReturnDir(); // 캐릭터의 현재 바라보는 방향 벡터
+
+
+        // 이동이 있을 때만 각도를 계산
+        if (playerMoveDir != Vector3.zero)
+        {
+            float angle = Vector3.SignedAngle(getRotationVector, playerMoveDir, Vector3.up);
+
+            // 디버깅을 위한 로그
+            Debug.Log($"Move Direction: {playerMoveDir}, Rotation: {getRotationVector}, Angle: {angle}");
+
+            // 각도를 양수로 변환 (0~360도)
+            if (angle < 0)
+                angle += 360;
+
+            // 8방향 판정
+            if (angle >= 337.5f || angle < 22.5f)
+            {
+                dirpos = 8; // 정면
+            }
+            else if (angle >= 22.5f && angle < 67.5f)
+            {
+                dirpos = 9; // 우측 대각선 앞
+            }
+            else if (angle >= 67.5f && angle < 112.5f)
+            {
+                dirpos = 6; // 오른쪽
+            }
+            else if (angle >= 112.5f && angle < 157.5f)
+            {
+                dirpos = 3; // 우측 대각선 뒤
+            }
+            else if (angle >= 157.5f && angle < 202.5f)
+            {
+                dirpos = 2; // 뒤쪽
+            }
+            else if (angle >= 202.5f && angle < 247.5f)
+            {
+                dirpos = 1; // 좌측 대각선 뒤
+            }
+            else if (angle >= 247.5f && angle < 292.5f)
+            {
+                dirpos = 4; // 왼쪽
+            }
+            else if (angle >= 292.5f && angle < 337.5f)
+            {
+                dirpos = 7; // 좌측 대각선 앞
+            }
+
+            // 각도를 계산해서 360도 기준으로 방향을 나눈다.
+            /*float angle = Vector3.SignedAngle(getRotationVector, playerMoveDir, Vector3.up);
+
+            Debug.DrawRay(transform.position, playerMoveDir * 2, Color.red);
+            Debug.DrawRay(transform.position, getRotationVector * 2, Color.blue);
+
+            //Debug.Log(angle);
+
+            // 각도에 따라 8방향으로 나눈다
+            if (angle >= -22.5f && angle < 22.5f)
+            {
+                dirpos = 8; // 정면 (앞)
+            }
+            else if (angle >= 22.5f && angle < 67.5f)
+            {
+                dirpos = 9; // 우측 대각선 앞
+            }
+            else if (angle >= 67.5f && angle < 112.5f)
+            {
+                dirpos = 6; // 오른쪽
+            }
+            else if (angle >= 112.5f && angle < 157.5f)
+            {
+                dirpos = 3; // 우측 대각선 뒤
+            }
+            else if ((angle >= 157.5f && angle <= 180f) || (angle < -157.5f && angle >= -180f))
+            {
+                dirpos = 2; // 뒤쪽
+            }
+            else if (angle >= -157.5f && angle < -112.5f)
+            {
+                dirpos = 1; // 좌측 대각선 뒤
+            }
+            else if (angle >= -112.5f && angle < -67.5f)
+            {
+                dirpos = 4; // 왼쪽
+            }
+            else if (angle >= -67.5f && angle < -22.5f)
+            {
+                dirpos = 7; // 좌측 대각선 앞
+            } // 2-1안 */
         }
+        else
+        {
+            dirpos = 5; // 이동하지 않을 때 (정지 상태)
+        } // 2안 회전각 사용*/
+
+
         animator.SetInteger("MovePos", dirpos);
-        
+
+        // 이동 적용
         this.gameObject.transform.Translate(transform_x, 0, transform_z);
     }
 
