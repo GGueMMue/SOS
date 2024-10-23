@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class Player_Controller : MonoBehaviour
 {
@@ -12,13 +13,17 @@ public class Player_Controller : MonoBehaviour
     public                                      Transform shotRocation;
     public                                      Gun gun;
 
-    public                                      bool isMelee = true;
+    public float margin_of_error = 0.15f;
+
+    public bool isMelee = true;
     public                                      bool possible_Kill_Confirm = false;
 
     public                                      bool nowReroadingRunAnimation = false;
 
+    public int dirpos = 0;
     [SerializeField]                            float timechecker = 0;
     [SerializeField]                            Player_LookAtController childLC;
+    [SerializeField]                            Animator animator;
 
     //private Enemy_Seacher[] es;
 
@@ -29,6 +34,7 @@ public class Player_Controller : MonoBehaviour
     {
         //es = GameObject.FindGameObjectsWithTag("Enemy").Getcomponent<
         childLC = GetComponentInChildren<Player_LookAtController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -107,6 +113,68 @@ public class Player_Controller : MonoBehaviour
         transform_z *= Time.deltaTime;
         transform_x *= Time.deltaTime;
 
+        Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z);
+        Vector3 nomalDir = new Vector3(playerMoveDir.normalized.x , 0, playerMoveDir.normalized.z);
+
+        Vector3 getRotationVector = childLC.ReturnNormalDir();
+
+        float angle = Vector3.Angle(getRotationVector, nomalDir);
+
+        if (transform_z == 0 && transform_x == 0)
+        {
+            dirpos = 5;
+        }
+        else
+        {
+
+            if (nomalDir.x + margin_of_error < getRotationVector.x) // 캐릭터의 x 이동이 왼쪽 (7, 4, 1)
+            {
+                if (nomalDir.z + margin_of_error < getRotationVector.z) // 캐릭터의 z 이동이 뒤 (1, 2, 3)
+                {
+                    dirpos = 1;
+                }
+                else if (nomalDir.z + margin_of_error == 0) // 캐릭터의 z 이동이 없음 (4, 5, 6)
+                {
+                    dirpos = 4;
+                }
+                else // 캐릭터의 z 이동이 앞 (7, 8, 9)
+                {
+                    dirpos = 7;
+                }
+            }
+            else if (nomalDir.x + margin_of_error == 0) // 캐릭터의 x 이동 없음 (8, 5, 2)
+            {
+                if (nomalDir.z + margin_of_error < getRotationVector.z)
+                {
+                    dirpos = 2;
+                }
+                //else if (nomalDir.z + margin_of_error == 0)
+                //{
+                //    dirpos = 5;
+                //}
+                else
+                {
+                    dirpos = 8;
+                }
+            }
+            else // 캐릭터의 x 이동이 오른쪽 (9, 6, 3)
+            {
+                if (nomalDir.z + margin_of_error < getRotationVector.z)
+                {
+                    dirpos = 3;
+                }
+                else if (nomalDir.z + margin_of_error == 0)
+                {
+                    dirpos = 6;
+                }
+                else
+                {
+                    dirpos = 9;
+                }
+            }
+        }
+        animator.SetInteger("MovePos", dirpos);
+        
         this.gameObject.transform.Translate(transform_x, 0, transform_z);
     }
 
