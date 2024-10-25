@@ -44,46 +44,20 @@ public class Player_Controller : MonoBehaviour
 
         /*
                현재 필요 로직
-        1.
-               Gun을 start에서 GetComponentInChildren으로 받는다.
-                Gun이 null이면, 주먹 밀리 공격 이벤트 실행
-                Gun이 Meele면 빠따 공격 이벤트 실행(셋불 has_meele_item = true)
-                Gun이 총기면, 각 총기별 공격 이벤트  실행.
-                총의 종류에 따라, 애니메이터의 파라메터 bool 값을 수정.
-
-                => 클리어
-
-        2.     
-                각 무기별, 레이케스트 사격.
-                근접 공격과 샷건을 제외한 총기 사격은 레이케스트로 이뤄진 사격 함수를 작성해 진행한다.
-                각 총기별 사거리에 제한을 두도록한다.
-
-                => 클리어
-
-        3.      
+        1.      
                 줍총
                 적이 죽으면, 적이 가지고 있는 총기를 떨군다.
                 떨군 총기는, 시체 위로 Ins 하고, 유저는 이를 G키를 눌러 먹는다.
                 만일, 총기를 가지고 있다면, 이 무기와 교체한다.
                 교체했을 때, 계획서에 작성한 로직대로 총기의 탄과 잔탄을 부여 받는다.       
 
-        4.
-                사격에 용이하기 위해, 현재 마우스 포인트가 위치한 곳에 크로스헤어 그림을 위치한다.
-                => 구현 자체는 되었음.
-
-        5.
+        2.
                 무기를 사격할 때, 머즐이펙트와 사운드를 출력하도록 한다.
-
-        6.
-                무기 투척
-                플레이어가 마우스 우클릭으로 했을 때, 크로스헤어의 디자인이 바뀌며, 그 상태에서 좌클릭을 눌렀을 때, 해당 무기에 RigidBody가 달리고, 중력 제한은 fasle로, Addforce를 사용하여 직선 방향으로 총기가 날라가도록 한다.
-                해당 방향으로 날라간 무기가, 적에게 닿으면 적 사망. 콜라이더에 충돌 판정이 들어오면, 중력 제한을 true로 놓고 무기가 땅으로 떨어지도록 한다.
-                땅에 떨어진 무기는 줍총과 관련된 함수를 사용하여 자신과 동일한(탄, 잔탄 등) 무기를 ins하고 distroy 한다.
-
-        7.      
+       
+        3.      
                 사운드 조절이 가능한 BGM을 넣는다.
          
-        8.      
+        4.      
                 카메라의 이동
                 카메라의 이동은 계획서에 있는 대로 진행한다. 허나, 해당 로직은 게임 플레이에 중요치 않은 요소이기에, 마지막에 구현하도록 한다.
         
@@ -262,7 +236,7 @@ public class Player_Controller : MonoBehaviour
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
             yield return new WaitForSeconds(1.1f);
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
+            hits = Physics.SphereCastAll(transform.position, 3.5f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
 
             foreach (RaycastHit hit in hits)
             {
@@ -298,7 +272,7 @@ public class Player_Controller : MonoBehaviour
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
             yield return new WaitForSeconds(0.45f);
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(transform.position, 2.2f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
+            hits = Physics.SphereCastAll(transform.position, 1.8f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
 
             foreach (RaycastHit hit in hits)
             {
