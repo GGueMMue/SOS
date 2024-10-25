@@ -16,7 +16,6 @@ public abstract class GunControllerManager : MonoBehaviour
     [SerializeField] protected string[] Rifle = new string[] { "0.25", "2.3", "25" };
     [SerializeField] protected string[] Shotgun = new string[] { "1.0", "3.5", "6" };
 
-    abstract public bool Fire(float NowTIme);
     abstract public void ReRoad();
     abstract public bool Enemy_Fire(float NowTIme);
 

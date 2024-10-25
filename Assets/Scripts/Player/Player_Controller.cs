@@ -13,6 +13,7 @@ public class Player_Controller : MonoBehaviour
     public                                      float speed = 5f;
     public                                      Transform shotRocation;
     public                                      Gun gun;
+    public bool coroutineChecker = false;
 
     public float margin_of_error = 0.3f;
 
@@ -22,6 +23,8 @@ public class Player_Controller : MonoBehaviour
     public                                      bool nowReroadingRunAnimation = false;
 
     public int dirpos = 0;
+    public CrossHair crosshair;
+
     [SerializeField]                            float timechecker = 0;
     [SerializeField]                            Player_LookAtController childLC;
     [SerializeField]                            Animator animator;
@@ -36,6 +39,7 @@ public class Player_Controller : MonoBehaviour
         //es = GameObject.FindGameObjectsWithTag("Enemy").Getcomponent<
         childLC = GetComponentInChildren<Player_LookAtController>();
         animator = GetComponentInChildren<Animator>();
+        gun = GetComponentInChildren<Gun>();
 
         /*
                현재 필요 로직
@@ -46,10 +50,14 @@ public class Player_Controller : MonoBehaviour
                 Gun이 총기면, 각 총기별 공격 이벤트  실행.
                 총의 종류에 따라, 애니메이터의 파라메터 bool 값을 수정.
 
+                => 클리어
+
         2.     
                 각 무기별, 레이케스트 사격.
                 근접 공격과 샷건을 제외한 총기 사격은 레이케스트로 이뤄진 사격 함수를 작성해 진행한다.
                 각 총기별 사거리에 제한을 두도록한다.
+
+                => 클리어
 
         3.      
                 줍총
@@ -91,16 +99,123 @@ public class Player_Controller : MonoBehaviour
         childLC.PlayerRotate();//PlayerRotate(childTR);
         Debug.DrawRay(shotRocation.position, shotRocation.forward, Color.red);
 
-        if (Input.GetKeyDown(KeyCode.R))
-            ReRoadingInvoke(gun.reRoadTime);
+        //if (Input.GetKeyDown(KeyCode.R))
+        //    ReRoadingInvoke(gun.reRoadTime);
 
-        if(gun.Fire(timechecker))
+        if (gun != null)
         {
-            AlertToEnemy();
-            timechecker = 0;
-            Debug.Log("사격");            
+            switch (gun.gunName)
+            {
+                case "SMG":
+                    animator.SetBool("isARorSMG", true);
+                    animator.SetBool("isHG", false);
+                    animator.SetBool("isSG", false);
+                    animator.SetBool("Has_Meele_Item", false);
+
+                    if (gun.Fire(timechecker, shotRocation))
+                    {
+                        crosshair.SetNowFireTrue();
+                        animator.SetTrigger("Attack");
+
+                        AlertToEnemy();
+                        timechecker = 0;
+                        Debug.Log("사격");
+                    }
+                    crosshair.SetNowFireFalse();
+
+                    break;
+
+                case "Rifle":
+                    animator.SetBool("isARorSMG", true);
+                    animator.SetBool("isHG", false);
+                    animator.SetBool("isSG", false);
+                    animator.SetBool("Has_Meele_Item", false);
+
+                    if (gun.Fire(timechecker, shotRocation))
+                    {
+                        crosshair.SetNowFireTrue();
+                        animator.SetTrigger("Attack");
+
+                        AlertToEnemy();
+                        timechecker = 0;
+                        Debug.Log("사격");
+                    }
+                    crosshair.SetNowFireFalse();
+
+                    break;
+
+                case "HandGun":
+                    animator.SetBool("isARorSMG", false);
+                    animator.SetBool("isHG", true);
+                    animator.SetBool("isSG", false);
+                    animator.SetBool("Has_Meele_Item", false);
+
+                    if (gun.Fire(timechecker, shotRocation))
+                    {
+                        crosshair.SetNowFireTrue();
+                        animator.SetTrigger("Attack");
+
+                        AlertToEnemy();
+                        timechecker = 0;
+                        Debug.Log("사격");
+                    }
+                    crosshair.SetNowFireFalse();
+
+                    break;
+
+                case "Shotgun":
+                    animator.SetBool("isARorSMG", false);
+                    animator.SetBool("isHG", false);
+                    animator.SetBool("isSG", true);
+                    animator.SetBool("Has_Meele_Item", false);
+
+                    if (gun.ShotGunFire(timechecker, shotRocation))
+                    {
+                        crosshair.SetNowFireTrue();
+                        animator.SetTrigger("Attack");
+
+                        AlertToEnemy();
+                        timechecker = 0;
+                        Debug.Log("사격");
+                    }
+                    crosshair.SetNowFireFalse();
+
+                    break;
+
+                case "Meele":
+                    animator.SetBool("isARorSMG", false);
+                    animator.SetBool("isHG", false);
+                    animator.SetBool("isSG", false);
+                    animator.SetBool("Has_Meele_Item", true);
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        animator.SetTrigger("Attack");
+
+                        StartCoroutine(MeeleAttack());
+                    }
+                    break;
+
+                default:
+
+                    break;
+            }
         }
-         
+        else
+        {
+            animator.SetBool("isARorSMG", false);
+            animator.SetBool("isHG", false);
+            animator.SetBool("isSG", false);
+            animator.SetBool("Has_Meele_Item", false);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetTrigger("Attack");
+
+                StartCoroutine(NoneItemMeeleAttack());
+            }
+        }
+
 
         // 현재 테스트용. 추후 총기의 연사력을 기준으로 GetKey 상태일 때 총알이 레이케스트로 나가야 함.
     }
@@ -133,6 +248,71 @@ public class Player_Controller : MonoBehaviour
         gun.ReRoad();
         gun.now_Reroading = false;
         nowReroadingRunAnimation = false;
+    }
+
+    private IEnumerator MeeleAttack()
+    {
+        if (!coroutineChecker)
+        {
+            coroutineChecker = true;
+            crosshair.SetNowFireTrue();
+
+            // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
+            yield return new WaitForSeconds(1.1f);
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+                {
+                    hit.collider.GetComponent<FSM>().SetStateDead();
+                }
+            }
+
+            coroutineChecker = false;
+            crosshair.SetNowFireFalse();
+
+        }
+        else
+        {
+            crosshair.SetNowFireFalse();
+
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator NoneItemMeeleAttack()
+    {
+        if (!coroutineChecker)
+        {
+            coroutineChecker = true;
+            crosshair.SetNowFireTrue();
+
+            // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
+            yield return new WaitForSeconds(0.45f);
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(transform.position, 2.2f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+                {
+                    hit.collider.GetComponent<FSM>().SetStateDead();
+                }
+            }
+
+            coroutineChecker = false;
+            crosshair.SetNowFireFalse();
+        }
+        else
+        {
+            crosshair.SetNowFireFalse();
+
+            yield return null;
+        }
+
     }
 
     public void OnTriggerStay(Collider other) // 적 유닛의 확인 사살을 위해 사용되는 Trigger 함수. 
@@ -231,7 +411,7 @@ public class Player_Controller : MonoBehaviour
             float angle = Vector3.SignedAngle(getRotationVector, playerMoveDir, Vector3.up);
 
             // 디버깅을 위한 로그
-            Debug.Log($"Move Direction: {playerMoveDir}, Rotation: {getRotationVector}, Angle: {angle}");
+            //Debug.Log($"Move Direction: {playerMoveDir}, Rotation: {getRotationVector}, Angle: {angle}");
 
             // 각도를 양수로 변환 (0~360도)
             if (angle < 0)

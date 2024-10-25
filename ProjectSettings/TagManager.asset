@@ -13,6 +13,7 @@ TagManager:
   - SMG_Attack_Range
   - Bullet
   - Wall
+  - GrabPoint
   layers:
   - Default
   - TransparentFX

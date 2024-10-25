@@ -25,6 +25,7 @@ public class Gun : GunControllerManager
 
     private                             FSM fsm;
 
+    public Transform muzzleTR;
     //public                              Bullet_Ins bullet_Ins;
     public                              string gunName; // 무기 이름
     public                              bool coroutineChecker = false;
@@ -43,7 +44,7 @@ public class Gun : GunControllerManager
 
     //NavMeshAgent nav;
 
-    public override bool Fire(float NowTIme)
+    public bool Fire(float NowTIme, Transform muzzlePoint)
     // NowTime에는 Time.deltaTime으로 받아온 타임워치 시간이 들어가야 함.
     // user의 Fire.
     {
@@ -63,6 +64,32 @@ public class Gun : GunControllerManager
                     Debug.Log("적 상태 Dead");
                 }
             }
+            return true;
+        }
+        else return false;
+    }
+
+    public bool ShotGunFire(float nowTime, Transform muzzlePoint)
+    {
+        if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
+        {
+            --this.curBullet;
+
+            //GameObject effect = Instantiate(muzzleEffect);
+            //effect.transform.position = muzzlePoint.position;
+            //effect.transform.rotation = muzzlePoint.rotation;
+
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(muzzlePoint.position, 4f, muzzlePoint.forward, 10f, LayerMask.GetMask("Enemy", "Wall"));
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+                {
+                    hit.collider.GetComponent<FSM>().SetStateDead();
+                }
+            }
+
             return true;
         }
         else return false;
