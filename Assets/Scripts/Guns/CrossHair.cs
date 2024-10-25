@@ -8,9 +8,8 @@ public class CrossHair : MonoBehaviour
 {
     public LayerMask mask;
     public SpriteRenderer sr;
-    [SerializeField] Color originalColor;
+    [SerializeField] public Color originalColor;
     public Color hightLightColor;
-    [SerializeField] Vector3 originalSize;
     public Vector3 maxSize;
     [SerializeField] bool fireChecker = false;
     public float translateSpeed = 0.2f;
@@ -25,10 +24,7 @@ public class CrossHair : MonoBehaviour
 
         Cursor.visible = false;
         originalColor = sr.color;
-        originalSize = this.transform.localScale;
         hightLightColor = Color.red;
-
-        maxSize = originalSize + new Vector3(0.2f, 0.2f, 0.2f);
         mask = LayerMask.GetMask("Enemy", "Wall");
     }
 
@@ -43,27 +39,45 @@ public class CrossHair : MonoBehaviour
 
         transform.Rotate(Vector3.forward * -40 * Time.deltaTime);
 
-        if (fireChecker)
-        {
-            this.transform.localScale = Vector3.Lerp(this.transform.localScale, maxSize, Time.deltaTime * translateSpeed);
-        }
-        else
-        {
-            this.transform.localScale = Vector3.Lerp(this.transform.localScale, originalSize, Time.deltaTime * translateSpeed);
-        }
+        //if (fireChecker)
+        //{
+        //    this.transform.localScale = Vector3.Lerp(this.transform.localScale, maxSize, Time.deltaTime * translateSpeed);
+        //}
+        //else
+        //{
+        //    this.transform.localScale = Vector3.Lerp(this.transform.localScale, originalSize, Time.deltaTime * translateSpeed);
+        //}
 
     }
 
-    public void SetNowFireTrue()
+    public IEnumerator SetFire(float rpm)
     {
-        fireChecker = true;
-        this.sr.color = hightLightColor;
+        if(fireChecker)
+        {
+            this.sr.color = hightLightColor;
+            fireChecker = false;
 
+            yield return new WaitForSeconds(rpm);
+
+            fireChecker = true;
+
+            this.sr.color = originalColor;
+
+        }
+
+        yield return null;
     }
 
-    public void SetNowFireFalse()
-    {
-        fireChecker = false;
-        this.sr.color = originalColor;
-    }
+    //public void SetNowFireTrue()
+    //{
+    //    fireChecker = true;
+    //    this.sr.color = hightLightColor;
+
+    //}
+
+    //public void SetNowFireFalse()
+    //{
+    //    fireChecker = false;
+    //    this.sr.color = originalColor;
+    //}
 }

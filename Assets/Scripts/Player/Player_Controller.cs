@@ -116,7 +116,7 @@ public class Player_Controller : MonoBehaviour
 
                     if (gun.Fire(timechecker, shotRocation))
                     {
-                        crosshair.SetNowFireTrue();
+                        StartCoroutine(crosshair.SetFire(gun.rpm));
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -135,7 +135,7 @@ public class Player_Controller : MonoBehaviour
 
                     if (gun.Fire(timechecker, shotRocation))
                     {
-                        crosshair.SetNowFireTrue();
+                        StartCoroutine(crosshair.SetFire(gun.rpm));
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -154,7 +154,7 @@ public class Player_Controller : MonoBehaviour
 
                     if (gun.Fire(timechecker, shotRocation))
                     {
-                        crosshair.SetNowFireTrue();
+                        StartCoroutine(crosshair.SetFire(gun.rpm));
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -173,7 +173,7 @@ public class Player_Controller : MonoBehaviour
 
                     if (gun.ShotGunFire(timechecker, shotRocation))
                     {
-                        crosshair.SetNowFireTrue();
+                        StartCoroutine(crosshair.SetFire(gun.rpm));
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -257,7 +257,7 @@ public class Player_Controller : MonoBehaviour
         if (!coroutineChecker)
         {
             coroutineChecker = true;
-            crosshair.SetNowFireTrue();
+            crosshair.sr.color = crosshair.hightLightColor;
 
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
             yield return new WaitForSeconds(1.1f);
@@ -273,6 +273,8 @@ public class Player_Controller : MonoBehaviour
             }
 
             coroutineChecker = false;
+            crosshair.sr.color = crosshair.originalColor;
+
             //crosshair.SetNowFireFalse();
 
         }
@@ -290,7 +292,8 @@ public class Player_Controller : MonoBehaviour
         if (!coroutineChecker)
         {
             coroutineChecker = true;
-            crosshair.SetNowFireTrue();
+
+            crosshair.sr.color = crosshair.hightLightColor;
 
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
             yield return new WaitForSeconds(0.45f);
@@ -306,11 +309,13 @@ public class Player_Controller : MonoBehaviour
             }
 
             coroutineChecker = false;
-            crosshair.SetNowFireFalse();
+
+            crosshair.sr.color = crosshair.originalColor;
+
+
         }
         else
         {
-            crosshair.SetNowFireFalse();
 
             yield return null;
         }
