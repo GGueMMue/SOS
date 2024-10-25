@@ -37,6 +37,10 @@ public class CrossHair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        this.transform.position = new Vector3(ray.origin.x, -10, ray.origin.z);
+
         transform.Rotate(Vector3.forward * -40 * Time.deltaTime);
 
         if (fireChecker)
@@ -53,14 +57,13 @@ public class CrossHair : MonoBehaviour
     public void SetNowFireTrue()
     {
         fireChecker = true;
-        //sr.color = hightLightColor;
+        this.sr.color = hightLightColor;
 
     }
 
     public void SetNowFireFalse()
     {
         fireChecker = false;
-        //sr.color = originalColor;
-
+        this.sr.color = originalColor;
     }
 }

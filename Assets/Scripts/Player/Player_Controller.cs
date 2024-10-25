@@ -40,6 +40,7 @@ public class Player_Controller : MonoBehaviour
         childLC = GetComponentInChildren<Player_LookAtController>();
         animator = GetComponentInChildren<Animator>();
         gun = GetComponentInChildren<Gun>();
+        crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<CrossHair>();
 
         /*
                현재 필요 로직
@@ -68,6 +69,7 @@ public class Player_Controller : MonoBehaviour
 
         4.
                 사격에 용이하기 위해, 현재 마우스 포인트가 위치한 곳에 크로스헤어 그림을 위치한다.
+                => 구현 자체는 되었음.
 
         5.
                 무기를 사격할 때, 머즐이펙트와 사운드를 출력하도록 한다.
@@ -121,7 +123,7 @@ public class Player_Controller : MonoBehaviour
                         timechecker = 0;
                         Debug.Log("사격");
                     }
-                    crosshair.SetNowFireFalse();
+                    //crosshair.SetNowFireFalse();
 
                     break;
 
@@ -140,7 +142,7 @@ public class Player_Controller : MonoBehaviour
                         timechecker = 0;
                         Debug.Log("사격");
                     }
-                    crosshair.SetNowFireFalse();
+                    //crosshair.SetNowFireFalse();
 
                     break;
 
@@ -159,7 +161,7 @@ public class Player_Controller : MonoBehaviour
                         timechecker = 0;
                         Debug.Log("사격");
                     }
-                    crosshair.SetNowFireFalse();
+                    //crosshair.SetNowFireFalse();
 
                     break;
 
@@ -178,7 +180,7 @@ public class Player_Controller : MonoBehaviour
                         timechecker = 0;
                         Debug.Log("사격");
                     }
-                    crosshair.SetNowFireFalse();
+                    //crosshair.SetNowFireFalse();
 
                     break;
 
@@ -271,12 +273,12 @@ public class Player_Controller : MonoBehaviour
             }
 
             coroutineChecker = false;
-            crosshair.SetNowFireFalse();
+            //crosshair.SetNowFireFalse();
 
         }
         else
         {
-            crosshair.SetNowFireFalse();
+            //crosshair.SetNowFireFalse();
 
             yield return null;
         }

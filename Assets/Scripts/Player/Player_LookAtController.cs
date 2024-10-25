@@ -6,7 +6,6 @@ using UnityEngine;
 public class Player_LookAtController : MonoBehaviour
 {
     Vector3 dir;
-    public CrossHair crosshair;
 
     public void PlayerRotate() // 유저 캐릭터의 마우스 방향에 따른 회전 함수
     {
@@ -16,9 +15,7 @@ public class Player_LookAtController : MonoBehaviour
 
         if (site.Raycast(ray, out float dis)) // 만약 레이케스트가 맞았다면
         {
-            Vector3 point = ray.GetPoint(dis);
-            crosshair.transform.position = point;
-                        
+                      
             dir = ray.GetPoint(dis) - transform.position;
             transform.rotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z)); // 회전
         }
