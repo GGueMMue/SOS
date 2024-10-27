@@ -18,6 +18,8 @@ public class Player_Controller : MonoBehaviour
     public AudioClip noneMeeleItemSFX;
     public AudioSource SFX;
 
+    [SerializeField] GameObject insWeapon;
+
     public float margin_of_error = 0.3f;
 
     //Rigidbody rb;
@@ -31,6 +33,8 @@ public class Player_Controller : MonoBehaviour
     public GameObject playerMuzzleEffect;
     public int dirpos = 0;
     public CrossHair crosshair;
+
+    public GameObject weaponPos;
 
     [SerializeField]                            float timechecker = 0;
     [SerializeField]                            Player_LookAtController childLC;
@@ -50,6 +54,10 @@ public class Player_Controller : MonoBehaviour
         crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<CrossHair>();
         SFX = GetComponent<AudioSource>();
         tween = GameObject.FindGameObjectWithTag("Bullet_UI").GetComponent<Jun_TweenRuntime>();
+
+        if(GetComponentInChildren<Gun>().gameObject)
+            insWeapon = GetComponentInChildren<Gun>().gameObject;
+
         //rb = GetComponent<Rigidbody>();
         /*
                현재 필요 로직
@@ -59,14 +67,11 @@ public class Player_Controller : MonoBehaviour
                 떨군 총기는, 시체 위로 Ins 하고, 유저는 이를 G키를 눌러 먹는다.
                 만일, 총기를 가지고 있다면, 이 무기와 교체한다.
                 교체했을 때, 계획서에 작성한 로직대로 총기의 탄과 잔탄을 부여 받는다.       
-
-        2.
-                무기를 사격할 때, 머즐이펙트와 사운드를 출력하도록 한다.
-       
-        3.      
+        
+        2.      
                 사운드 조절이 가능한 BGM을 넣는다.
          
-        4.      
+        3.      
                 카메라의 이동
                 카메라의 이동은 계획서에 있는 대로 진행한다. 허나, 해당 로직은 게임 플레이에 중요치 않은 요소이기에, 마지막에 구현하도록 한다.
         

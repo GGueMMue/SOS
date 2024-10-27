@@ -224,16 +224,19 @@ public class Gun : GunControllerManager
 
     public void SetPickUpGunSetting()
     {
-        GunSetUp();
+        if (gunName == null)
+        {
+            GunSetUp();
 
-        fsm = GetComponentInParent<FSM>();
+            fsm = GetComponentInParent<FSM>();
 
-        //nav = GetComponentInParent<NavMeshAgent>();
+            //nav = GetComponentInParent<NavMeshAgent>();
 
-        SFX = GetComponent<AudioSource>();
-        SFX.volume = .5f;
+            SFX = GetComponent<AudioSource>();
+            SFX.volume = .5f;
 
-        this.curBullet = Random.Range(1, this.maxReroadableBullet);
+            this.curBullet = Random.Range(1, this.maxReroadableBullet);
+        }
 
     }
 

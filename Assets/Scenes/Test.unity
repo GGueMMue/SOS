@@ -2279,10 +2279,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5256163333708593819, guid: c3030c93d3bb473438d270b52363347c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5537293350054483332, guid: c3030c93d3bb473438d270b52363347c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2322,18 +2318,6 @@ PrefabInstance:
     - target: {fileID: 5537293350054483332, guid: c3030c93d3bb473438d270b52363347c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6667518885156076850, guid: c3030c93d3bb473438d270b52363347c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8403021065820660941, guid: c3030c93d3bb473438d270b52363347c, type: 3}
-      propertyPath: tween
-      value: 
-      objectReference: {fileID: 1710863887}
-    - target: {fileID: 8403021065820660941, guid: c3030c93d3bb473438d270b52363347c, type: 3}
-      propertyPath: crosshair
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2409,7 +2393,6 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1830864082}
   - {fileID: 80158390810825082}
-  - {fileID: 5877066127942303905}
   - {fileID: 1527732102}
   - {fileID: 1267693570}
   - {fileID: 498066561}
@@ -2424,3 +2407,4 @@ SceneRoots:
   - {fileID: 1695675163}
   - {fileID: 757020586}
   - {fileID: 421098496}
+  - {fileID: 5877066127942303905}
