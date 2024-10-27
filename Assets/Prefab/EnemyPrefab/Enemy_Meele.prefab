@@ -176,6 +176,7 @@ MonoBehaviour:
   min_Angle: 35
   roamer_Deviation: 1.5
   fireChecker: 0
+  bloodEffect: {fileID: 8689993462640985489, guid: 1ebef835760e6544c97f4dde26de3799, type: 3}
   deadSound: {fileID: 8300000, guid: 28035043174d44f928d428fc44f59150, type: 3}
   raycastDistance: 0
   meeleTimer: 0
