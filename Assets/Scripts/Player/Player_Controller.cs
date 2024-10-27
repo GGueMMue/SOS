@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.EventSystems;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.UIElements;
 
 public class Player_Controller : MonoBehaviour
 {
@@ -232,6 +233,8 @@ public class Player_Controller : MonoBehaviour
         box.transform.rotation = Quaternion.identity;
 
         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 200;
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(200, box.transform);
+
         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
 
         Destroy(box, 2f);
@@ -286,6 +289,8 @@ public class Player_Controller : MonoBehaviour
                     {
                         hit.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(500, hit.transform);
+
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }
@@ -328,6 +333,8 @@ public class Player_Controller : MonoBehaviour
                     {
                         hit.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(500, hit.transform);
+
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }

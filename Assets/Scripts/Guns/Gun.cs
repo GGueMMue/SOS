@@ -73,6 +73,8 @@ public class Gun : GunControllerManager
                     {
                         get_hit_info.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, get_hit_info.transform);
+
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }
@@ -105,6 +107,8 @@ public class Gun : GunControllerManager
                     {
                         hit.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, hit.transform);
+
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }

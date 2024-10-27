@@ -19,6 +19,7 @@ TagManager:
   - Bullet_UI
   - Score_UI
   - Manager
+  - Canvas_Tag
   layers:
   - Default
   - TransparentFX

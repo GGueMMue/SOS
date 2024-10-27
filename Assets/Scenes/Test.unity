@@ -356,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletText: {fileID: 1710863885}
   isGunNull: 1
+  alert_Score_Text_Board: {fileID: 6030056247480087538, guid: ec012c54c58efe045a7a8b8f6a17903c, type: 3}
 --- !u!114 &421098498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,7 +1850,7 @@ GameObject:
   - component: {fileID: 1695675160}
   m_Layer: 5
   m_Name: UI_Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas_Tag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
