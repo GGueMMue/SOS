@@ -8,6 +8,10 @@ public class Gun : GunControllerManager
 {  
     public float[] shotgunRotationPos = { -10, 5, 0, 5, 10 };
 
+    public AudioClip gun_Sound;
+    public AudioClip sg_Sound;
+    AudioSource SFX;
+
     //총기들이 다 공통적으로 가지고 있는 특징을 포함하는 클래스
     /*private Vector3[] spwanOffsets = new Vector3[]
     {
@@ -25,7 +29,8 @@ public class Gun : GunControllerManager
 
     private                             FSM fsm;
 
-    public Transform muzzleTR;
+    //public GameObject muzzle_Effect;
+    public Transform muzzleEffectTR;
     //public                              Bullet_Ins bullet_Ins;
     public                              string gunName; // 무기 이름
     public                              bool coroutineChecker = false;
@@ -51,10 +56,9 @@ public class Gun : GunControllerManager
         if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet <= 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
         {
             --this.curBullet;
+            //GunSoundEffect(this.gunName);
+            GunSFX();
 
-            //GameObject effect = Instantiate(muzzleEffect);
-            //effect.transform.position = muzzlePoint.position;
-            //effect.transform.rotation = muzzlePoint.rotation;
 
             if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out get_hit_info, LayerMask.GetMask("Enemy", "Wall")))
             {
@@ -74,10 +78,8 @@ public class Gun : GunControllerManager
         if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
         {
             --this.curBullet;
-
-            //GameObject effect = Instantiate(muzzleEffect);
-            //effect.transform.position = muzzlePoint.position;
-            //effect.transform.rotation = muzzlePoint.rotation;
+            //GunSoundEffect(this.gunName);
+            GunShotGunSFX();
 
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(muzzlePoint.position, 4f, muzzlePoint.forward, 10f, LayerMask.GetMask("Enemy", "Wall"));
@@ -117,12 +119,29 @@ public class Gun : GunControllerManager
         if (this.rpm <= NowTIme)
         {
             Debug.Log("쏨");
+
             bullet_Ins.ShotBulletIns();
             return true;
         }
         else return false;
     } // 사용안함. IEnumerator의 적 공격을 사용
 
+    void MuzzleEffectFunction()
+    {
+        GameObject effect = Instantiate(muzzleEffect);
+        effect.transform.position = muzzleEffectTR.position;
+        effect.transform.rotation = muzzleEffectTR.rotation;
+        Destroy(effect, 0.2f);
+    }
+
+
+    public void Playe_MuzzleEffectFunction(Transform playerMuzzleTR, GameObject playerMuzzleEffect)
+    {
+        GameObject effect = Instantiate(playerMuzzleEffect);
+        effect.transform.position = playerMuzzleTR.position;
+        effect.transform.rotation = playerMuzzleTR.rotation;
+        Destroy(effect, 0.2f);
+    }
 
     public IEnumerator Enemy_fire() // 총기 사격 함수, 적 전용
     {
@@ -144,7 +163,11 @@ public class Gun : GunControllerManager
             if (!coroutineChecker)
             {
                 Debug.Log("호출 확인");
+                MuzzleEffectFunction();
+               
                 bullet_Ins.ShotBulletIns();
+                GunSFX();
+
                 coroutineChecker = true;
                 //nav.isStopped = true;
 
@@ -170,6 +193,8 @@ public class Gun : GunControllerManager
                 for (int i = 0; i < shotgunRotationPos.Length; i++)
                 {
                     Debug.Log("샷건 호출 확인");
+                    MuzzleEffectFunction();
+                    GunShotGunSFX();
 
                     bullet_Ins.ShotgunBulletIns(shotgunRotationPos[i]); //, spwanOffsets[i]);
 
@@ -188,8 +213,41 @@ public class Gun : GunControllerManager
     private void Start()
     {
         fsm = GetComponentInParent<FSM>();
+
         //nav = GetComponentInParent<NavMeshAgent>();
 
+        SFX = GetComponent<AudioSource>();
+        SFX.volume = .5f;
+        GunSetUp();
+    }
+
+    public void SetPickUpGunSetting()
+    {
+        GunSetUp();
+
+        fsm = GetComponentInParent<FSM>();
+
+        //nav = GetComponentInParent<NavMeshAgent>();
+
+        SFX = GetComponent<AudioSource>();
+        SFX.volume = .5f;
+
+        this.curBullet = Random.Range(5, this.maxReroadableBullet);
+
+    }
+
+    public void GunShotGunSFX()
+    {
+        SFX.PlayOneShot(gun_Sound);
+    }
+
+    public void GunSFX()
+    {
+        SFX.PlayOneShot(sg_Sound);
+    }
+
+    public void GunSetUp()
+    {
         if (this.gameObject.CompareTag("SMG")) { this.isSMG = true; this.isRifle = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "SMG"; }
         if (this.gameObject.CompareTag("Rifle")) { this.isRifle = true; this.isSMG = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "Rifle"; }
         if (this.gameObject.CompareTag("HandGun")) { this.isHandGun = true; this.isSMG = false; this.isRifle = false; this.isShotgun = false; this.gunName = "HandGun"; }
@@ -202,7 +260,7 @@ public class Gun : GunControllerManager
             this.reRoadTime = float.Parse(SMG[1]);
             this.maxReroadableBullet = int.Parse(SMG[2]);
         }
-        if(isHandGun)
+        if (isHandGun)
         {
             this.rpm = float.Parse(Handgun[0]);
             this.reRoadTime = float.Parse(Handgun[1]);

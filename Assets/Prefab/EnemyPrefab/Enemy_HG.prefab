@@ -604,11 +604,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 1022853160978166460}
     m_Modifications:
     - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
+      propertyPath: sg_Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 6349a640dc07c3b4389c205f5b5a5145, type: 3}
+    - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
+      propertyPath: gun_Sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
+    - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
       propertyPath: bullet_Ins
       value: 
       objectReference: {fileID: 2691434969362428304}
     - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
       propertyPath: muzzlePoint
+      value: 
+      objectReference: {fileID: 3510663341218556742}
+    - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
+      propertyPath: muzzleEffect
+      value: 
+      objectReference: {fileID: 5627569325872113395, guid: 8db53931e75ef2d41960a337cb63986c, type: 3}
+    - target: {fileID: 1095713092064112529, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}
+      propertyPath: muzzleEffectTR
       value: 
       objectReference: {fileID: 3510663341218556742}
     - target: {fileID: 4736076441279209318, guid: 83620451bca07a746bbf2079dee2c06f, type: 3}

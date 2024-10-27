@@ -21,7 +21,7 @@ public class Player_Controller : MonoBehaviour
     public                                      bool possible_Kill_Confirm = false;
 
     public                                      bool nowReroadingRunAnimation = false;
-
+    public GameObject playerMuzzleEffect;
     public int dirpos = 0;
     public CrossHair crosshair;
 
@@ -91,6 +91,8 @@ public class Player_Controller : MonoBehaviour
                     if (gun.Fire(timechecker, shotRocation))
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
+                        gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -110,6 +112,8 @@ public class Player_Controller : MonoBehaviour
                     if (gun.Fire(timechecker, shotRocation))
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
+                        gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -129,6 +133,8 @@ public class Player_Controller : MonoBehaviour
                     if (gun.Fire(timechecker, shotRocation))
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
+                        gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -148,6 +154,8 @@ public class Player_Controller : MonoBehaviour
                     if (gun.ShotGunFire(timechecker, shotRocation))
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
+                        gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();

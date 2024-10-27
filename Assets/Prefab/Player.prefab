@@ -54,6 +54,7 @@ MonoBehaviour:
   isMelee: 1
   possible_Kill_Confirm: 0
   nowReroadingRunAnimation: 0
+  playerMuzzleEffect: {fileID: 5627569325872113395, guid: 8db53931e75ef2d41960a337cb63986c, type: 3}
   dirpos: 0
   crosshair: {fileID: -3354702672178483583, guid: 3ec6a082985ed4c40a1d67e5020e1c70, type: 3}
   timechecker: 0
@@ -230,7 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8a33688b1f97a409b03a0112b2a3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: -3354702672178483583, guid: 3ec6a082985ed4c40a1d67e5020e1c70, type: 3}
 --- !u!1001 &1369983815476349207
 PrefabInstance:
   m_ObjectHideFlags: 0

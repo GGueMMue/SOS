@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c33309b1b9f0024199feb06a5075813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleEffect: {fileID: 0}
+  muzzleEffect: {fileID: 5627569325872113395, guid: 8db53931e75ef2d41960a337cb63986c, type: 3}
   muzzlePoint: {fileID: 4323397374099574052}
   bullet_Ins: {fileID: 3323180901490743282}
   SMG:
@@ -566,6 +566,9 @@ MonoBehaviour:
   - 0
   - 5
   - 10
+  gun_Sound: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
+  sg_Sound: {fileID: 8300000, guid: 6349a640dc07c3b4389c205f5b5a5145, type: 3}
+  muzzleEffectTR: {fileID: 4323397374099574052}
   gunName: 
   coroutineChecker: 0
   isShotgun: 0
