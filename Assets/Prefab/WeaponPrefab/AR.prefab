@@ -83,6 +83,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
       insertIndex: -1
       addedObject: {fileID: -9118406791142652271}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4007879072842729136}
   m_SourcePrefab: {fileID: 100100000, guid: 33269b2b610f4c245a712795c1927939, type: 3}
 --- !u!1 &9105591783883893364 stripped
 GameObject:
@@ -185,3 +188,55 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4007879072842729136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105591783883893364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c33309b1b9f0024199feb06a5075813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muzzleEffect: {fileID: 0}
+  muzzlePoint: {fileID: 0}
+  bullet_Ins: {fileID: 0}
+  SMG:
+  - 0.125
+  - 1.8
+  - 30
+  Handgun:
+  - 0.35
+  - 1.1
+  - 12
+  Rifle:
+  - 0.25
+  - 2.3
+  - 25
+  Shotgun:
+  - 1.0
+  - 3.5
+  - 6
+  shotgunRotationPos:
+  - -10
+  - 5
+  - 0
+  - 5
+  - 10
+  gun_Sound: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
+  sg_Sound: {fileID: 8300000, guid: 6349a640dc07c3b4389c205f5b5a5145, type: 3}
+  muzzleEffectTR: {fileID: 0}
+  gunName: 
+  coroutineChecker: 0
+  isShotgun: 0
+  isSMG: 0
+  isRifle: 0
+  isHandGun: 0
+  now_Reroading: 0
+  rpm: 0
+  reRoadTime: 0
+  curBullet: 0
+  remainBullet: 0
+  maxReroadableBullet: 0

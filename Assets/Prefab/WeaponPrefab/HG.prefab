@@ -177,6 +177,8 @@ MonoBehaviour:
   - 0
   - 5
   - 10
+  gun_Sound: {fileID: 8300000, guid: 30114844b380b88418785402b1e582c0, type: 3}
+  sg_Sound: {fileID: 8300000, guid: 6349a640dc07c3b4389c205f5b5a5145, type: 3}
   muzzleEffectTR: {fileID: 0}
   gunName: 
   coroutineChecker: 0
