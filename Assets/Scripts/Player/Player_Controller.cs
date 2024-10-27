@@ -20,7 +20,7 @@ public class Player_Controller : MonoBehaviour
 
     public float margin_of_error = 0.3f;
 
-    public Jun_TweenRuntime tween;
+    Jun_TweenRuntime tween;
 
     public bool isMelee = true;
     public                                      bool possible_Kill_Confirm = false;
@@ -47,6 +47,7 @@ public class Player_Controller : MonoBehaviour
         gun = GetComponentInChildren<Gun>();
         crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<CrossHair>();
         SFX = GetComponent<AudioSource>();
+        tween = GameObject.FindGameObjectWithTag("Bullet_UI").GetComponent<Jun_TweenRuntime>();
 
         /*
                현재 필요 로직
