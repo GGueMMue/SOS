@@ -22,6 +22,8 @@ public class FSM : MonoBehaviour
     public float min_Angle = 35f;
     public float roamer_Deviation = 3f;
     public float fireChecker = 0f;
+    
+    
 
     public GameObject bloodEffect;
 
@@ -627,7 +629,6 @@ public class FSM : MonoBehaviour
                     GameObject blood = Instantiate(bloodEffect);
                     blood.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 1f, this.transform.position.z);
                     blood.transform.rotation = Quaternion.identity;
-
                     //this.gameObject.GetComponent<Rigidbody>().mass = 3;
                     this.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     this.gameObject.GetComponent<Rigidbody>().isKinematic = true;

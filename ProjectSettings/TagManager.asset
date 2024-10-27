@@ -17,6 +17,8 @@ TagManager:
   - Crosshair
   - FxTemporaire
   - Bullet_UI
+  - Score_UI
+  - Manager
   layers:
   - Default
   - TransparentFX

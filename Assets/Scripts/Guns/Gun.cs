@@ -65,8 +65,16 @@ public class Gun : GunControllerManager
             {
                 if (get_hit_info.collider.CompareTag("Enemy"))
                 {
-                    get_hit_info.collider.GetComponent<FSM>().SetStateDead();
-                    Debug.Log("적 상태 Dead");
+                    //get_hit_info.collider.GetComponent<FSM>().SetStateDead();
+                    //GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                    //GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                    //Debug.Log("적 상태 Dead");
+                    if (get_hit_info.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
+                    {
+                        get_hit_info.collider.GetComponent<FSM>().SetStateDead();
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                        GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                    }
                 }
             }
             return true;
@@ -89,7 +97,16 @@ public class Gun : GunControllerManager
             {
                 if (hit.collider != null && hit.collider.CompareTag("Enemy"))
                 {
-                    hit.collider.GetComponent<FSM>().SetStateDead();
+                    //hit.collider.GetComponent<FSM>().SetStateDead();
+                    //GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                    //GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+
+                    if (hit.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
+                    {
+                        hit.collider.GetComponent<FSM>().SetStateDead();
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                        GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                    }
                 }
             }
 

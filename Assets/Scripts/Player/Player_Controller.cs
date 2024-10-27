@@ -231,6 +231,9 @@ public class Player_Controller : MonoBehaviour
         box.transform.position = new Vector3(go.transform.position.x, go.transform.position.y + 3f, go.transform.position.z); 
         box.transform.rotation = Quaternion.identity;
 
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 200;
+        GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+
         Destroy(box, 2f);
         Destroy(go.gameObject);
     }
@@ -278,7 +281,13 @@ public class Player_Controller : MonoBehaviour
             {
                 if (hit.collider != null && hit.collider.CompareTag("Enemy"))
                 {
-                    hit.collider.GetComponent<FSM>().SetStateDead();
+                    //hit.collider.GetComponent<FSM>().SetStateDead();
+                    if (hit.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
+                    {
+                        hit.collider.GetComponent<FSM>().SetStateDead();
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
+                        GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                    }
                 }
             }
 
@@ -314,7 +323,13 @@ public class Player_Controller : MonoBehaviour
             {
                 if (hit.collider != null && hit.collider.CompareTag("Enemy"))
                 {
-                    hit.collider.GetComponent<FSM>().SetStateDead();
+                    //hit.collider.GetComponent<FSM>().SetStateDead();
+                    if(hit.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
+                    {
+                        hit.collider.GetComponent<FSM>().SetStateDead();
+                        GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
+                        GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                    }
                 }
             }
 
