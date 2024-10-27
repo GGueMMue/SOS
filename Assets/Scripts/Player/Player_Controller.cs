@@ -20,6 +20,8 @@ public class Player_Controller : MonoBehaviour
 
     public float margin_of_error = 0.3f;
 
+    public Jun_TweenRuntime tween;
+
     public bool isMelee = true;
     public                                      bool possible_Kill_Confirm = false;
 
@@ -96,7 +98,7 @@ public class Player_Controller : MonoBehaviour
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
                         gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
-
+                        RunTween();
                         animator.SetTrigger("Attack");
 
                         AlertToEnemy();
@@ -117,6 +119,7 @@ public class Player_Controller : MonoBehaviour
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
                         gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+                        RunTween();
 
                         animator.SetTrigger("Attack");
 
@@ -138,6 +141,7 @@ public class Player_Controller : MonoBehaviour
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
                         gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+                        RunTween();
 
                         animator.SetTrigger("Attack");
 
@@ -159,6 +163,7 @@ public class Player_Controller : MonoBehaviour
                     {
                         StartCoroutine(crosshair.SetFire(gun.rpm));
                         gun.Playe_MuzzleEffectFunction(shotRocation, playerMuzzleEffect);
+                        RunTween();
 
                         animator.SetTrigger("Attack");
 
@@ -179,6 +184,7 @@ public class Player_Controller : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         animator.SetTrigger("Attack");
+                        RunTween();
 
                         StartCoroutine(MeeleAttack());
                     }
@@ -199,6 +205,7 @@ public class Player_Controller : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 animator.SetTrigger("Attack");
+                RunTween();
 
                 StartCoroutine(NoneItemMeeleAttack());
             }
@@ -308,6 +315,11 @@ public class Player_Controller : MonoBehaviour
             yield return null;
         }
 
+    }
+
+    public void RunTween()
+    {
+        tween.Play();
     }
 
     public void OnTriggerStay(Collider other) // 적 유닛의 확인 사살을 위해 사용되는 Trigger 함수. 
