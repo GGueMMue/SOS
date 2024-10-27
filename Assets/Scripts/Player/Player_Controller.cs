@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.EventSystems;
 using UnityEngine.ProBuilder.MeshOperations;
 
@@ -14,6 +15,8 @@ public class Player_Controller : MonoBehaviour
     public                                      Transform shotRocation;
     public                                      Gun gun;
     public bool coroutineChecker = false;
+    public AudioClip noneMeeleItemSFX;
+    public AudioSource SFX;
 
     public float margin_of_error = 0.3f;
 
@@ -41,6 +44,7 @@ public class Player_Controller : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         gun = GetComponentInChildren<Gun>();
         crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<CrossHair>();
+        SFX = GetComponent<AudioSource>();
 
         /*
                현재 필요 로직
@@ -239,6 +243,8 @@ public class Player_Controller : MonoBehaviour
         if (!coroutineChecker)
         {
             coroutineChecker = true;
+            gun.MeeleSFX();
+
             crosshair.sr.color = crosshair.hightLightColor;
 
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
@@ -274,7 +280,7 @@ public class Player_Controller : MonoBehaviour
         if (!coroutineChecker)
         {
             coroutineChecker = true;
-
+            SFX.PlayOneShot(noneMeeleItemSFX);
             crosshair.sr.color = crosshair.hightLightColor;
 
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)

@@ -11,6 +11,7 @@ public class Gun : GunControllerManager
     public AudioClip gun_Sound;
     public AudioClip sg_Sound;
     AudioSource SFX;
+    public AudioClip meele_Sound;
 
     //총기들이 다 공통적으로 가지고 있는 특징을 포함하는 클래스
     /*private Vector3[] spwanOffsets = new Vector3[]
@@ -232,7 +233,7 @@ public class Gun : GunControllerManager
         SFX = GetComponent<AudioSource>();
         SFX.volume = .5f;
 
-        this.curBullet = Random.Range(5, this.maxReroadableBullet);
+        this.curBullet = Random.Range(1, this.maxReroadableBullet);
 
     }
 
@@ -240,6 +241,11 @@ public class Gun : GunControllerManager
     {
         SFX.PlayOneShot(gun_Sound);
     }
+    public void MeeleSFX()
+    {
+        SFX.PlayOneShot(meele_Sound);
+    }
+
 
     public void GunSFX()
     {

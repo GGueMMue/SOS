@@ -641,6 +641,7 @@ public class FSM : MonoBehaviour
         {
 
             animator.SetInteger("State", 2);
+            gun.MeeleSFX();
 
             coroutineChecker = true;
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
