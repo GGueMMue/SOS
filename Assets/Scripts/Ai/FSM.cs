@@ -23,6 +23,9 @@ public class FSM : MonoBehaviour
     public float roamer_Deviation = 3f;
     public float fireChecker = 0f;
 
+    AudioSource SFX;
+    public AudioClip deadSound;
+
     public float raycastDistance;
     public float meeleTimer = 0;
     int[] rotationlist = new int[4] { -90, 90, 180, -180 };
@@ -229,6 +232,7 @@ public class FSM : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         gun = GetComponentInChildren<Gun>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        SFX = GetComponent<AudioSource>();
 
         startPoint = this.transform.position;
 
@@ -622,6 +626,7 @@ public class FSM : MonoBehaviour
                     this.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                     this.gameObject.GetComponent<CapsuleCollider>().radius = 1.5f;
+                    SFX.PlayOneShot(deadSound);
                     nav.enabled = false;
                 }
                 //this.GetComponent<Rigidbody>(). = true;
