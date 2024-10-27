@@ -18,6 +18,8 @@ public class Player_Controller : MonoBehaviour
     public AudioClip noneMeeleItemSFX;
     public AudioSource SFX;
 
+    public GameObject deadBox;
+
     [SerializeField] GameObject insWeapon;
 
     public float margin_of_error = 0.3f;
@@ -225,6 +227,11 @@ public class Player_Controller : MonoBehaviour
 
     void Kill_Confirm(GameObject go) // 확인 사살과 관련된 함수. 추후 애니메이션 변수가 들어가야 함.
     {
+        GameObject box = Instantiate(deadBox);
+        box.transform.position = new Vector3(go.transform.position.x, go.transform.position.y + 3f, go.transform.position.z); 
+        box.transform.rotation = Quaternion.identity;
+
+        Destroy(box, 2f);
         Destroy(go.gameObject);
     }
 
@@ -338,7 +345,7 @@ public class Player_Controller : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<FSM>().state == FSM.STATE.DEAD)
         {
             //Destroy(other.gameObject);
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKey(KeyCode.E))
                 Kill_Confirm(other.gameObject);
         }
     } // 현재 키가 씹히는 문제가 있음. <- 해결

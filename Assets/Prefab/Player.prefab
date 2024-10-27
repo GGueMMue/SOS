@@ -53,6 +53,7 @@ MonoBehaviour:
   coroutineChecker: 0
   noneMeeleItemSFX: {fileID: 8300000, guid: 1785fff83652f42399d9b2017b05656c, type: 3}
   SFX: {fileID: 0}
+  deadBox: {fileID: 5148236504128027505, guid: 0fc8cd05554dcde4794f395d98b389a1, type: 3}
   insWeapon: {fileID: 0}
   margin_of_error: 0.3
   isMelee: 1
