@@ -20,6 +20,8 @@ public class Player_Controller : MonoBehaviour
 
     public float margin_of_error = 0.3f;
 
+    //Rigidbody rb;
+
     Jun_TweenRuntime tween;
 
     public bool isMelee = true;
@@ -48,7 +50,7 @@ public class Player_Controller : MonoBehaviour
         crosshair = GameObject.FindGameObjectWithTag("Crosshair").GetComponent<CrossHair>();
         SFX = GetComponent<AudioSource>();
         tween = GameObject.FindGameObjectWithTag("Bullet_UI").GetComponent<Jun_TweenRuntime>();
-
+        //rb = GetComponent<Rigidbody>();
         /*
                현재 필요 로직
         1.      
@@ -508,9 +510,21 @@ public class Player_Controller : MonoBehaviour
 
 
         animator.SetInteger("MovePos", dirpos);
+        Vector3 move = new Vector3(transform_x, 0, transform_z);
+
 
         // 이동 적용
-        this.gameObject.transform.Translate(transform_x, 0, transform_z);
+        //rb.MovePosition(this.transform.position + move);
+        //this.gameObject.transform.Translate(transform_x, 0, transform_z);
+        Vector3 movedir = new Vector3(transform_x, 0, transform_z);
+        Vector3 nextpos = this.transform.position + move;
+
+        if (Physics.Raycast(transform.position, movedir, 0.2f, LayerMask.GetMask("Wall")))
+        {
+            // 이동 적용
+            transform.position = this.transform.position;
+        }
+        else { this.transform.position = nextpos;}
     }
 
     /*
