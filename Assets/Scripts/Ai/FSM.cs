@@ -629,6 +629,8 @@ public class FSM : MonoBehaviour
                     GameObject blood = Instantiate(bloodEffect);
                     blood.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 1f, this.transform.position.z);
                     blood.transform.rotation = Quaternion.identity;
+
+                    DropGun();
                     //this.gameObject.GetComponent<Rigidbody>().mass = 3;
                     this.gameObject.GetComponent<Rigidbody>().useGravity = false;
                     this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -644,6 +646,20 @@ public class FSM : MonoBehaviour
             default:
                 break;
         }
+    }
+    public void DropGun()
+    {
+        GameObject dropGun = Instantiate(gun.gameObject);
+        dropGun.transform.position = this.gameObject.transform.position;
+        dropGun.transform.rotation = Quaternion .identity;
+        dropGun.transform.Rotate(0, 0, 90f);
+        dropGun.transform.Rotate(0, 45f, 0);
+        dropGun.transform.Translate(0, -2f, 0);
+
+        dropGun.AddComponent<BoxCollider>();
+
+        Destroy(gun.gameObject);
+
     }
 
 
