@@ -20,6 +20,7 @@ TagManager:
   - Score_UI
   - Manager
   - Canvas_Tag
+  - Bat
   layers:
   - Default
   - TransparentFX

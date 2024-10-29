@@ -8,8 +8,12 @@ public class Gun : GunControllerManager
 {  
     public float[] shotgunRotationPos = { -10, 5, 0, 5, 10 };
 
+    float lastEmptySoundTime = 0f;
+    float emptySoundDelay = 0.5f;  // 빈 탄창 소리 재생 간격 (초)
+
     public AudioClip gun_Sound;
     public AudioClip sg_Sound;
+    public AudioClip empty_shell;
     AudioSource SFX;
     public AudioClip meele_Sound;
 
@@ -54,7 +58,17 @@ public class Gun : GunControllerManager
     // NowTime에는 Time.deltaTime으로 받아온 타임워치 시간이 들어가야 함.
     // user의 Fire.
     {
-        if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet <= 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
+        if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet <= 0)
+        {
+            // 마지막 소리 재생 후 일정 시간이 지났을 때만 소리 재생
+            if (Time.time - lastEmptySoundTime >= emptySoundDelay)
+            {
+                SFX.PlayOneShot(empty_shell);
+                lastEmptySoundTime = Time.time; // 마지막 소리 재생 시간 업데이트
+            }
+        }
+
+        if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet > 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
         {
             --this.curBullet;
             //GunSoundEffect(this.gunName);
@@ -86,14 +100,90 @@ public class Gun : GunControllerManager
 
     public bool ShotGunFire(float nowTime, Transform muzzlePoint)
     {
+        if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0)
+        {
+            // 마지막 소리 재생 후 일정 시간이 지났을 때만 소리 재생
+            if (Time.time - lastEmptySoundTime >= emptySoundDelay)
+            {
+                SFX.PlayOneShot(empty_shell);
+                lastEmptySoundTime = Time.time; // 마지막 소리 재생 시간 업데이트
+            }
+        }
+
+        if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet > 0)
+        {
+            --this.curBullet;
+            GunShotGunSFX();
+            MuzzleEffectFunction();
+
+            // 이번 함수 호출 동안 이미 처리된 적을 저장할 리스트 생성
+            List<Transform> scoredEnemies = new List<Transform>();
+
+            for (int i = 0; i < shotgunRotationPos.Length; i++)
+            {
+                if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward * shotgunRotationPos[i], out get_hit_info, LayerMask.GetMask("Enemy", "Wall")))
+                {
+                    Debug.Log("샷건 호출 확인");
+
+                    if (get_hit_info.collider.CompareTag("Enemy"))
+                    {
+                        var enemyFSM = get_hit_info.collider.GetComponent<FSM>();
+
+                        // 이미 처리한 적이 아니고, 적이 아직 살아있는 상태일 때만 점수 처리
+                        if (!scoredEnemies.Contains(get_hit_info.transform) && enemyFSM.state != FSM.STATE.DEAD)
+                        {
+                            enemyFSM.SetStateDead();
+                            GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                            GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, get_hit_info.transform);
+
+                            GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+
+                            // 처리한 적을 리스트에 추가
+                            scoredEnemies.Add(get_hit_info.transform);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        else return false;
+    }
+
+    /*public bool ShotGunFire(float nowTime, Transform muzzlePoint)
+    {
         if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0) // 확인을 위해 curBullet <= 0으로 지정. 실제 작동 시는 curBullet > 0이 됨.
         {
             --this.curBullet;
             //GunSoundEffect(this.gunName);
             GunShotGunSFX();
+            MuzzleEffectFunction();
 
-            RaycastHit[] hits;
-            hits = Physics.SphereCastAll(muzzlePoint.position, 4f, muzzlePoint.forward, 10f, LayerMask.GetMask("Enemy", "Wall"));
+            for (int i = 0; i < shotgunRotationPos.Length; i++)
+            {
+                if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward * shotgunRotationPos[i], out get_hit_info, LayerMask.GetMask("Enemy", "Wall")))
+                {
+                    Debug.Log("샷건 호출 확인");
+
+                    if (get_hit_info.collider.CompareTag("Enemy"))
+                    {
+                        //get_hit_info.collider.GetComponent<FSM>().SetStateDead();
+                        //GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                        //GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                        //Debug.Log("적 상태 Dead");
+                        if (get_hit_info.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
+                        {
+                            get_hit_info.collider.GetComponent<FSM>().SetStateDead();
+                            GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
+                            GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, get_hit_info.transform);
+
+                            GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
+                        }
+                    }
+                }
+            }
+
+            /*RaycastHit[] hits;
+            hits = Physics.SphereCastAll(muzzlePoint.position, 4f, muzzlePoint.forward, 20f, LayerMask.GetMask("Enemy", "Wall"));
 
             foreach (RaycastHit hit in hits)
             {
@@ -117,7 +207,7 @@ public class Gun : GunControllerManager
             return true;
         }
         else return false;
-    }
+    }*/
 
     public override void ReRoad()
     // NowTime에는 Time.deltaTime으로 받아온 타임 워치 시간이 들어가야 함.
@@ -247,7 +337,7 @@ public class Gun : GunControllerManager
     {
         if (gunName == null)
         {
-            GunSetUp();
+            //GunSetUp();
 
             fsm = GetComponentInParent<FSM>();
 
@@ -282,7 +372,7 @@ public class Gun : GunControllerManager
         if (this.gameObject.CompareTag("Rifle")) { this.isRifle = true; this.isSMG = false; this.isHandGun = false; this.isShotgun = false; this.gunName = "Rifle"; }
         if (this.gameObject.CompareTag("HandGun")) { this.isHandGun = true; this.isSMG = false; this.isRifle = false; this.isShotgun = false; this.gunName = "HandGun"; }
         if (this.gameObject.CompareTag("Shotgun")) { this.isShotgun = true; this.isSMG = false; this.isRifle = false; this.isHandGun = false; this.gunName = "Shotgun"; }
-        if (this.gameObject.CompareTag("Untagged")) this.gunName = "Meele";
+        if (this.gameObject.CompareTag("Bat")) this.gunName = "Meele";
 
         if (isSMG)
         {

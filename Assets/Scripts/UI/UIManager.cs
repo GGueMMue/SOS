@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -8,7 +9,9 @@ public class UIManager : MonoBehaviour
     public Text bulletText;
     [SerializeField] bool isGunNull = true;
     Gun gun;
-    
+
+    public bool playerDeadChecker = false;
+
     //public Canvas canvas;
 
     public Text alert_Score_Text_Board;
@@ -24,7 +27,10 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Gun>() != null)
+        if(Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+
+        if (GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Gun>() != null)
         {
             gun = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Gun>();
 

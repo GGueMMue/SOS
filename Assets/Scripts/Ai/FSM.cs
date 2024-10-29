@@ -1,9 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,7 +18,6 @@ public class FSM : MonoBehaviour
     public float min_Angle = 35f;
     public float roamer_Deviation = 3f;
     public float fireChecker = 0f;
-    
     
 
     public GameObject bloodEffect;
@@ -263,11 +258,16 @@ public class FSM : MonoBehaviour
 
         Debug.Log(state);
 
+        if (GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().playerDeadChecker)
+            return;
+
         if (nowDead)
         {
             animator.SetBool("isDead", true);
             state = STATE.DEAD;
         }
+
+        
         if (nav.enabled)
         {
 
@@ -505,7 +505,7 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else
+                        else if(es.SearchUser())
                         {
                             animator.SetInteger("State", 2);
                             RotationEnemy(player.transform.position);
@@ -524,7 +524,7 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else
+                        else if (es.SearchUser())
                         {
                             animator.SetInteger("State", 2);
                             RotationEnemy(player.transform.position);
@@ -540,7 +540,7 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else
+                        else if (es.SearchUser())
                         {
                             animator.SetInteger("State", 2);
                             RotationEnemy(player.transform.position);
@@ -556,7 +556,7 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else
+                        else if (es.SearchUser())
                         {
                             animator.SetInteger("State", 2);
                             RotationEnemy(player.transform.position);
@@ -581,7 +581,7 @@ public class FSM : MonoBehaviour
                             this.state = STATE.FIND;
                             break;
                         }
-                        else
+                        else if (es.SearchUser())
                         {
                             animator.SetInteger("State", 2);
 
@@ -657,6 +657,9 @@ public class FSM : MonoBehaviour
         dropGun.transform.Translate(0, -2f, 0);
 
         dropGun.AddComponent<BoxCollider>();
+        dropGun.AddComponent<Rigidbody>();
+
+        dropGun.GetComponent<Rigidbody>().isKinematic= true;
 
         Destroy(gun.gameObject);
 
@@ -674,14 +677,25 @@ public class FSM : MonoBehaviour
             coroutineChecker = true;
             // 애니메이션이 끝날 때까지 기다림 (임의의 대기 시간)
             yield return new WaitForSeconds(1.1f);
-            RaycastHit[] hits;
-            hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up);
 
-            foreach(RaycastHit hit in hits)
+            if (state != STATE.DEAD)
             {
-                if(hit.collider != null && hit.collider.CompareTag("Player"))
+                RaycastHit[] hits;
+                hits = Physics.SphereCastAll(transform.position, 3.2f, Vector3.up);
+
+                foreach (RaycastHit hit in hits)
                 {
-                    Debug.Log("유저사망");
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+                        if (hit.collider != null)
+                        {
+                            Player_Controller playerController = hit.collider.GetComponent<Player_Controller>();
+                            if (playerController != null)
+                            {
+                                playerController.DeadEffect();
+                            }
+                        }
+                    }
                 }
             }
 

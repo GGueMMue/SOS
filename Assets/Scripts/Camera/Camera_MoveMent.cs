@@ -28,31 +28,37 @@ public class Camera_MoveMent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (checker)
+        if (playerTr != null)
         {
-            Vector3 desiredPos = new Vector3(playerTr.position.x, fixed_Y, playerTr.position.z);
-            // XZ 축에 대해서만 부드럽게 보간 (Y는 고정)
-            newPos = Vector3.Lerp(transform.position, desiredPos, 0.5f);
-
-            // 카메라의 위치를 업데이트 (Y축 고정)
-            transform.position = new Vector3(newPos.x, fixed_Y, newPos.z);
+            transform.position = new Vector3(playerTr.position.x, this.transform.position.y, playerTr.position.z);
         }
+
+
+        //if (checker)
+        //{
+        //    Vector3 desiredPos = new Vector3(playerTr.position.x, fixed_Y, playerTr.position.z);
+        //    // XZ 축에 대해서만 부드럽게 보간 (Y는 고정)
+        //    newPos = Vector3.Lerp(transform.position, desiredPos, 0.5f);
+
+        //    // 카메라의 위치를 업데이트 (Y축 고정)
+        //    transform.position = new Vector3(newPos.x, fixed_Y, newPos.z);
+        //}
     } // 죽여벌랑 진짜
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            checker = false;
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        checker = false;
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        startPos = this.gameObject.transform.position;
-        if(other.gameObject.CompareTag("Player"))
-        {
-            checker = true;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    startPos = this.gameObject.transform.position;
+    //    if(other.gameObject.CompareTag("Player"))
+    //    {
+    //        checker = true;
+    //    }
+    //}
 }

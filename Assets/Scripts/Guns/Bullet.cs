@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -13,6 +14,8 @@ public class Bullet : MonoBehaviour
         rb = GetComponentInParent<Rigidbody>();
 
         rb.AddForce(transform.forward * force);
+
+        Destroy(this.gameObject, 3f);
     }
 
     // Update is called once per frame
@@ -21,13 +24,18 @@ public class Bullet : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other) // À¯Àú, º®, ÀûÀ» ¸¸³µÀ» ¶§ ÃÑ¾Ë ¼Ò¸ğ. Àû³¢¸®´Â ¿µÇâÀÌ ¾øÀ½.
+    private void OnTriggerEnter(Collider other) // ìœ ì €, ë²½, ì ì„ ë§Œë‚¬ì„ ë•Œ ì´ì•Œ ì†Œëª¨. ì ë¼ë¦¬ëŠ” ì˜í–¥ì´ ì—†ìŒ.
     {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Wall"))
         {
             if(other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á »óÅÂ");
+                Player_Controller playerController = other.gameObject.GetComponent<Player_Controller>();
+                if (playerController != null)
+                {
+                    playerController.DeadEffect();
+                }
+                //other.GetComponent<Player_Controller>().DeadEffect();
             }
             Destroy(this.gameObject);
         }

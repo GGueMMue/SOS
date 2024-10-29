@@ -52,7 +52,10 @@ MonoBehaviour:
   gun: {fileID: 0}
   coroutineChecker: 0
   noneMeeleItemSFX: {fileID: 8300000, guid: 1785fff83652f42399d9b2017b05656c, type: 3}
+  bloodEffect: {fileID: 8689993462640985489, guid: 1ebef835760e6544c97f4dde26de3799, type: 3}
+  deadSound: {fileID: 8300000, guid: 28035043174d44f928d428fc44f59150, type: 3}
   SFX: {fileID: 0}
+  weaponPickUpList: []
   deadBox: {fileID: 5148236504128027505, guid: 0fc8cd05554dcde4794f395d98b389a1, type: 3}
   insWeapon: {fileID: 0}
   margin_of_error: 0.3

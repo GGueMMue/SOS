@@ -1,13 +1,8 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
+
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.EventSystems;
-using UnityEngine.ProBuilder.MeshOperations;
-using UnityEngine.UIElements;
+
 
 public class Player_Controller : MonoBehaviour
 {
@@ -16,8 +11,15 @@ public class Player_Controller : MonoBehaviour
     public                                      Transform shotRocation;
     public                                      Gun gun;
     public bool coroutineChecker = false;
+    public bool isDead = false;
     public AudioClip noneMeeleItemSFX;
+
+    public GameObject bloodEffect;
+    public AudioClip deadSound;
     public AudioSource SFX;
+
+    [SerializeField] List<GameObject> weaponPickUpList = new List<GameObject>();
+
 
     public GameObject deadBox;
 
@@ -61,6 +63,8 @@ public class Player_Controller : MonoBehaviour
         if(GetComponentInChildren<Gun>().gameObject)
             insWeapon = GetComponentInChildren<Gun>().gameObject;
 
+        weaponPickUpList.Clear();
+
         //rb = GetComponent<Rigidbody>();
         /*
                현재 필요 로직
@@ -84,6 +88,7 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isDead) return;
 
         timechecker += Time.deltaTime;
 
@@ -91,6 +96,7 @@ public class Player_Controller : MonoBehaviour
         PlayerMove();
         childLC.PlayerRotate();//PlayerRotate(childTR);
         Debug.DrawRay(shotRocation.position, shotRocation.forward, Color.red);
+        PickUpGun();
 
         //if (Input.GetKeyDown(KeyCode.R))
         //    ReRoadingInvoke(gun.reRoadTime);
@@ -372,6 +378,59 @@ public class Player_Controller : MonoBehaviour
         }
     } // 현재 키가 씹히는 문제가 있음. <- 해결
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("SMG") || other.gameObject.CompareTag("Rifle") || other.gameObject.CompareTag("Bat") || other.gameObject.CompareTag("HandGun") || other.gameObject.CompareTag("Shotgun"))
+        {
+            weaponPickUpList.Add(other.gameObject);
+
+        }
+
+
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("SMG") || other.gameObject.CompareTag("Rifle") || other.gameObject.CompareTag("Bat") || other.gameObject.CompareTag("HandGun") || other.gameObject.CompareTag("Shotgun"))
+        {
+            weaponPickUpList.Remove(other.gameObject);
+        }
+    }
+
+    void PickUpGun()
+    {
+        if(Input.GetKeyDown(KeyCode.G) && weaponPickUpList != null && weaponPickUpList.Count == 0)
+        {
+            if (weaponPos.GetComponentInChildren<Gun>() != null) Destroy(weaponPos.GetComponentInChildren<Gun>().gameObject);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && weaponPickUpList != null && weaponPickUpList.Count > 0)
+        {
+            if(weaponPos.GetComponentInChildren<Gun>() != null) Destroy(weaponPos.GetComponentInChildren<Gun>().gameObject);
+
+            if (weaponPickUpList[0] != null)
+            {
+                GameObject new_gun = Instantiate(weaponPickUpList[0]);
+                new_gun.transform.parent = weaponPos.transform;
+                new_gun.transform.position = weaponPos.transform.position;
+                new_gun.transform.rotation = weaponPos.transform.rotation;
+
+                Destroy(new_gun.GetComponent<Rigidbody>());
+                Destroy(new_gun.GetComponent<BoxCollider>());
+
+                new_gun.GetComponent<Gun>().GunSetUp();
+                new_gun.GetComponent<Gun>().curBullet = Random.Range(1, new_gun.GetComponent<Gun>().maxReroadableBullet);
+
+                //new_gun.GetComponent<Gun>().SetPickUpGunSetting();
+
+
+                gun = new_gun.GetComponent<Gun>();
+
+                Destroy(weaponPickUpList[0].gameObject);
+                weaponPickUpList.RemoveAt(0);
+            }
+        }
+    }
     void PlayerMove() // 플레이어 캐릭터의 ㄴ이동과 관련된 함수 
     {
         float transform_z = Input.GetAxis("Vertical") * speed;
@@ -576,7 +635,22 @@ public class Player_Controller : MonoBehaviour
         }
     }
     */
+    
+    public void DeadEffect()
+    {
+        if(isDead) return;
 
+        isDead = true;
+
+        SFX.PlayOneShot(deadSound);
+        GameObject blood = Instantiate(bloodEffect);
+        blood.transform.position = this.transform.position;
+        blood.transform.rotation = Quaternion.identity;
+
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().playerDeadChecker = true;
+
+        Destroy(this.gameObject.GetComponentInChildren<CapsuleCollider>().gameObject);
+    }
     void AlertToEnemy() // 총을 쏠 때, 20f 범위 내, 적에게 유저의 위치를 알리는 함수.
     {
         //총을 쏠 때, 테스트용
