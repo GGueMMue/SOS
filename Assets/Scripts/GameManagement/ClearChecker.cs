@@ -22,6 +22,18 @@ public class ClearChecker : MonoBehaviour
         Enemy_List = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         clearColider.enabled = false;
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        /* 구조. 각 스테이지 별로 클리어 시 들어갈 장소가 될 위치에, mesh 렌더러가 꺼진 박스 콜라이더를
+           놓음. 이 박스 콜라이더를 해당 클리어 매니저에 지정을 함.
+           게임 시작 시, 적들을 Withtag로 받아오고, 해당 적들을 전부 list에 push함.
+           만약, 해당 적이 죽게 되면 FSM에서 RemoveListEnemy를 불러 자신을 찾아 Remove함.
+           만약, 카운트가 0이 되면, 클리어 Colider가 켜지며, ShowNavDir을 통해 클리어 위치를
+           UI로 표현해줌.
+        
+         
+           모든 적 유닛이 죽자마자 클리어를 시키지 않는 이유?
+                -> 확인사살 또한 점수가 들어오기 때문.
+         */
         
     }
 
