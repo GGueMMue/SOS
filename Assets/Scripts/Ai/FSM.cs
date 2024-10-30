@@ -74,7 +74,7 @@ public class FSM : MonoBehaviour
     {
         state = STATE.FIND;
     }
-    void SetroamerDestination() // NavMesh ������ ���� �� �̵� �Լ� (ROAMER ���� �� ���)
+    void SetroamerDestination() // NavMesh 경로 지정 (ROAMER 상태일 때만)
     {
         //if(roamerCount < 4)
         //{
@@ -134,7 +134,7 @@ public class FSM : MonoBehaviour
 
     }*/
 
-    void AlertImDead() // �� ������ DEAD ������ ��, 10f �� �α� �ٸ� �� ���� ROAMER ���·� (DEAD�� ���Ǵ� �Լ�)
+    void AlertImDead() // 적 상태가 DEAD 상태일 때, 시체 기준의 10f 범위 내 적을 ROAMER 상태로 (DEAD 상태일 때 사용)
     {
         RaycastHit[] hits;
 
@@ -157,7 +157,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    public void SetRoamerWithResetRoamerCount() // ROAMER�� ���Ǵ� ���� ���� (DEAD ������ ��, �ٸ� �� ������ ���¸� ��ȯ�� �� ���)
+    public void SetRoamerWithResetRoamerCount() // ROAMER 상태로 전환, 또는 ROAMER 상태일 때 사용되는 수치 0으로 초기화
     {
         if (this.state != STATE.ROAMER)
             this.state = STATE.ROAMER;
@@ -170,7 +170,7 @@ public class FSM : MonoBehaviour
                 this.roamerTimer = 0f;
         }
     }
-    bool IsReachedroamerDestination() // �������� �����ߴ°�? (ROAMER �� ���)
+    bool IsReachedroamerDestination() // ROAMER 상태일 때, 해당 목적지에 도착하였는가?
     {
         float dis = Vector3.Distance(this.transform.position, roamerPoints);
 
@@ -188,7 +188,7 @@ public class FSM : MonoBehaviour
         nowDead = true;
     }
 
-    void RotationIdle() // �� ������ ���ڸ� ȸ���� ���õ� �Լ�. isRotateEnemy �� ��, IDLE ������ �� ���ڸ� ȸ��, �ƴ� �� ȸ�� X (IDLE�� ���) 
+    void RotationIdle() // 적을 회전시키는 함수. isRotateEnemy가 true일 때, IDLE 상태일 때 적을 회전, 아닐 때 회전 X (IDLE일 때만)
     {
         if (rotationTimer > 3f)
         {
@@ -206,7 +206,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    void RotationEnemy(Vector3 location) // �� ������ ȸ���� ���õ� �Լ�
+    void RotationEnemy(Vector3 location) // 적을 회전시키는 함수
     {
         Vector3 dir = location - this.transform.position;
         dir.y = 0;
@@ -288,9 +288,9 @@ public class FSM : MonoBehaviour
         }
 
         if (nav.velocity != Vector3.zero) bugCountDown = 0;
-        // �ش� ������ ROAMER ������ �� ������.
-        // ����, �̵��ӵ��� ROAMER ������ ��, 0�� �Ǹ��� bugCountDown�� ���� ����
-        // �װ� �ƴ� ��, BugCountDown�� 0���� �ʱ�ȭ
+        // 해당 상태가 ROAMER 상태일 때에만 작동함.
+        // 만약, 이동 속도가 0이 되면 bugCountDown을 증가시킴
+        // 속도가 0이 아니라면, BugCountDown을 0으로 초기화
 
 
         /*********************  FSM *********************/
@@ -298,7 +298,7 @@ public class FSM : MonoBehaviour
 
         switch (state)
         {
-            /*********************  IDLE ���� *********************/
+            /*********************  IDLE *********************/
 
             case STATE.IDLE:
 
@@ -332,7 +332,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  IDLE_PATROL ���� *********************/
+            /*********************  IDLE_PATROL *********************/
 
             case STATE.IDLE_PATROL:
                 animator.SetInteger("State", 0);
@@ -388,7 +388,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  ROAMER ���� *********************/
+            /*********************  ROAMER *********************/
 
             case STATE.ROAMER:
                 animator.SetInteger("State", 1);
@@ -401,8 +401,9 @@ public class FSM : MonoBehaviour
                 {
                     SetroamerDestination();
                 }
-                // �� �����̴� ���� ���� = �� ���ֳ��� ����ų�, ������Ʈ�� ����� Navmesh�� �������� �������� ����.
-                // 1.5�ʰ� ���� ���ܼ� �������� ���� �� SetRoamerDestination()�Լ��� �ٽ� �ҷ� ������ �缳������ �ذ�
+
+                // ROAMER 상태일 때, 도착을 하지 못했을 경우 실행.
+                // 1.5초가 넘게 되면 새로운 경로를 찾도록 SetRoamerDestination() 함수를 호출함.
 
                 if (roamerCount < 10 || roamerTimer <= 8f)
                 {
@@ -430,7 +431,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  FIND ���� *********************/
+            /*********************  FIND *********************/
 
             case STATE.FIND:
                 animator.SetInteger("State", 1);
@@ -473,16 +474,14 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  ATTACT ���� *********************/
+            /*********************  ATTACT  *********************/
 
             case STATE.ATTACK:
 
-                // gun class�� �����ϰ�, start �Ǵ� awake �Լ����� getcomponentchild�� ���� ������Ʈ�� �ʱ�ȭ�Ѵ�.
-                // gun class���� gunName�� �޾ƿ´�.
-                // swicth ������ gunName�� �ְ� �� ���ڿ��� ���� ���� ����
-                // ���� � �ѵ� �ƴ϶��, �и��� ����Ʈ�� �и� ���� �ֱ�
-                // �и� ������ �ִϸ��̼� �ӵ� ���� ������ �־� �ش� �ִϸ��̼� ���� �ʿ� ���� sphereall�� �ҷ� ������ �¾Ҵ��� Ȯ��.
-                // �¾����� ���� ���.
+                // gun class를 상속하고, start 또는 awake 함수에서 getcomponentchild로 컴포넌트를 초기화한다.
+                // gun class에서 gunName을 가져온다.
+                // switch 문에서 gunName을 사용해 무기를 설정.
+
 
                 //this.transform.LookAt(player);
 
@@ -493,7 +492,7 @@ public class FSM : MonoBehaviour
 
                 switch (gun.gunName)
                 {
-                    case "SMG":  //SMG�� ��
+                    case "SMG":  //SMG
                                  //if (!canShot)
                                  //{
                                  //    this.state = STATE.FIND;
@@ -516,7 +515,7 @@ public class FSM : MonoBehaviour
 
                         //if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
 
-                        break; // �ƴ� ���� ���� �����̴� �̰�
+                        break; 
 
 
                     case "Rifle":  // �������� ��
@@ -535,7 +534,7 @@ public class FSM : MonoBehaviour
                         break;
 
 
-                    case "HandGun": // ������ ��
+                    case "HandGun":
 
                         if (!canShot)
                         {
@@ -551,8 +550,8 @@ public class FSM : MonoBehaviour
                         break;
 
 
-                    case "Shotgun":  // ������ �� (�ٸ� �ѵ�� �޸� for���� ���� źȯ�� ������ �߻�)
-                                     // ���� ������ �߻簡 �� ������?
+                    case "Shotgun": 
+
                         if (!canShot)
                         {
                             this.state = STATE.FIND;
@@ -567,16 +566,7 @@ public class FSM : MonoBehaviour
                         break;
 
 
-                    default: // �и� �� ��
-                             // ���� ���� ��, ���� ����. �ִϸ��̼��� ��������� Ÿ�ֿ̹� �ۼ� ����.
-                             // �� ���¿���, �� ������ ���� ������ �����ԵǸ� ���� ���� ���� �ִϸ��̼��� ����ǰ�,
-                             // �� ��, �� ������ �����ϰ� �ִ� ���� ������ collider Ȱ��ȭ,
-                             // �� ������ ��� �ִ� ���� ������ ��ũ��Ʈ�� OnTrrigerEnter �Լ� �ۼ�.
-                             // OnTrriger �Լ� ����, ���� Player�� �����Ѵٸ�, ���� ��� ó��.
-                             // ���� ������ ������ ȸ���� �̽��� �� ���,.
-                             // �ٽ� ���� ������ collider ��Ȱ��ȭ ��, ���� ���� �� ������ �ִ��� Ȯ��
-                             // ����, ������ ������ ���� ������ Find ���·� ��ȯ.
-                             // �װ� �ƴ϶��, �ٽ� ���� ����.
+                    default: 
 
                         if (!canShot)
                         {
@@ -616,7 +606,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  DEAD ���� *********************/
+            /*********************  DEAD  *********************/
 
             case STATE.DEAD:
                 //animator.SetBool("isDead", true);
@@ -679,7 +669,8 @@ public class FSM : MonoBehaviour
             gun.MeeleSFX();
 
             coroutineChecker = true;
-            // �ִϸ��̼��� ���� ������ ��ٸ� (������ ��� �ð�)
+            // 애니메이션 종료 후 (재실행 대기 시간)
+
             yield return new WaitForSeconds(1.1f);
 
             if (state != STATE.DEAD)

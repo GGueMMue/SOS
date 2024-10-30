@@ -19,6 +19,6 @@ public class Meele_Attack : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-            Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á");
+            Debug.Log("í”Œë ˆì´ì–´ ì‚¬ë§");
     }
 }

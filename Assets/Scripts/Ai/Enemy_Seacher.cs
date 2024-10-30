@@ -56,7 +56,7 @@ public class Enemy_Seacher : MonoBehaviour
         agent.speed = 13;
         agent.velocity = agent.desiredVelocity;
 
-        //transform.LookAt(player.transform.position); // ¿òÁ÷ÀÓÀÌ ±â±«ÇÔ
+        //transform.LookAt(player.transform.position); // ì›€ì§ì„ì´ ê¸°ê´´í•¨
         agent.SetDestination(player.transform.position);
     }
 
@@ -75,7 +75,7 @@ public class Enemy_Seacher : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(dir);
         enTR.rotation = Quaternion.Slerp(enTR.rotation, rotation, Time.deltaTime*rotationSpeed);*/
     }
-    // ±â±«ÇÑ NavMesh Æ¯À¯ÀÇ È¸Àü »ç¿ë X
+    // ê¸°ê´´í•œ NavMesh íŠ¹ìœ ì˜ íšŒì „ ì‚¬ìš© X
 
     //public void RestSearch()
     //{
@@ -94,14 +94,14 @@ public class Enemy_Seacher : MonoBehaviour
     //            FollowUser();
     //        }
     //    }
-    //} // ¹üÀ§¿¡¼­ »ç¶óÁ®µµ 3ÃÊ°£ ´õ Ãß°İ
+    //} // ë²”ìœ„ì—ì„œ ì‚¬ë¼ì ¸ë„ 3ì´ˆê°„ ë” ì¶”ê²©
 
     public void UnFollowUser()
     {
         agent.velocity = Vector3.zero;
         agent.isStopped = true;
 
-    } // À¯Àú¸¦ Ãß°İÇÏÁö ¾ÊÀ» ¶§
+    } // ìœ ì €ë¥¼ ì¶”ê²©í•˜ì§€ ì•Šì„ ë•Œ
     public bool SearchUser()
     {
         RaycastHit hit;

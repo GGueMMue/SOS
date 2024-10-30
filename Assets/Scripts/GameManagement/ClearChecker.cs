@@ -29,18 +29,6 @@ public class ClearChecker : MonoBehaviour
 
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-
-        /* ����. �� �������� ���� Ŭ���� �� �� ��Ұ� �� ��ġ��, mesh �������� ���� �ڽ� �ݶ��̴���
-           ����. �� �ڽ� �ݶ��̴��� �ش� Ŭ���� �Ŵ����� ������ ��.
-           ���� ���� ��, ������ Withtag�� �޾ƿ���, �ش� ������ ���� list�� push��.
-           ����, �ش� ���� �װ� �Ǹ� FSM���� RemoveListEnemy�� �ҷ� �ڽ��� ã�� Remove��.
-           ����, ī��Ʈ�� 0�� �Ǹ�, Ŭ���� Colider�� ������, ShowNavDir�� ���� Ŭ���� ��ġ��
-           UI�� ǥ������.
-        
-         
-           ��� �� ������ ���ڸ��� Ŭ��� ��Ű�� �ʴ� ����?
-                -> Ȯ�λ�� ���� ������ ������ ����.
-         */
         
     }
 
