@@ -67,20 +67,20 @@ public class Player_Controller : MonoBehaviour
 
         //rb = GetComponent<Rigidbody>();
         /*
-               ÇöÀç ÇÊ¿ä ·ÎÁ÷
+               í˜„ì¬ í•„ìš” ë¡œì§
         1.      
-                ÁİÃÑ
-                ÀûÀÌ Á×À¸¸é, ÀûÀÌ °¡Áö°í ÀÖ´Â ÃÑ±â¸¦ ¶³±º´Ù.
-                ¶³±º ÃÑ±â´Â, ½ÃÃ¼ À§·Î Ins ÇÏ°í, À¯Àú´Â ÀÌ¸¦ GÅ°¸¦ ´­·¯ ¸Ô´Â´Ù.
-                ¸¸ÀÏ, ÃÑ±â¸¦ °¡Áö°í ÀÖ´Ù¸é, ÀÌ ¹«±â¿Í ±³Ã¼ÇÑ´Ù.
-                ±³Ã¼ÇßÀ» ¶§, °èÈ¹¼­¿¡ ÀÛ¼ºÇÑ ·ÎÁ÷´ë·Î ÃÑ±âÀÇ Åº°ú ÀÜÅºÀ» ºÎ¿© ¹Ş´Â´Ù.       
+                ì¤ì´
+                ì ì´ ì£½ìœ¼ë©´, ì ì´ ê°€ì§€ê³  ìˆëŠ” ì´ê¸°ë¥¼ ë–¨êµ°ë‹¤.
+                ë–¨êµ° ì´ê¸°ëŠ”, ì‹œì²´ ìœ„ë¡œ Ins í•˜ê³ , ìœ ì €ëŠ” ì´ë¥¼ Gí‚¤ë¥¼ ëˆŒëŸ¬ ë¨¹ëŠ”ë‹¤.
+                ë§Œì¼, ì´ê¸°ë¥¼ ê°€ì§€ê³  ìˆë‹¤ë©´, ì´ ë¬´ê¸°ì™€ êµì²´í•œë‹¤.
+                êµì²´í–ˆì„ ë•Œ, ê³„íšì„œì— ì‘ì„±í•œ ë¡œì§ëŒ€ë¡œ ì´ê¸°ì˜ íƒ„ê³¼ ì”íƒ„ì„ ë¶€ì—¬ ë°›ëŠ”ë‹¤.       
         
         2.      
-                »ç¿îµå Á¶ÀıÀÌ °¡´ÉÇÑ BGMÀ» ³Ö´Â´Ù.
+                ì‚¬ìš´ë“œ ì¡°ì ˆì´ ê°€ëŠ¥í•œ BGMì„ ë„£ëŠ”ë‹¤.
          
         3.      
-                Ä«¸Ş¶óÀÇ ÀÌµ¿
-                Ä«¸Ş¶óÀÇ ÀÌµ¿Àº °èÈ¹¼­¿¡ ÀÖ´Â ´ë·Î ÁøÇàÇÑ´Ù. Çã³ª, ÇØ´ç ·ÎÁ÷Àº °ÔÀÓ ÇÃ·¹ÀÌ¿¡ Áß¿äÄ¡ ¾ÊÀº ¿ä¼ÒÀÌ±â¿¡, ¸¶Áö¸·¿¡ ±¸ÇöÇÏµµ·Ï ÇÑ´Ù.
+                ì¹´ë©”ë¼ì˜ ì´ë™
+                ì¹´ë©”ë¼ì˜ ì´ë™ì€ ê³„íšì„œì— ìˆëŠ” ëŒ€ë¡œ ì§„í–‰í•œë‹¤. í—ˆë‚˜, í•´ë‹¹ ë¡œì§ì€ ê²Œì„ í”Œë ˆì´ì— ì¤‘ìš”ì¹˜ ì•Šì€ ìš”ì†Œì´ê¸°ì—, ë§ˆì§€ë§‰ì— êµ¬í˜„í•˜ë„ë¡ í•œë‹¤.
         
          */
     }
@@ -120,7 +120,7 @@ public class Player_Controller : MonoBehaviour
 
                         AlertToEnemy();
                         timechecker = 0;
-                        Debug.Log("»ç°İ");
+                        Debug.Log("ì‚¬ê²©");
                     }
                     //crosshair.SetNowFireFalse();
 
@@ -142,7 +142,7 @@ public class Player_Controller : MonoBehaviour
 
                         AlertToEnemy();
                         timechecker = 0;
-                        Debug.Log("»ç°İ");
+                        Debug.Log("ì‚¬ê²©");
                     }
                     //crosshair.SetNowFireFalse();
 
@@ -164,7 +164,7 @@ public class Player_Controller : MonoBehaviour
 
                         AlertToEnemy();
                         timechecker = 0;
-                        Debug.Log("»ç°İ");
+                        Debug.Log("ì‚¬ê²©");
                     }
                     //crosshair.SetNowFireFalse();
 
@@ -186,7 +186,7 @@ public class Player_Controller : MonoBehaviour
 
                         AlertToEnemy();
                         timechecker = 0;
-                        Debug.Log("»ç°İ");
+                        Debug.Log("ì‚¬ê²©");
                     }
                     //crosshair.SetNowFireFalse();
 
@@ -229,10 +229,10 @@ public class Player_Controller : MonoBehaviour
         }
 
 
-        // ÇöÀç Å×½ºÆ®¿ë. ÃßÈÄ ÃÑ±âÀÇ ¿¬»ç·ÂÀ» ±âÁØÀ¸·Î GetKey »óÅÂÀÏ ¶§ ÃÑ¾ËÀÌ ·¹ÀÌÄÉ½ºÆ®·Î ³ª°¡¾ß ÇÔ.
+        // í˜„ì¬ í…ŒìŠ¤íŠ¸ìš©. ì¶”í›„ ì´ê¸°ì˜ ì—°ì‚¬ë ¥ì„ ê¸°ì¤€ìœ¼ë¡œ GetKey ìƒíƒœì¼ ë•Œ ì´ì•Œì´ ë ˆì´ì¼€ìŠ¤íŠ¸ë¡œ ë‚˜ê°€ì•¼ í•¨.
     }
 
-    void Kill_Confirm(GameObject go) // È®ÀÎ »ç»ì°ú °ü·ÃµÈ ÇÔ¼ö. ÃßÈÄ ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö°¡ µé¾î°¡¾ß ÇÔ.
+    void Kill_Confirm(GameObject go) // í™•ì¸ ì‚¬ì‚´ê³¼ ê´€ë ¨ëœ í•¨ìˆ˜. ì¶”í›„ ì• ë‹ˆë©”ì´ì…˜ ë³€ìˆ˜ê°€ ë“¤ì–´ê°€ì•¼ í•¨.
     {
         GameObject box = Instantiate(deadBox);
         box.transform.position = new Vector3(go.transform.position.x, go.transform.position.y + 3f, go.transform.position.z); 
@@ -240,7 +240,7 @@ public class Player_Controller : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 200;
         GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(200, box.transform);
-
+        DataForScoreCalculator.TOTAL_KILL_CONFIRM++;
         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
 
         Destroy(box, 2f);
@@ -256,12 +256,12 @@ public class Player_Controller : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy"))
             {
-                Debug.Log("Àû »óÅÂ Dead");
+                Debug.Log("ì  ìƒíƒœ Dead");
             }
         }
     }*/
 
-    IEnumerator ReRoadingInvoke(float reroadingTime) // ÀçÀåÀü IEnumerator
+    IEnumerator ReRoadingInvoke(float reroadingTime) // ì¬ì¥ì „ IEnumerator
     {
         gun.now_Reroading = true;
         nowReroadingRunAnimation = true;
@@ -281,7 +281,7 @@ public class Player_Controller : MonoBehaviour
 
             crosshair.sr.color = crosshair.hightLightColor;
 
-            // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³¯ ¶§±îÁö ±â´Ù¸² (ÀÓÀÇÀÇ ´ë±â ½Ã°£)
+            // ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼ (ì„ì˜ì˜ ëŒ€ê¸° ì‹œê°„)
             yield return new WaitForSeconds(1.1f);
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(transform.position, 3.5f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
@@ -296,7 +296,7 @@ public class Player_Controller : MonoBehaviour
                         hit.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(500, hit.transform);
-
+                        DataForScoreCalculator.MEELE_KILL_COUNT++;
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }
@@ -325,7 +325,7 @@ public class Player_Controller : MonoBehaviour
             SFX.PlayOneShot(noneMeeleItemSFX);
             crosshair.sr.color = crosshair.hightLightColor;
 
-            // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³¯ ¶§±îÁö ±â´Ù¸² (ÀÓÀÇÀÇ ´ë±â ½Ã°£)
+            // ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦¼ (ì„ì˜ì˜ ëŒ€ê¸° ì‹œê°„)
             yield return new WaitForSeconds(0.45f);
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(transform.position, 1.8f, Vector3.up, LayerMask.GetMask("Enemy", "Wall"));
@@ -340,7 +340,7 @@ public class Player_Controller : MonoBehaviour
                         hit.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 500;
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(500, hit.transform);
-
+                        DataForScoreCalculator.MEELE_KILL_COUNT++;
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }
@@ -365,7 +365,7 @@ public class Player_Controller : MonoBehaviour
         tween.Play();
     }
 
-    public void OnTriggerStay(Collider other) // Àû À¯´ÖÀÇ È®ÀÎ »ç»ìÀ» À§ÇØ »ç¿ëµÇ´Â Trigger ÇÔ¼ö. 
+    public void OnTriggerStay(Collider other) // ì  ìœ ë‹›ì˜ í™•ì¸ ì‚¬ì‚´ì„ ìœ„í•´ ì‚¬ìš©ë˜ëŠ” Trigger í•¨ìˆ˜. 
     {
         if(!other.gameObject.CompareTag("Player"))
             Debug.Log(other.tag);
@@ -376,7 +376,7 @@ public class Player_Controller : MonoBehaviour
             if(Input.GetKey(KeyCode.E))
                 Kill_Confirm(other.gameObject);
         }
-    } // ÇöÀç Å°°¡ ¾ÃÈ÷´Â ¹®Á¦°¡ ÀÖÀ½. <- ÇØ°á
+    } // í˜„ì¬ í‚¤ê°€ ì”¹íˆëŠ” ë¬¸ì œê°€ ìˆìŒ. <- í•´ê²°
 
     public void OnTriggerEnter(Collider other)
     {
@@ -431,7 +431,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
-    void PlayerMove() // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¤¤ÀÌµ¿°ú °ü·ÃµÈ ÇÔ¼ö 
+    void PlayerMove() // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ã„´ì´ë™ê³¼ ê´€ë ¨ëœ í•¨ìˆ˜ 
     {
         float transform_z = Input.GetAxis("Vertical") * speed;
         float transform_x = Input.GetAxis("Horizontal") * speed;
@@ -455,22 +455,22 @@ public class Player_Controller : MonoBehaviour
         else
         {
 
-            if (nomalDir.x + margin_of_error < getRotationVector.x) // Ä³¸¯ÅÍÀÇ x ÀÌµ¿ÀÌ ¿ŞÂÊ (7, 4, 1)
+            if (nomalDir.x + margin_of_error < getRotationVector.x) // ìºë¦­í„°ì˜ x ì´ë™ì´ ì™¼ìª½ (7, 4, 1)
             {
-                if (nomalDir.z + margin_of_error < getRotationVector.z) // Ä³¸¯ÅÍÀÇ z ÀÌµ¿ÀÌ µÚ (1, 2, 3)
+                if (nomalDir.z + margin_of_error < getRotationVector.z) // ìºë¦­í„°ì˜ z ì´ë™ì´ ë’¤ (1, 2, 3)
                 {
                     dirpos = 1;
                 }
-                else if (nomalDir.z + margin_of_error == 0) // Ä³¸¯ÅÍÀÇ z ÀÌµ¿ÀÌ ¾øÀ½ (4, 5, 6)
+                else if (nomalDir.z + margin_of_error == 0) // ìºë¦­í„°ì˜ z ì´ë™ì´ ì—†ìŒ (4, 5, 6)
                 {
                     dirpos = 4;
                 }
-                else // Ä³¸¯ÅÍÀÇ z ÀÌµ¿ÀÌ ¾Õ (7, 8, 9)
+                else // ìºë¦­í„°ì˜ z ì´ë™ì´ ì• (7, 8, 9)
                 {
                     dirpos = 7;
                 }
             }
-            else if (nomalDir.x + margin_of_error == 0) // Ä³¸¯ÅÍÀÇ x ÀÌµ¿ ¾øÀ½ (8, 5, 2)
+            else if (nomalDir.x + margin_of_error == 0) // ìºë¦­í„°ì˜ x ì´ë™ ì—†ìŒ (8, 5, 2)
             {
                 if (nomalDir.z + margin_of_error < getRotationVector.z)
                 {
@@ -485,7 +485,7 @@ public class Player_Controller : MonoBehaviour
                     dirpos = 8;
                 }
             }
-            else // Ä³¸¯ÅÍÀÇ x ÀÌµ¿ÀÌ ¿À¸¥ÂÊ (9, 6, 3)
+            else // ìºë¦­í„°ì˜ x ì´ë™ì´ ì˜¤ë¥¸ìª½ (9, 6, 3)
             {
                 if (nomalDir.z + margin_of_error < getRotationVector.z)
                 {
@@ -500,61 +500,61 @@ public class Player_Controller : MonoBehaviour
                     dirpos = 9;
                 }
             }
-        } // 1¾È*/
+        } // 1ì•ˆ*/
 
         Vector3 playerMoveDir = transform.TransformDirection(new Vector3(transform_x, 0, transform_z)).normalized;
 
-        //Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z); // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¹æÇâ
-        Vector3 getRotationVector = childLC.ReturnDir(); // Ä³¸¯ÅÍÀÇ ÇöÀç ¹Ù¶óº¸´Â ¹æÇâ º¤ÅÍ
+        //Vector3 playerMoveDir = new Vector3(transform_x, 0, transform_z); // í”Œë ˆì´ì–´ ì´ë™ ë°©í–¥
+        Vector3 getRotationVector = childLC.ReturnDir(); // ìºë¦­í„°ì˜ í˜„ì¬ ë°”ë¼ë³´ëŠ” ë°©í–¥ ë²¡í„°
 
 
-        // ÀÌµ¿ÀÌ ÀÖÀ» ¶§¸¸ °¢µµ¸¦ °è»ê
+        // ì´ë™ì´ ìˆì„ ë•Œë§Œ ê°ë„ë¥¼ ê³„ì‚°
         if (playerMoveDir != Vector3.zero)
         {
             float angle = Vector3.SignedAngle(getRotationVector, playerMoveDir, Vector3.up);
 
-            // µğ¹ö±ëÀ» À§ÇÑ ·Î±×
+            // ë””ë²„ê¹…ì„ ìœ„í•œ ë¡œê·¸
             //Debug.Log($"Move Direction: {playerMoveDir}, Rotation: {getRotationVector}, Angle: {angle}");
 
-            // °¢µµ¸¦ ¾ç¼ö·Î º¯È¯ (0~360µµ)
+            // ê°ë„ë¥¼ ì–‘ìˆ˜ë¡œ ë³€í™˜ (0~360ë„)
             if (angle < 0)
                 angle += 360;
 
-            // 8¹æÇâ ÆÇÁ¤
+            // 8ë°©í–¥ íŒì •
             if (angle >= 337.5f || angle < 22.5f)
             {
-                dirpos = 8; // Á¤¸é
+                dirpos = 8; // ì •ë©´
             }
             else if (angle >= 22.5f && angle < 67.5f)
             {
-                dirpos = 9; // ¿ìÃø ´ë°¢¼± ¾Õ
+                dirpos = 9; // ìš°ì¸¡ ëŒ€ê°ì„  ì•
             }
             else if (angle >= 67.5f && angle < 112.5f)
             {
-                dirpos = 6; // ¿À¸¥ÂÊ
+                dirpos = 6; // ì˜¤ë¥¸ìª½
             }
             else if (angle >= 112.5f && angle < 157.5f)
             {
-                dirpos = 3; // ¿ìÃø ´ë°¢¼± µÚ
+                dirpos = 3; // ìš°ì¸¡ ëŒ€ê°ì„  ë’¤
             }
             else if (angle >= 157.5f && angle < 202.5f)
             {
-                dirpos = 2; // µÚÂÊ
+                dirpos = 2; // ë’¤ìª½
             }
             else if (angle >= 202.5f && angle < 247.5f)
             {
-                dirpos = 1; // ÁÂÃø ´ë°¢¼± µÚ
+                dirpos = 1; // ì¢Œì¸¡ ëŒ€ê°ì„  ë’¤
             }
             else if (angle >= 247.5f && angle < 292.5f)
             {
-                dirpos = 4; // ¿ŞÂÊ
+                dirpos = 4; // ì™¼ìª½
             }
             else if (angle >= 292.5f && angle < 337.5f)
             {
-                dirpos = 7; // ÁÂÃø ´ë°¢¼± ¾Õ
+                dirpos = 7; // ì¢Œì¸¡ ëŒ€ê°ì„  ì•
             }
 
-            // °¢µµ¸¦ °è»êÇØ¼­ 360µµ ±âÁØÀ¸·Î ¹æÇâÀ» ³ª´«´Ù.
+            // ê°ë„ë¥¼ ê³„ì‚°í•´ì„œ 360ë„ ê¸°ì¤€ìœ¼ë¡œ ë°©í–¥ì„ ë‚˜ëˆˆë‹¤.
             /*float angle = Vector3.SignedAngle(getRotationVector, playerMoveDir, Vector3.up);
 
             Debug.DrawRay(transform.position, playerMoveDir * 2, Color.red);
@@ -562,51 +562,51 @@ public class Player_Controller : MonoBehaviour
 
             //Debug.Log(angle);
 
-            // °¢µµ¿¡ µû¶ó 8¹æÇâÀ¸·Î ³ª´«´Ù
+            // ê°ë„ì— ë”°ë¼ 8ë°©í–¥ìœ¼ë¡œ ë‚˜ëˆˆë‹¤
             if (angle >= -22.5f && angle < 22.5f)
             {
-                dirpos = 8; // Á¤¸é (¾Õ)
+                dirpos = 8; // ì •ë©´ (ì•)
             }
             else if (angle >= 22.5f && angle < 67.5f)
             {
-                dirpos = 9; // ¿ìÃø ´ë°¢¼± ¾Õ
+                dirpos = 9; // ìš°ì¸¡ ëŒ€ê°ì„  ì•
             }
             else if (angle >= 67.5f && angle < 112.5f)
             {
-                dirpos = 6; // ¿À¸¥ÂÊ
+                dirpos = 6; // ì˜¤ë¥¸ìª½
             }
             else if (angle >= 112.5f && angle < 157.5f)
             {
-                dirpos = 3; // ¿ìÃø ´ë°¢¼± µÚ
+                dirpos = 3; // ìš°ì¸¡ ëŒ€ê°ì„  ë’¤
             }
             else if ((angle >= 157.5f && angle <= 180f) || (angle < -157.5f && angle >= -180f))
             {
-                dirpos = 2; // µÚÂÊ
+                dirpos = 2; // ë’¤ìª½
             }
             else if (angle >= -157.5f && angle < -112.5f)
             {
-                dirpos = 1; // ÁÂÃø ´ë°¢¼± µÚ
+                dirpos = 1; // ì¢Œì¸¡ ëŒ€ê°ì„  ë’¤
             }
             else if (angle >= -112.5f && angle < -67.5f)
             {
-                dirpos = 4; // ¿ŞÂÊ
+                dirpos = 4; // ì™¼ìª½
             }
             else if (angle >= -67.5f && angle < -22.5f)
             {
-                dirpos = 7; // ÁÂÃø ´ë°¢¼± ¾Õ
-            } // 2-1¾È */
+                dirpos = 7; // ì¢Œì¸¡ ëŒ€ê°ì„  ì•
+            } // 2-1ì•ˆ */
         }
         else
         {
-            dirpos = 5; // ÀÌµ¿ÇÏÁö ¾ÊÀ» ¶§ (Á¤Áö »óÅÂ)
-        } // 2¾È È¸Àü°¢ »ç¿ë*/
+            dirpos = 5; // ì´ë™í•˜ì§€ ì•Šì„ ë•Œ (ì •ì§€ ìƒíƒœ)
+        } // 2ì•ˆ íšŒì „ê° ì‚¬ìš©*/
 
 
         animator.SetInteger("MovePos", dirpos);
         Vector3 move = new Vector3(transform_x, 0, transform_z);
 
 
-        // ÀÌµ¿ Àû¿ë
+        // ì´ë™ ì ìš©
         //rb.MovePosition(this.transform.position + move);
         //this.gameObject.transform.Translate(transform_x, 0, transform_z);
         Vector3 movedir = new Vector3(transform_x, 0, transform_z);
@@ -614,15 +614,15 @@ public class Player_Controller : MonoBehaviour
 
         if (Physics.Raycast(transform.position, movedir, 0.2f, LayerMask.GetMask("Wall")))
         {
-            // ÀÌµ¿ Àû¿ë
+            // ì´ë™ ì ìš©
             transform.position = this.transform.position;
         }
         else { this.transform.position = nextpos;}
     }
 
     /*
-    public void PlayerRotate() // Ä³¸¯ÅÍÀÇ ÀÌµ¿°ú È¸ÀüÀ» ºÎ¸ğ ÀÚ½Ä°ú ºĞÇØÇØ¼­ »ç¿ë. °ãÃÄ »ç¿ëÇÏ´Ï Á¶ÀÛ°¨ÀÌ ÀÌ»óÇÔ.
-        //½ºÅ©¸³Æ® ºĞ¸®°¡ ÇÊ¿ä.
+    public void PlayerRotate() // ìºë¦­í„°ì˜ ì´ë™ê³¼ íšŒì „ì„ ë¶€ëª¨ ìì‹ê³¼ ë¶„í•´í•´ì„œ ì‚¬ìš©. ê²¹ì³ ì‚¬ìš©í•˜ë‹ˆ ì¡°ì‘ê°ì´ ì´ìƒí•¨.
+        //ìŠ¤í¬ë¦½íŠ¸ ë¶„ë¦¬ê°€ í•„ìš”.
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     
@@ -651,9 +651,8 @@ public class Player_Controller : MonoBehaviour
 
         Destroy(this.gameObject.GetComponentInChildren<CapsuleCollider>().gameObject);
     }
-    void AlertToEnemy() // ÃÑÀ» ½ò ¶§, 20f ¹üÀ§ ³», Àû¿¡°Ô À¯ÀúÀÇ À§Ä¡¸¦ ¾Ë¸®´Â ÇÔ¼ö.
+    void AlertToEnemy() // ì´ì„ ì  ë•Œ, 20f ë²”ìœ„ ë‚´, ì ì—ê²Œ ìœ ì €ì˜ ìœ„ì¹˜ë¥¼ ì•Œë¦¬ëŠ” í•¨ìˆ˜.
     {
-        //ÃÑÀ» ½ò ¶§, Å×½ºÆ®¿ë
         RaycastHit[] hits;
         hits = Physics.SphereCastAll(transform.position, 20f, Vector3.up);
         foreach(RaycastHit hit in hits)
@@ -661,10 +660,10 @@ public class Player_Controller : MonoBehaviour
             if (hit.collider != null && hit.collider.tag == "Enemy")
             {
                 hit.collider.GetComponent<FSM>().SetStateFInd();                
-                Debug.Log("Àû¿¡°Ô ¾Ë¸²");
+                Debug.Log("ì ì—ê²Œ ì•Œë¦¼");
             }
         }
 
-        // À¯Àú°¡ »ç°İÇßÀ» ½Ã, ÇØ´ç ÇÔ¼ö ½ÇÇà
+        // ìœ ì €ê°€ ì‚¬ê²©í–ˆì„ ì‹œ, í•´ë‹¹ í•¨ìˆ˜ ì‹¤í–‰
     }
 }

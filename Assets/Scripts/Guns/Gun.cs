@@ -9,7 +9,7 @@ public class Gun : GunControllerManager
     public float[] shotgunRotationPos = { -10, 5, 0, 5, 10 };
 
     float lastEmptySoundTime = 0f;
-    float emptySoundDelay = 0.5f;  // ºó ÅºÃ¢ ¼Ò¸® Àç»ı °£°İ (ÃÊ)
+    float emptySoundDelay = 0.5f;  // ë¹ˆ íƒ„ì°½ ì†Œë¦¬ ì¬ìƒ ê°„ê²© (ì´ˆ)
 
     public AudioClip gun_Sound;
     public AudioClip sg_Sound;
@@ -17,7 +17,7 @@ public class Gun : GunControllerManager
     AudioSource SFX;
     public AudioClip meele_Sound;
 
-    //ÃÑ±âµéÀÌ ´Ù °øÅëÀûÀ¸·Î °¡Áö°í ÀÖ´Â Æ¯Â¡À» Æ÷ÇÔÇÏ´Â Å¬·¡½º
+    //ì´ê¸°ë“¤ì´ ë‹¤ ê³µí†µì ìœ¼ë¡œ ê°€ì§€ê³  ìˆëŠ” íŠ¹ì§•ì„ í¬í•¨í•˜ëŠ” í´ë˜ìŠ¤
     /*private Vector3[] spwanOffsets = new Vector3[]
     {
         new Vector3 (-.1f , 0, 0),
@@ -37,38 +37,38 @@ public class Gun : GunControllerManager
     //public GameObject muzzle_Effect;
     public Transform muzzleEffectTR;
     //public                              Bullet_Ins bullet_Ins;
-    public                              string gunName; // ¹«±â ÀÌ¸§
+    public                              string gunName; // ë¬´ê¸° ì´ë¦„
     public                              bool coroutineChecker = false;
-    // ÇöÀç ¹«±â À¯Çü Inspector Ã¢¿¡¼­ ¹Ì¸® ¼³Á¤.
+    // í˜„ì¬ ë¬´ê¸° ìœ í˜• Inspector ì°½ì—ì„œ ë¯¸ë¦¬ ì„¤ì •.
     public                              bool isShotgun;
     public                              bool isSMG;
     public                              bool isRifle;
     public                              bool isHandGun;
-    public                              bool now_Reroading = false; // ÂüÀÏ ¶§ ÀåÀü Áß, °ÅÁşÀÏ ¶§ ÀåÀü ¾Æ´Ô.
-    public                              float rpm; // ¿¬»ç·Â ÃÊ´ç µ¥¹ÌÁö. »ç°İ ÈÄ ´ÙÀ½ »ç°İ±îÁöÀÇ ±× ½Ã°£ ³»¿¡ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÀÌ·ïÁ®¾ß ÇÔ.
-    public                              float reRoadTime; // ÀåÀü½Ã°£
-    // Invoke(ÇÔ¼ö, reRoadTIme); À¸·Î ÀçÀåÀü ½Ã°£ ±¸Çö
-    public                              int curBullet; // ÇöÀç ÅºÃ¢¿¡ ³²¾Æ ÀÖ´Â ÃÑ¾Ë
-    public                              int remainBullet; // ÀåÀüÇÒ ¼ö ÀÖ´Â ³²¾Æ ÀÖ´Â ÃÑ¾Ë
-    public                              int maxReroadableBullet; // ÀçÀåÀü ½Ã ÅºÃ¢¿¡ »ğÀÔ µÇ´Â ÃÖ´ë ÃÑ¾Ë
+    public                              bool now_Reroading = false; // ì°¸ì¼ ë•Œ ì¥ì „ ì¤‘, ê±°ì§“ì¼ ë•Œ ì¥ì „ ì•„ë‹˜.
+    public                              float rpm; // ì—°ì‚¬ë ¥ ì´ˆë‹¹ ë°ë¯¸ì§€. ì‚¬ê²© í›„ ë‹¤ìŒ ì‚¬ê²©ê¹Œì§€ì˜ ê·¸ ì‹œê°„ ë‚´ì— ì• ë‹ˆë©”ì´ì…˜ì´ ì´ë¤„ì ¸ì•¼ í•¨.
+    public                              float reRoadTime; // ì¥ì „ì‹œê°„
+    // Invoke(í•¨ìˆ˜, reRoadTIme); ìœ¼ë¡œ ì¬ì¥ì „ ì‹œê°„ êµ¬í˜„
+    public                              int curBullet; // í˜„ì¬ íƒ„ì°½ì— ë‚¨ì•„ ìˆëŠ” ì´ì•Œ
+    public                              int remainBullet; // ì¥ì „í•  ìˆ˜ ìˆëŠ” ë‚¨ì•„ ìˆëŠ” ì´ì•Œ
+    public                              int maxReroadableBullet; // ì¬ì¥ì „ ì‹œ íƒ„ì°½ì— ì‚½ì… ë˜ëŠ” ìµœëŒ€ ì´ì•Œ
 
     //NavMeshAgent nav;
 
     public bool Fire(float NowTIme, Transform muzzlePoint)
-    // NowTime¿¡´Â Time.deltaTimeÀ¸·Î ¹Ş¾Æ¿Â Å¸ÀÓ¿öÄ¡ ½Ã°£ÀÌ µé¾î°¡¾ß ÇÔ.
-    // userÀÇ Fire.
+    // NowTimeì—ëŠ” Time.deltaTimeìœ¼ë¡œ ë°›ì•„ì˜¨ íƒ€ì„ì›Œì¹˜ ì‹œê°„ì´ ë“¤ì–´ê°€ì•¼ í•¨.
+    // userì˜ Fire.
     {
         if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet <= 0)
         {
-            // ¸¶Áö¸· ¼Ò¸® Àç»ı ÈÄ ÀÏÁ¤ ½Ã°£ÀÌ Áö³µÀ» ¶§¸¸ ¼Ò¸® Àç»ı
+            // ë§ˆì§€ë§‰ ì†Œë¦¬ ì¬ìƒ í›„ ì¼ì • ì‹œê°„ì´ ì§€ë‚¬ì„ ë•Œë§Œ ì†Œë¦¬ ì¬ìƒ
             if (Time.time - lastEmptySoundTime >= emptySoundDelay)
             {
                 SFX.PlayOneShot(empty_shell);
-                lastEmptySoundTime = Time.time; // ¸¶Áö¸· ¼Ò¸® Àç»ı ½Ã°£ ¾÷µ¥ÀÌÆ®
+                lastEmptySoundTime = Time.time; // ë§ˆì§€ë§‰ ì†Œë¦¬ ì¬ìƒ ì‹œê°„ ì—…ë°ì´íŠ¸
             }
         }
 
-        if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet > 0) // È®ÀÎÀ» À§ÇØ curBullet <= 0À¸·Î ÁöÁ¤. ½ÇÁ¦ ÀÛµ¿ ½Ã´Â curBullet > 0ÀÌ µÊ.
+        if (Input.GetMouseButton(0) && this.rpm <= NowTIme && !this.now_Reroading && this.curBullet > 0) // í™•ì¸ì„ ìœ„í•´ curBullet <= 0ìœ¼ë¡œ ì§€ì •. ì‹¤ì œ ì‘ë™ ì‹œëŠ” curBullet > 0ì´ ë¨.
         {
             --this.curBullet;
             //GunSoundEffect(this.gunName);
@@ -82,13 +82,13 @@ public class Gun : GunControllerManager
                     //get_hit_info.collider.GetComponent<FSM>().SetStateDead();
                     //GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
                     //GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
-                    //Debug.Log("Àû »óÅÂ Dead");
+                    //Debug.Log("ì  ìƒíƒœ Dead");
                     if (get_hit_info.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
                     {
                         get_hit_info.collider.GetComponent<FSM>().SetStateDead();
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
                         GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, get_hit_info.transform);
-
+                        DataForScoreCalculator.GUN_KILL_COUNT++;
                         GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
                     }
                 }
@@ -102,11 +102,11 @@ public class Gun : GunControllerManager
     {
         if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0)
         {
-            // ¸¶Áö¸· ¼Ò¸® Àç»ı ÈÄ ÀÏÁ¤ ½Ã°£ÀÌ Áö³µÀ» ¶§¸¸ ¼Ò¸® Àç»ı
+            // ë§ˆì§€ë§‰ ì†Œë¦¬ ì¬ìƒ í›„ ì¼ì • ì‹œê°„ì´ ì§€ë‚¬ì„ ë•Œë§Œ ì†Œë¦¬ ì¬ìƒ
             if (Time.time - lastEmptySoundTime >= emptySoundDelay)
             {
                 SFX.PlayOneShot(empty_shell);
-                lastEmptySoundTime = Time.time; // ¸¶Áö¸· ¼Ò¸® Àç»ı ½Ã°£ ¾÷µ¥ÀÌÆ®
+                lastEmptySoundTime = Time.time; // ë§ˆì§€ë§‰ ì†Œë¦¬ ì¬ìƒ ì‹œê°„ ì—…ë°ì´íŠ¸
             }
         }
 
@@ -116,29 +116,29 @@ public class Gun : GunControllerManager
             GunShotGunSFX();
             MuzzleEffectFunction();
 
-            // ÀÌ¹ø ÇÔ¼ö È£Ãâ µ¿¾È ÀÌ¹Ì Ã³¸®µÈ ÀûÀ» ÀúÀåÇÒ ¸®½ºÆ® »ı¼º
+            // ì´ë²ˆ í•¨ìˆ˜ í˜¸ì¶œ ë™ì•ˆ ì´ë¯¸ ì²˜ë¦¬ëœ ì ì„ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸ ìƒì„±
             List<Transform> scoredEnemies = new List<Transform>();
 
             for (int i = 0; i < shotgunRotationPos.Length; i++)
             {
                 if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward * shotgunRotationPos[i], out get_hit_info, LayerMask.GetMask("Enemy", "Wall")))
                 {
-                    Debug.Log("¼¦°Ç È£Ãâ È®ÀÎ");
+                    Debug.Log("ìƒ·ê±´ í˜¸ì¶œ í™•ì¸");
 
                     if (get_hit_info.collider.CompareTag("Enemy"))
                     {
                         var enemyFSM = get_hit_info.collider.GetComponent<FSM>();
 
-                        // ÀÌ¹Ì Ã³¸®ÇÑ ÀûÀÌ ¾Æ´Ï°í, ÀûÀÌ ¾ÆÁ÷ »ì¾ÆÀÖ´Â »óÅÂÀÏ ¶§¸¸ Á¡¼ö Ã³¸®
+                        // ì´ë¯¸ ì²˜ë¦¬í•œ ì ì´ ì•„ë‹ˆê³ , ì ì´ ì•„ì§ ì‚´ì•„ìˆëŠ” ìƒíƒœì¼ ë•Œë§Œ ì ìˆ˜ ì²˜ë¦¬
                         if (!scoredEnemies.Contains(get_hit_info.transform) && enemyFSM.state != FSM.STATE.DEAD)
                         {
                             enemyFSM.SetStateDead();
                             GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
                             GameObject.FindGameObjectWithTag("Manager").GetComponent<UIManager>().PrintAlertScoreBoard(300, get_hit_info.transform);
-
+                            DataForScoreCalculator.GUN_KILL_COUNT++;
                             GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
 
-                            // Ã³¸®ÇÑ ÀûÀ» ¸®½ºÆ®¿¡ Ãß°¡
+                            // ì²˜ë¦¬í•œ ì ì„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
                             scoredEnemies.Add(get_hit_info.transform);
                         }
                     }
@@ -151,7 +151,7 @@ public class Gun : GunControllerManager
 
     /*public bool ShotGunFire(float nowTime, Transform muzzlePoint)
     {
-        if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0) // È®ÀÎÀ» À§ÇØ curBullet <= 0À¸·Î ÁöÁ¤. ½ÇÁ¦ ÀÛµ¿ ½Ã´Â curBullet > 0ÀÌ µÊ.
+        if (Input.GetMouseButton(0) && this.rpm <= nowTime && !this.now_Reroading && this.curBullet <= 0) // í™•ì¸ì„ ìœ„í•´ curBullet <= 0ìœ¼ë¡œ ì§€ì •. ì‹¤ì œ ì‘ë™ ì‹œëŠ” curBullet > 0ì´ ë¨.
         {
             --this.curBullet;
             //GunSoundEffect(this.gunName);
@@ -162,14 +162,14 @@ public class Gun : GunControllerManager
             {
                 if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward * shotgunRotationPos[i], out get_hit_info, LayerMask.GetMask("Enemy", "Wall")))
                 {
-                    Debug.Log("¼¦°Ç È£Ãâ È®ÀÎ");
+                    Debug.Log("ìƒ·ê±´ í˜¸ì¶œ í™•ì¸");
 
                     if (get_hit_info.collider.CompareTag("Enemy"))
                     {
                         //get_hit_info.collider.GetComponent<FSM>().SetStateDead();
                         //GameObject.FindGameObjectWithTag("Manager").GetComponent<ScoreManager>().scores += 300;
                         //GameObject.FindGameObjectWithTag("Score_UI").GetComponent<Jun_TweenRuntime>().Play();
-                        //Debug.Log("Àû »óÅÂ Dead");
+                        //Debug.Log("ì  ìƒíƒœ Dead");
                         if (get_hit_info.collider.GetComponent<FSM>().state != FSM.STATE.DEAD)
                         {
                             get_hit_info.collider.GetComponent<FSM>().SetStateDead();
@@ -210,8 +210,8 @@ public class Gun : GunControllerManager
     }*/
 
     public override void ReRoad()
-    // NowTime¿¡´Â Time.deltaTimeÀ¸·Î ¹Ş¾Æ¿Â Å¸ÀÓ ¿öÄ¡ ½Ã°£ÀÌ µé¾î°¡¾ß ÇÔ.
-    // userÀÇ ReRoad. ÀûÀº ÀåÀüÇÏÁö ¾ÊÀ½.
+    // NowTimeì—ëŠ” Time.deltaTimeìœ¼ë¡œ ë°›ì•„ì˜¨ íƒ€ì„ ì›Œì¹˜ ì‹œê°„ì´ ë“¤ì–´ê°€ì•¼ í•¨.
+    // userì˜ ReRoad. ì ì€ ì¥ì „í•˜ì§€ ì•ŠìŒ.
     {
         if (this.curBullet != this.maxReroadableBullet)
         {
@@ -224,19 +224,19 @@ public class Gun : GunControllerManager
     }
 
     public override bool Enemy_Fire(float NowTIme)
-    // NowTime¿¡´Â Time.deltaTimeÀ¸·Î ¹Ş¾Æ¿Â Å¸ÀÓ¿öÄ¡ ½Ã°£ÀÌ µé¾î°¡¾ß ÇÔ.
-    // EnemyÀÇ Fire.
+    // NowTimeì—ëŠ” Time.deltaTimeìœ¼ë¡œ ë°›ì•„ì˜¨ íƒ€ì„ì›Œì¹˜ ì‹œê°„ì´ ë“¤ì–´ê°€ì•¼ í•¨.
+    // Enemyì˜ Fire.
     {
 
         if (this.rpm <= NowTIme)
         {
-            Debug.Log("½ô");
+            Debug.Log("ì¨");
 
             bullet_Ins.ShotBulletIns();
             return true;
         }
         else return false;
-    } // »ç¿ë¾ÈÇÔ. IEnumeratorÀÇ Àû °ø°İÀ» »ç¿ë
+    } // ì‚¬ìš©ì•ˆí•¨. IEnumeratorì˜ ì  ê³µê²©ì„ ì‚¬ìš©
 
     void MuzzleEffectFunction()
     {
@@ -255,12 +255,12 @@ public class Gun : GunControllerManager
         Destroy(effect, 0.2f);
     }
 
-    public IEnumerator Enemy_fire() // ÃÑ±â »ç°İ ÇÔ¼ö, Àû Àü¿ë
+    public IEnumerator Enemy_fire() // ì´ê¸° ì‚¬ê²© í•¨ìˆ˜, ì  ì „ìš©
     {
         //if (coroutineChecker) yield break;
         //else
         //{
-        //    Debug.Log("È£Ãâ È®ÀÎ");
+        //    Debug.Log("í˜¸ì¶œ í™•ì¸");
 
         //    bullet_Ins.ShotBulletIns();
 
@@ -274,7 +274,7 @@ public class Gun : GunControllerManager
         {
             if (!coroutineChecker)
             {
-                Debug.Log("È£Ãâ È®ÀÎ");
+                Debug.Log("í˜¸ì¶œ í™•ì¸");
                 MuzzleEffectFunction();
                
                 bullet_Ins.ShotBulletIns();
@@ -296,7 +296,7 @@ public class Gun : GunControllerManager
         //StartCoroutine(Enemy_fire());
     }
 
-    public IEnumerator Enemy_Shotgun_Fire() // ¼¦°Ç »ç°İ ÇÔ¼ö Àû Àü¿ë
+    public IEnumerator Enemy_Shotgun_Fire() // ìƒ·ê±´ ì‚¬ê²© í•¨ìˆ˜ ì  ì „ìš©
     {
         while (fsm.state == FSM.STATE.ATTACK)
         {
@@ -304,7 +304,7 @@ public class Gun : GunControllerManager
             {
                 for (int i = 0; i < shotgunRotationPos.Length; i++)
                 {
-                    Debug.Log("¼¦°Ç È£Ãâ È®ÀÎ");
+                    Debug.Log("ìƒ·ê±´ í˜¸ì¶œ í™•ì¸");
                     MuzzleEffectFunction();
                     GunShotGunSFX();
 

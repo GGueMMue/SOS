@@ -9,9 +9,9 @@ public class ScoreManager : MonoBehaviour
     public Text score_Text;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        InitDataForScoreCalculator();
     }
 
     // Update is called once per frame
@@ -22,5 +22,16 @@ public class ScoreManager : MonoBehaviour
 
         else
             score_Text.text = "SCORE: " + scores;
+
+        DataForScoreCalculator.PLAYER_TOTAL_SCORE = scores;
+    }
+
+    void InitDataForScoreCalculator()
+    {
+        DataForScoreCalculator.MEELE_KILL_COUNT = 0;
+        DataForScoreCalculator.TOTAL_ENEMY = 0;
+        DataForScoreCalculator.TOTAL_KILL_CONFIRM = 0;
+        DataForScoreCalculator.GUN_KILL_COUNT = 0;
+        DataForScoreCalculator.PLAYER_TOTAL_SCORE = 0;
     }
 }
