@@ -9,7 +9,7 @@ public class ClearColider : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            // Ŭ���� Scene���� �Ѿ�� ��.
+            // Ŭ���� Scene���� �Ѿ�� ��. 
 
             Debug.Log("Clear");
         }
