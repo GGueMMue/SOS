@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class ClearChecker : MonoBehaviour
 {
     [SerializeField] List<GameObject> Enemy_List;
-    public BoxCollider clearColider;
+    [SerializeField] BoxCollider clearColider;
 
-    public Camera mainCamera;
-    public Transform clearTr;
+    public GameObject clearPointBox;
+
+    [SerializeField] Camera mainCamera;
+    [SerializeField] Transform clearTr;
     [SerializeField] Transform playerTr;
 
     public RectTransform dirUI;
@@ -20,19 +23,23 @@ public class ClearChecker : MonoBehaviour
     void Start()
     {
         Enemy_List = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
-        clearColider.enabled = false;
-        playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        clearColider = clearPointBox.GetComponent<BoxCollider>();
+        clearTr = clearPointBox.GetComponent<Transform>();
+        clearPointBox.SetActive(false);
 
-        /* ±¸Á¶. °¢ ½ºÅ×ÀÌÁö º°·Î Å¬¸®¾î ½Ã µé¾î°¥ Àå¼Ò°¡ µÉ À§Ä¡¿¡, mesh ·»´õ·¯°¡ ²¨Áø ¹Ú½º Äİ¶óÀÌ´õ¸¦
-           ³õÀ½. ÀÌ ¹Ú½º Äİ¶óÀÌ´õ¸¦ ÇØ´ç Å¬¸®¾î ¸Å´ÏÀú¿¡ ÁöÁ¤À» ÇÔ.
-           °ÔÀÓ ½ÃÀÛ ½Ã, ÀûµéÀ» Withtag·Î ¹Ş¾Æ¿À°í, ÇØ´ç ÀûµéÀ» ÀüºÎ list¿¡ pushÇÔ.
-           ¸¸¾à, ÇØ´ç ÀûÀÌ Á×°Ô µÇ¸é FSM¿¡¼­ RemoveListEnemy¸¦ ºÒ·¯ ÀÚ½ÅÀ» Ã£¾Æ RemoveÇÔ.
-           ¸¸¾à, Ä«¿îÆ®°¡ 0ÀÌ µÇ¸é, Å¬¸®¾î Colider°¡ ÄÑÁö¸ç, ShowNavDirÀ» ÅëÇØ Å¬¸®¾î À§Ä¡¸¦
-           UI·Î Ç¥ÇöÇØÁÜ.
+        playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        /* ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½Ò°ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½, mesh ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½
+           ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
+           ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Withtagï¿½ï¿½ ï¿½Ş¾Æ¿ï¿½ï¿½ï¿½, ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ listï¿½ï¿½ pushï¿½ï¿½.
+           ï¿½ï¿½ï¿½ï¿½, ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½ ï¿½Ç¸ï¿½ FSMï¿½ï¿½ï¿½ï¿½ RemoveListEnemyï¿½ï¿½ ï¿½Ò·ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ Removeï¿½ï¿½.
+           ï¿½ï¿½ï¿½ï¿½, Ä«ï¿½ï¿½Æ®ï¿½ï¿½ 0ï¿½ï¿½ ï¿½Ç¸ï¿½, Å¬ï¿½ï¿½ï¿½ï¿½ Coliderï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ShowNavDirï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
+           UIï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         
          
-           ¸ğµç Àû À¯´ÖÀÌ Á×ÀÚ¸¶ÀÚ Å¬¸®¾î¸¦ ½ÃÅ°Áö ¾Ê´Â ÀÌÀ¯?
-                -> È®ÀÎ»ç»ì ¶ÇÇÑ Á¡¼ö°¡ µé¾î¿À±â ¶§¹®.
+           ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½î¸¦ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½?
+                -> È®ï¿½Î»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
          */
         
     }
@@ -45,7 +52,8 @@ public class ClearChecker : MonoBehaviour
 
             if (Enemy_List.Count <= 0)
             {
-                clearColider.enabled = true;
+                clearPointBox.SetActive(true);
+                SetClearPointOutline();
                 isClear = true;
             }
         }
@@ -53,20 +61,87 @@ public class ClearChecker : MonoBehaviour
 
     public void ShowNavDir()
     {
-        Vector3 dir = (clearTr.position - playerTr.position).normalized;
-        
-        Vector3 screenPos = mainCamera.WorldToScreenPoint(clearTr.position);
+        // í´ë¦¬ì–´ ì§€ì ê³¼ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜ë¥¼ ë™ì¼í•œ yê°’ìœ¼ë¡œ ë§ì¶¤
+        Vector3 ySetValueOfClearTr = new Vector3(clearTr.position.x, playerTr.position.y, clearTr.position.z);
 
-        if(screenPos.x < 0 || screenPos.x > Screen.width || /*x Å¬¸®¾î Æ÷Áö¼ÇÀÇ x ÃàÀÌ ¹ş¾î³¯ ¶§*/
-            screenPos.y < 0 || screenPos.y > Screen.height /*y Å¬¸®¾î Æ÷Áö¼ÇÀÇ y ÃàÀÌ ¹ş¾î³¯ ¶§*/
-            )
+        // ì›”ë“œ ìŠ¤í˜ì´ìŠ¤ ìƒì˜ ë°©í–¥
+        Vector3 worldDir = (ySetValueOfClearTr - playerTr.position).normalized;
+
+        // íƒ€ê²Ÿì˜ ìŠ¤í¬ë¦° ì¢Œí‘œ
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(ySetValueOfClearTr);
+        Vector3 screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+
+        if (screenPos.x < 0 || screenPos.x > Screen.width ||
+           screenPos.y < 0 || screenPos.y > Screen.height)
         {
             dirUI.gameObject.SetActive(true);
 
-            float angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-            dirUI.rotation = Quaternion.Euler(0, 0, angle);
+            // ìŠ¤í¬ë¦° ìƒì—ì„œì˜ ë°©í–¥ ê³„ì‚°
+            Vector2 screenDir = new Vector2(screenPos.x - screenCenter.x, screenPos.y - screenCenter.y).normalized;
+
+            // ê°ë„ ê³„ì‚° (ìŠ¤í¬ë¦° ì¢Œí‘œê³„ ê¸°ì¤€)
+            float angle = Mathf.Atan2(screenDir.y, screenDir.x) * Mathf.Rad2Deg;
+
+            // UI íšŒì „ ì„¤ì • (ê¸°ë³¸ì´ ìœ„ìª½ì„ í–¥í•˜ë¯€ë¡œ -90ë„ ë³´ì •)
+            dirUI.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+            // UI ìœ„ì¹˜ ì„¤ì •
+            //float offset = 100f; // í™”ë©´ ê°€ì¥ìë¦¬ë¡œë¶€í„°ì˜ ê±°ë¦¬
+            Vector2 viewportPoint = new Vector2(
+                Mathf.Clamp(screenPos.x / Screen.width, 0.1f, 0.9f),
+                Mathf.Clamp(screenPos.y / Screen.height, 0.1f, 0.9f));
+
+            dirUI.position = new Vector3(
+                viewportPoint.x * Screen.width,
+                viewportPoint.y * Screen.height,
+                0);
+        }
+        else
+        {
+            dirUI.gameObject.SetActive(false);
         }
     }
+
+    public void SetClearPointOutline()
+    {
+        LineRenderer line = clearPointBox.AddComponent<LineRenderer>();
+
+        line.material = new Material(Shader.Find("Sprites/Default"));
+        line.startColor = Color.green;
+        line.endColor = Color.green;
+        line.startWidth = .1f;
+        line.endWidth = .1f;
+
+        // íë¸Œì˜ 8ê°œ ê¼­ì§€ì  ìœ„ì¹˜
+        Vector3[] points = new Vector3[16];
+        Vector3 size = clearPointBox.GetComponent<BoxCollider>().size;
+
+        points[0] = new Vector3(-size.x, -size.y, -size.z);
+        points[1] = new Vector3(size.x, -size.y, -size.z);
+        points[2] = new Vector3(size.x, -size.y, size.z);
+        points[3] = new Vector3(-size.x, -size.y, size.z);
+        points[4] = new Vector3(-size.x, -size.y, -size.z);
+        points[5] = new Vector3(-size.x, size.y, -size.z);
+        points[6] = new Vector3(size.x, size.y, -size.z);
+        points[7] = new Vector3(size.x, size.y, size.z);
+        points[8] = new Vector3(-size.x, size.y, size.z);
+        points[9] = new Vector3(-size.x, size.y, -size.z);
+        points[10] = new Vector3(-size.x, size.y, size.z);
+        points[11] = new Vector3(-size.x, -size.y, size.z);
+        points[12] = new Vector3(size.x, -size.y, size.z);
+        points[13] = new Vector3(size.x, size.y, size.z);
+        points[14] = new Vector3(size.x, size.y, -size.z);
+        points[15] = new Vector3(size.x, -size.y, -size.z);
+
+        line.positionCount = points.Length;
+        line.SetPositions(points);
+
+        //clearPointBox.transform.parent = this.transform;
+        //clearPointBox.transform.localPosition = Vector3.zero;
+
+    }
+
+
     // Update is called once per frame
     void Update()
     {

@@ -12,12 +12,13 @@ public class FSM : MonoBehaviour
     public Enemy_Patrol_Node curnode;
     public Enemy_Patrol_Node backupNode;
     public Vector3 startpos;
-    public Vector3 nextpos; // ÆÐÆ®·Ñ¿ë º¯¼ö
+    public Vector3 nextpos; // ï¿½ï¿½Æ®ï¿½Ñ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
     public bool nullChecker = false;
     public float max_Angle = 205f;
     public float min_Angle = 35f;
     public float roamer_Deviation = 3f;
     public float fireChecker = 0f;
+    [SerializeField] ClearChecker clear;
     
 
     public GameObject bloodEffect;
@@ -73,7 +74,7 @@ public class FSM : MonoBehaviour
     {
         state = STATE.FIND;
     }
-    void SetroamerDestination() // NavMesh ¸ñÀûÁö »ý¼º ¹× ÀÌµ¿ ÇÔ¼ö (ROAMER »óÅÂ ½Ã »ç¿ë)
+    void SetroamerDestination() // NavMesh ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ô¼ï¿½ (ROAMER ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½)
     {
         //if(roamerCount < 4)
         //{
@@ -133,7 +134,7 @@ public class FSM : MonoBehaviour
 
     }*/
 
-    void AlertImDead() // Àû À¯´ÖÀÌ DEAD »óÅÂÀÏ ¶§, 10f ³» ÀÎ±Ù ´Ù¸¥ Àû À¯´Ö ROAMER »óÅÂ·Î (DEAD½Ã »ç¿ëµÇ´Â ÇÔ¼ö)
+    void AlertImDead() // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DEAD ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, 10f ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ROAMER ï¿½ï¿½ï¿½Â·ï¿½ (DEADï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½)
     {
         RaycastHit[] hits;
 
@@ -156,7 +157,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    public void SetRoamerWithResetRoamerCount() // ROAMER¿¡ »ç¿ëµÇ´Â º¯¼ö ¸®¼Â (DEAD »óÅÂÀÏ ¶§, ´Ù¸¥ Àû À¯´ÖÀÇ »óÅÂ¸¦ º¯È¯ÇÒ ¶§ »ç¿ë)
+    public void SetRoamerWithResetRoamerCount() // ROAMERï¿½ï¿½ ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (DEAD ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½)
     {
         if (this.state != STATE.ROAMER)
             this.state = STATE.ROAMER;
@@ -169,7 +170,7 @@ public class FSM : MonoBehaviour
                 this.roamerTimer = 0f;
         }
     }
-    bool IsReachedroamerDestination() // ¸ñÀûÁö¿¡ µµÂøÇß´Â°¡? (ROAMER ½Ã »ç¿ë)
+    bool IsReachedroamerDestination() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Â°ï¿½? (ROAMER ï¿½ï¿½ ï¿½ï¿½ï¿½)
     {
         float dis = Vector3.Distance(this.transform.position, roamerPoints);
 
@@ -187,7 +188,7 @@ public class FSM : MonoBehaviour
         nowDead = true;
     }
 
-    void RotationIdle() // Àû À¯´ÖÀÇ Á¦ÀÚ¸® È¸Àü°ú °ü·ÃµÈ ÇÔ¼ö. isRotateEnemy ÀÏ ¶©, IDLE »óÅÂÀÏ ¶§ Á¦ÀÚ¸® È¸Àü, ¾Æ´Ò ¶© È¸Àü X (IDLE½Ã »ç¿ë) 
+    void RotationIdle() // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½Ô¼ï¿½. isRotateEnemy ï¿½ï¿½ ï¿½ï¿½, IDLE ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ È¸ï¿½ï¿½, ï¿½Æ´ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ X (IDLEï¿½ï¿½ ï¿½ï¿½ï¿½) 
     {
         if (rotationTimer > 3f)
         {
@@ -205,7 +206,7 @@ public class FSM : MonoBehaviour
         }
     }
 
-    void RotationEnemy(Vector3 location) // Àû À¯´ÖÀÇ È¸Àü°ú °ü·ÃµÈ ÇÔ¼ö
+    void RotationEnemy(Vector3 location) // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½Ô¼ï¿½
     {
         Vector3 dir = location - this.transform.position;
         dir.y = 0;
@@ -232,6 +233,7 @@ public class FSM : MonoBehaviour
         gun = GetComponentInChildren<Gun>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         SFX = GetComponent<AudioSource>();
+        clear = GameObject.FindGameObjectWithTag("Clear_Manager").GetComponent<ClearChecker>();
 
         startPoint = this.transform.position;
 
@@ -286,9 +288,9 @@ public class FSM : MonoBehaviour
         }
 
         if (nav.velocity != Vector3.zero) bugCountDown = 0;
-        // ÇØ´ç º¯¼ö´Â ROAMER »óÅÂÀÏ ¶§ Áõ°¡ÇÔ.
-        // µû¶ó¼­, ÀÌµ¿¼Óµµ°¡ ROAMER »óÅÂÀÏ ¶§, 0ÀÌ µÇ¸éÀº bugCountDownÀº Áõ°¡ ½ÃÀÛ
-        // ±×°Ô ¾Æ´Ò ¶©, BugCountDownÀº 0À¸·Î ÃÊ±âÈ­
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ROAMER ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+        // ï¿½ï¿½ï¿½ï¿½, ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ ROAMER ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, 0ï¿½ï¿½ ï¿½Ç¸ï¿½ï¿½ï¿½ bugCountDownï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½×°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½, BugCountDownï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
 
         /*********************  FSM *********************/
@@ -296,7 +298,7 @@ public class FSM : MonoBehaviour
 
         switch (state)
         {
-            /*********************  IDLE »óÅÂ *********************/
+            /*********************  IDLE ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.IDLE:
 
@@ -330,7 +332,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  IDLE_PATROL »óÅÂ *********************/
+            /*********************  IDLE_PATROL ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.IDLE_PATROL:
                 animator.SetInteger("State", 0);
@@ -386,7 +388,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  ROAMER »óÅÂ *********************/
+            /*********************  ROAMER ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.ROAMER:
                 animator.SetInteger("State", 1);
@@ -399,8 +401,8 @@ public class FSM : MonoBehaviour
                 {
                     SetroamerDestination();
                 }
-                // ¾È ¿òÁ÷ÀÌ´Â ¹ö±× ¿øÀÎ = Àû À¯´Ö³¢¸® ³©±â°Å³ª, ¿ÀºêÁ§Æ®¿¡ ³©±â¸é NavmeshÀÇ ¸ñÀûÁö¿¡ µµ´ÞÇÏÁö ¸øÇÔ.
-                // 1.5ÃÊ°£ ¼­·Î ³©°Ü¼­ ¿òÁ÷ÀÌÁö ¸øÇÒ ½Ã SetRoamerDestination()ÇÔ¼ö¸¦ ´Ù½Ã ºÒ·¯ ¸ñÀûÁö Àç¼³Á¤À¸·Î ÇØ°á
+                // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Navmeshï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+                // 1.5ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ SetRoamerDestination()ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ç¼³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½
 
                 if (roamerCount < 10 || roamerTimer <= 8f)
                 {
@@ -428,7 +430,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  FIND »óÅÂ *********************/
+            /*********************  FIND ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.FIND:
                 animator.SetInteger("State", 1);
@@ -471,16 +473,16 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  ATTACT »óÅÂ *********************/
+            /*********************  ATTACT ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.ATTACK:
 
-                // gun class¸¦ ¼±¾ðÇÏ°í, start ¶Ç´Â awake ÇÔ¼ö¿¡¼­ getcomponentchild¸¦ ÅëÇØ ÄÄÆ÷³ÍÆ®¸¦ ÃÊ±âÈ­ÇÑ´Ù.
-                // gun class¿¡¼­ gunNameÀ» ¹Þ¾Æ¿Â´Ù.
-                // swicth ¹®À¸·Î gunNameÀ» ³Ö°í °¢ ¹®ÀÚ¿­¿¡ ¸ÂÃç °ø°Ý Á¶Á¤
-                // ¸¸¾à ¾î¶² ÃÑµµ ¾Æ´Ï¶ó¸é, ¹Ð¸®´Ï µðÆúÆ®¿¡ ¹Ð¸® °ø°Ý ³Ö±â
-                // ¹Ð¸® °ø°ÝÀº ¾Ö´Ï¸ÞÀÌ¼Ç ¼Óµµ ÁøÇà º¯¼ö¸¦ ³Ö¾î ÇØ´ç ¾Ö´Ï¸ÞÀÌ¼Ç º¯¼ö ÃÊ¿¡ ¸ÂÃç sphereallÀ» ºÒ·¯ À¯Àú°¡ ¸Â¾Ò´ÂÁö È®ÀÎ.
-                // ¸Â¾ÒÀ¸¸é À¯Àú »ç¸Á.
+                // gun classï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½, start ï¿½Ç´ï¿½ awake ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ getcomponentchildï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
+                // gun classï¿½ï¿½ï¿½ï¿½ gunNameï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½.
+                // swicth ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ gunNameï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½î¶² ï¿½Ñµï¿½ ï¿½Æ´Ï¶ï¿½ï¿½, ï¿½Ð¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
+                // ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Ø´ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ sphereallï¿½ï¿½ ï¿½Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½.
+                // ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½.
 
                 //this.transform.LookAt(player);
 
@@ -491,7 +493,7 @@ public class FSM : MonoBehaviour
 
                 switch (gun.gunName)
                 {
-                    case "SMG":  //SMGÀÏ ¶§
+                    case "SMG":  //SMGï¿½ï¿½ ï¿½ï¿½
                                  //if (!canShot)
                                  //{
                                  //    this.state = STATE.FIND;
@@ -514,26 +516,10 @@ public class FSM : MonoBehaviour
 
                         //if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
 
-                        break; // µÆ´Ù ½ÅÀÌ ³»¸° ¼±¹°ÀÌ´Ù ÀÌ°Ç
+                        break; // ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ì°ï¿½
 
 
-                    case "Rifle":  // ¶óÀÌÇÃÀÏ ¶§
-
-                        if (!canShot)
-                        {
-                            this.state = STATE.FIND;
-                            break;
-                        }
-                        else if (es.SearchUser())
-                        {
-                            animator.SetInteger("State", 2);
-                            RotationEnemy(player.transform.position);
-                            StartCoroutine(gun.Enemy_fire());
-                        }
-                        break;
-
-
-                    case "HandGun": // ±ÇÃÑÀÏ ¶§
+                    case "Rifle":  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
                         if (!canShot)
                         {
@@ -549,8 +535,24 @@ public class FSM : MonoBehaviour
                         break;
 
 
-                    case "Shotgun":  // ¼¦°ÇÀÏ ¶§ (´Ù¸¥ ÃÑµé°ú ´Þ¸® for¹®À» µ¹·Á ÅºÈ¯À» ¿©·¯°³ ¹ß»ç)
-                                     // µ¿ÀÏ °£°ÝÀÇ ¹ß»ç°¡ ´õ ÁÁÀº°¡?
+                    case "HandGun": // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if (es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
+                            StartCoroutine(gun.Enemy_fire());
+                        }
+                        break;
+
+
+                    case "Shotgun":  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (ï¿½Ù¸ï¿½ ï¿½Ñµï¿½ï¿½ ï¿½Þ¸ï¿½ forï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ÅºÈ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½)
+                                     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ç°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
                         if (!canShot)
                         {
                             this.state = STATE.FIND;
@@ -565,16 +567,16 @@ public class FSM : MonoBehaviour
                         break;
 
 
-                    default: // ¹Ð¸® ÀÏ ¶§
-                             // ÀüºÎ »èÁ¦ ÈÄ, ¼öÁ¤ ¿¹Á¤. ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ¸¸µé¾îÁö´Â Å¸ÀÌ¹Ö¿¡ ÀÛ¼º ¿¹Á¤.
-                             // ±× »óÅÂ¿¡¼­, Àû À¯´ÖÀÌ ÀÏÁ¤ ¹üÀ§¿¡ µé¾î¿À°ÔµÇ¸é ±ÙÁ¢ ¹«±â °ø°Ý ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ½ÇÇàµÇ°í,
-                             // ±× ¶§, Àû À¯´ÖÀÌ ÀåÂøÇÏ°í ÀÖ´Â ±ÙÁ¢ ¹«±âÀÇ collider È°¼ºÈ­,
-                             // Àû À¯´ÖÀÌ µé°í ÀÖ´Â ±ÙÁ¢ ¹«±âÀÇ ½ºÅ©¸³Æ®¿¡ OnTrrigerEnter ÇÔ¼ö ÀÛ¼º.
-                             // OnTrriger ÇÔ¼ö ³»¿¡, ¸¸¾à Player°¡ Á¸ÀçÇÑ´Ù¸é, À¯Àú »ç¸Á Ã³¸®.
-                             // ¸¸¾à À¯Àú°¡ °ø°ÝÀ» È¸ÇÇÇØ ¹Ì½º°¡ ³­ °æ¿ì,
-                             // ´Ù½Ã ±ÙÁ¢ ¹«±âÀÇ collider ºñÈ°¼ºÈ­ ÈÄ, °ø°Ý ¹üÀ§ ³» À¯Àú°¡ ÀÖ´ÂÁö È®ÀÎ
-                             // ¸¸ÀÏ, À¯Àú°¡ ¹üÀ§¿¡ ¹þ¾î ³µÀ¸¸é Find »óÅÂ·Î ÀüÈ¯.
-                             // ±×°Ô ¾Æ´Ï¶ó¸é, ´Ù½Ã °ø°Ý ÁøÇà.
+                    default: // ï¿½Ð¸ï¿½ ï¿½ï¿½ ï¿½ï¿½
+                             // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ì¹Ö¿ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½.
+                             // ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÇ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½,
+                             // ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ collider È°ï¿½ï¿½È­,
+                             // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ OnTrrigerEnter ï¿½Ô¼ï¿½ ï¿½Û¼ï¿½.
+                             // OnTrriger ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´Ù¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½.
+                             // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½,
+                             // ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ collider ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+                             // ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Find ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯.
+                             // ï¿½×°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½, ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
                         if (!canShot)
                         {
@@ -598,7 +600,7 @@ public class FSM : MonoBehaviour
                         //    {
                         //        if (hit.collider.CompareTag("Player") && hit.collider != null)
                         //        {
-                        //            Debug.Log("À¯Àú »ç¸Á");
+                        //            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
                         //        }
 
                         //        else state = STATE.FIND;
@@ -614,7 +616,7 @@ public class FSM : MonoBehaviour
 
 
 
-            /*********************  DEAD »óÅÂ *********************/
+            /*********************  DEAD ï¿½ï¿½ï¿½ï¿½ *********************/
 
             case STATE.DEAD:
                 //animator.SetBool("isDead", true);
@@ -637,6 +639,8 @@ public class FSM : MonoBehaviour
                     this.gameObject.GetComponent<CapsuleCollider>().radius = 1.5f;
                     SFX.PlayOneShot(deadSound);
                     nav.enabled = false;
+
+                    clear.RemoveListEnemy(this.gameObject);
                 }
                 //this.GetComponent<Rigidbody>(). = true;
 
@@ -675,7 +679,7 @@ public class FSM : MonoBehaviour
             gun.MeeleSFX();
 
             coroutineChecker = true;
-            // ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³¯ ¶§±îÁö ±â´Ù¸² (ÀÓÀÇÀÇ ´ë±â ½Ã°£)
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½)
             yield return new WaitForSeconds(1.1f);
 
             if (state != STATE.DEAD)

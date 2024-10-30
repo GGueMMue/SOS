@@ -21,6 +21,7 @@ TagManager:
   - Manager
   - Canvas_Tag
   - Bat
+  - Clear_Manager
   layers:
   - Default
   - TransparentFX
