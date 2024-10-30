@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5952924465449108770}
   - component: {fileID: 8208882170725592156}
   - component: {fileID: 5174404675817982701}
+  - component: {fileID: 6886848479458609880}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Manager
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletText: {fileID: 0}
   isGunNull: 1
+  playerDeadChecker: 0
   alert_Score_Text_Board: {fileID: 6030056247480087538, guid: ec012c54c58efe045a7a8b8f6a17903c, type: 3}
 --- !u!114 &5174404675817982701
 MonoBehaviour:
@@ -62,3 +64,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scores: 0
   score_Text: {fileID: 0}
+--- !u!114 &6886848479458609880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879216359389462991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be48f0d5007a69a4390e3c44da7a45a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
