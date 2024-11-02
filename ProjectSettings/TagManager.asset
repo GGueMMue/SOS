@@ -22,6 +22,9 @@ TagManager:
   - Canvas_Tag
   - Bat
   - Clear_Manager
+  - Gun_Kill_Counter
+  - Meele_Kill_Counter
+  - Kill_Confrim_Counter
   layers:
   - Default
   - TransparentFX

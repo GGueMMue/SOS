@@ -24,6 +24,14 @@ public class ScoreManager : MonoBehaviour
             score_Text.text = "SCORE: " + scores;
 
         DataForScoreCalculator.PLAYER_TOTAL_SCORE = scores;
+
+
+
+        Debug.Log("적 수 " + DataForScoreCalculator.TOTAL_ENEMY);
+        Debug.Log("확인 사살 수 " + DataForScoreCalculator.TOTAL_KILL_CONFIRM);
+        Debug.Log("총 킬 수 " + DataForScoreCalculator.GUN_KILL_COUNT);
+        Debug.Log("밀리 킬 수 " + DataForScoreCalculator.MEELE_KILL_COUNT);
+        Debug.Log("플레이어 점수 " + DataForScoreCalculator.PLAYER_TOTAL_SCORE);
     }
 
     void InitDataForScoreCalculator()

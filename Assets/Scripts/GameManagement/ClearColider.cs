@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClearColider : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ClearColider : MonoBehaviour
         {
             // 씬 전환 필요.
 
+            SceneManager.LoadScene("ScoreBoard");
             Debug.Log("Clear");
         }
     }

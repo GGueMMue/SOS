@@ -23,6 +23,9 @@ public class ClearChecker : MonoBehaviour
     void Start()
     {
         Enemy_List = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
+        
+        DataForScoreCalculator.TOTAL_ENEMY = Enemy_List.Count;
+
         clearColider = clearPointBox.GetComponent<BoxCollider>();
         clearTr = clearPointBox.GetComponent<Transform>();
         clearPointBox.SetActive(false);
