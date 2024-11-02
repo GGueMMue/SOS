@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public                              float force = 1000.0f;
+    public                              float force = 250.0f;
     /*[SerializeField]*/                      private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponentInParent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
         rb.AddForce(transform.forward * force);
 
@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) // 유저, 벽, 적을 만났을 때 총알 소모. 적끼리는 영향이 없음.
     {
+        Debug.Log("Collided with: " + other.gameObject.name + ", Tag: " + other.gameObject.tag);
+
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Wall"))
         {
             if(other.gameObject.CompareTag("Player"))
@@ -37,7 +39,9 @@ public class Bullet : MonoBehaviour
                 }
                 //other.GetComponent<Player_Controller>().DeadEffect();
             }
-            Destroy(this.gameObject);
         }
+
+        if (!other.gameObject.CompareTag("Enemy") && !other.gameObject.CompareTag("Bullet")) Destroy(this.gameObject);
+
     }
 }

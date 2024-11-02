@@ -12,6 +12,8 @@ public class UIAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DataForScoreCalculator.NOW_STAGE = "";
+
         Cursor.visible = true;
 
         if (this.gameObject.CompareTag("Gun_Kill_Counter"))
@@ -40,7 +42,7 @@ public class UIAnimation : MonoBehaviour
     {
         for (int time = 0; time < total_time; time++)
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
 
             GameObject b_Img = Instantiate(bullet_Img);
             //RectTransform b_Rect = b_Img.GetComponent<RectTransform>();

@@ -239,15 +239,6 @@ public class FSM : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>();
 
-        if (!isPatrol)
-        {
-            state = STATE.IDLE;
-        }
-        else
-        {
-            animator.SetBool("isPatrol", true);
-            state = STATE.IDLE_PATROL;
-        }
         startpos = this.transform.position;
         //nextpos = curnode.Get_Now_Node();
 
@@ -336,7 +327,15 @@ public class FSM : MonoBehaviour
 
             case STATE.IDLE_PATROL:
                 animator.SetInteger("State", 0);
-
+                if (!isPatrol)
+                {
+                    state = STATE.IDLE;
+                }
+                else
+                {
+                    animator.SetBool("isPatrol", true);
+                    state = STATE.IDLE_PATROL;
+                }
                 //PatrolEnemy(patrolPoints);
                 nav.autoBraking = true;
                 nav.speed = 5f;
@@ -362,7 +361,7 @@ public class FSM : MonoBehaviour
                     {
                         nav.SetDestination(curnode.Get_Now_Node());
 
-                        if (Vector3.Distance(curnode.Get_Now_Node(), this.transform.position) < 0.1f)
+                        if (Vector3.Distance(curnode.Get_Now_Node(), this.transform.position) < 0.3f)
                         {
                             nullChecker = true;
                         }
@@ -374,7 +373,7 @@ public class FSM : MonoBehaviour
 
                         nav.SetDestination(nextpos);
 
-                        if (Vector3.Distance(nextpos, this.transform.position) < 0.1f)
+                        if (Vector3.Distance(nextpos, this.transform.position) < 0.3f)
                         {
                             curnode = curnode.next_Node;
                             nextpos = curnode.Get_Now_Node();

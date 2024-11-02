@@ -60,7 +60,7 @@ public class Player_Controller : MonoBehaviour
         SFX = GetComponent<AudioSource>();
         tween = GameObject.FindGameObjectWithTag("Bullet_UI").GetComponent<Jun_TweenRuntime>();
 
-        if(GetComponentInChildren<Gun>().gameObject)
+        if(GetComponentInChildren<Gun>() != null && GetComponentInChildren<Gun>().gameObject)
             insWeapon = GetComponentInChildren<Gun>().gameObject;
 
         weaponPickUpList.Clear();
@@ -651,10 +651,10 @@ public class Player_Controller : MonoBehaviour
 
         Destroy(this.gameObject.GetComponentInChildren<CapsuleCollider>().gameObject);
     }
-    void AlertToEnemy() // 총을 쏠 때, 20f 범위 내, 적에게 유저의 위치를 알리는 함수.
+    void AlertToEnemy() // 총을 쏠 때, 10f 범위 내, 적에게 유저의 위치를 알리는 함수.
     {
         RaycastHit[] hits;
-        hits = Physics.SphereCastAll(transform.position, 20f, Vector3.up);
+        hits = Physics.SphereCastAll(transform.position, 10f, Vector3.up);
         foreach(RaycastHit hit in hits)
         {
             if (hit.collider != null && hit.collider.tag == "Enemy")

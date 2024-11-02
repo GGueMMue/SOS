@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.SceneManagement;
 
 public class ClearChecker : MonoBehaviour
 {
@@ -25,7 +26,9 @@ public class ClearChecker : MonoBehaviour
         Enemy_List = new List<GameObject>(GameObject.FindGameObjectsWithTag("Enemy"));
         
         DataForScoreCalculator.TOTAL_ENEMY = Enemy_List.Count;
+        DataForScoreCalculator.NOW_STAGE = SceneManager.GetActiveScene().name;
 
+        Debug.Log(DataForScoreCalculator.NOW_STAGE);
         clearColider = clearPointBox.GetComponent<BoxCollider>();
         clearTr = clearPointBox.GetComponent<Transform>();
         clearPointBox.SetActive(false);
@@ -103,33 +106,30 @@ public class ClearChecker : MonoBehaviour
         line.startWidth = .1f;
         line.endWidth = .1f;
 
-        // 큐브의 8개 꼭지점 위치
-        Vector3[] points = new Vector3[16];
         Vector3 size = clearPointBox.GetComponent<BoxCollider>().size;
+        Vector3 position = clearPointBox.transform.position;
 
-        points[0] = new Vector3(-size.x, -size.y, -size.z);
-        points[1] = new Vector3(size.x, -size.y, -size.z);
-        points[2] = new Vector3(size.x, -size.y, size.z);
-        points[3] = new Vector3(-size.x, -size.y, size.z);
-        points[4] = new Vector3(-size.x, -size.y, -size.z);
-        points[5] = new Vector3(-size.x, size.y, -size.z);
-        points[6] = new Vector3(size.x, size.y, -size.z);
-        points[7] = new Vector3(size.x, size.y, size.z);
-        points[8] = new Vector3(-size.x, size.y, size.z);
-        points[9] = new Vector3(-size.x, size.y, -size.z);
-        points[10] = new Vector3(-size.x, size.y, size.z);
-        points[11] = new Vector3(-size.x, -size.y, size.z);
-        points[12] = new Vector3(size.x, -size.y, size.z);
-        points[13] = new Vector3(size.x, size.y, size.z);
-        points[14] = new Vector3(size.x, size.y, -size.z);
-        points[15] = new Vector3(size.x, -size.y, -size.z);
+        Vector3[] points = new Vector3[16];
+
+        points[0] = position + new Vector3(-size.x, -size.y, -size.z);
+        points[1] = position + new Vector3(size.x, -size.y, -size.z);
+        points[2] = position + new Vector3(size.x, -size.y, size.z);
+        points[3] = position + new Vector3(-size.x, -size.y, size.z);
+        points[4] = position + new Vector3(-size.x, -size.y, -size.z);
+        points[5] = position + new Vector3(-size.x, size.y, -size.z);
+        points[6] = position + new Vector3(size.x, size.y, -size.z);
+        points[7] = position + new Vector3(size.x, size.y, size.z);
+        points[8] = position + new Vector3(-size.x, size.y, size.z);
+        points[9] = position + new Vector3(-size.x, size.y, -size.z);
+        points[10] = position + new Vector3(-size.x, size.y, size.z);
+        points[11] = position + new Vector3(-size.x, -size.y, size.z);
+        points[12] = position + new Vector3(size.x, -size.y, size.z);
+        points[13] = position + new Vector3(size.x, size.y, size.z);
+        points[14] = position + new Vector3(size.x, size.y, -size.z);
+        points[15] = position + new Vector3(size.x, -size.y, -size.z);
 
         line.positionCount = points.Length;
         line.SetPositions(points);
-
-        //clearPointBox.transform.parent = this.transform;
-        //clearPointBox.transform.localPosition = Vector3.zero;
-
     }
 
 

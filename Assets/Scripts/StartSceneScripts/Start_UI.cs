@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Start_UI : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Start_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DataForScoreCalculator.NOW_STAGE = "";
     }
 
     // Update is called once per frame
@@ -31,5 +32,10 @@ public class Start_UI : MonoBehaviour
     public void EnmationContineMenuExit()
     {
         contMenu.SetActive(false);
+    }
+
+    public void OnClickStartEventLitener()
+    {
+        SceneManager.LoadScene("Stage1");
     }
 }
