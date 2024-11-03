@@ -12,7 +12,7 @@ public class UIAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DataForScoreCalculator.NOW_STAGE = "";
+        //DataForScoreCalculator.NOW_STAGE = "";
 
         Cursor.visible = true;
 
