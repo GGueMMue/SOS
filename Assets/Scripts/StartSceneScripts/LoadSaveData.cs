@@ -9,6 +9,8 @@ public class LoadSaveData : MonoBehaviour
     public Text rankText;
     public Text scoreText;
 
+    [SerializeField] Button btn;
+
     //public SaveGameDataManager gameDataManager;
 
     StageData curStageData;
@@ -18,6 +20,14 @@ public class LoadSaveData : MonoBehaviour
     {
         curStageName = this.gameObject.name;
         GetGameDatas();
+        btn = GetComponent<Button>();
+
+        if(rankText.text == "N")
+        {
+            btn.enabled = false;
+        }
+        else { btn.enabled = true; }
+
     }
 
     // Update is called once per frame

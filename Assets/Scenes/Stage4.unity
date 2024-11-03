@@ -8763,6 +8763,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c27fc0789e8d3134fa7288a8c02521c1, type: 3}
+--- !u!1 &467601855 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8405445070920579093, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+  m_PrefabInstance: {fileID: 6196799485735785654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &503709204 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6886848479458609880, guid: 89762ca64054d7f478731c54fa42379a, type: 3}
@@ -10278,6 +10283,10 @@ PrefabInstance:
       propertyPath: curBullet
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8403021065820660941, guid: c3030c93d3bb473438d270b52363347c, type: 3}
+      propertyPath: deadText
+      value: 
+      objectReference: {fileID: 467601855}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

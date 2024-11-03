@@ -743,6 +743,11 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &1011268838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8405445070920579093, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+  m_PrefabInstance: {fileID: 6196799485735785654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1124381643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1220,6 +1225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1850628369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3242744578383209489, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+  m_PrefabInstance: {fileID: 6196799485735785654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &2087219555
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1532,6 +1542,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8208882170725592156, guid: 89762ca64054d7f478731c54fa42379a, type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 1850628369}
+    - target: {fileID: 8208882170725592156, guid: 89762ca64054d7f478731c54fa42379a, type: 3}
       propertyPath: bulletText
       value: 
       objectReference: {fileID: 1710863885}
@@ -1540,6 +1554,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89762ca64054d7f478731c54fa42379a, type: 3}
+--- !u!114 &3550792290063311825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8208882170725592156, guid: 89762ca64054d7f478731c54fa42379a, type: 3}
+  m_PrefabInstance: {fileID: 3550792290063311824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0308747b8e7f2744a28f1bcba609547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5877066127942303905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1596,6 +1621,10 @@ PrefabInstance:
       propertyPath: curBullet
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8403021065820660941, guid: c3030c93d3bb473438d270b52363347c, type: 3}
+      propertyPath: deadText
+      value: 
+      objectReference: {fileID: 1011268838}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5256163333708593819, guid: c3030c93d3bb473438d270b52363347c, type: 3}
@@ -1610,6 +1639,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2278164952306658025, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3550792290063311825}
+    - target: {fileID: 3242744578383209489, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4315245394449700988, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1694,10 +1731,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5314410039925707386, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3550792290063311825}
     - target: {fileID: 6429439772034058172, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 503709204}
+    - target: {fileID: 7868134066437334531, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7968654642353526387, guid: b6b8b34e92ccaf34692654227e14d907, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

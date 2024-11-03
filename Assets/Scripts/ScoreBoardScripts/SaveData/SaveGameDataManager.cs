@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [System.Serializable]
@@ -56,7 +57,7 @@ public class SaveGameDataManager : MonoBehaviour
     {
         string curStage = DataForScoreCalculator.NOW_STAGE;
         int curScore = DataForScoreCalculator.PLAYER_TOTAL_SCORE;
-        string curRank = rankPrintGameObject.GetComponent<ScoreCalculator>().ReturningPlayerRank();
+        string curRank = rankPrintGameObject.GetComponent<Text>().text;
 
         Debug.Log($"Current Stage: {curStage}, Score: {curScore}, Rank: {curRank}");
 
@@ -101,9 +102,17 @@ public class SaveGameDataManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+
+    IEnumerator Start()
     {
-        if(rankPrintGameObject != null) SaveNowStageData();
+
+        if (rankPrintGameObject != null)
+        {
+            var scoreCalculator = rankPrintGameObject.GetComponent<ScoreCalculator>();
+            yield return new WaitUntil(() => scoreCalculator.isInit); // 텍스트가 완전히 변경 된 이후에 실행
+        }
+        if (rankPrintGameObject != null) SaveNowStageData();
+     
     }
 
     // Update is called once per frame

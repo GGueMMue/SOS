@@ -17,6 +17,7 @@ public class Player_Controller : MonoBehaviour
     public GameObject bloodEffect;
     public AudioClip deadSound;
     public AudioSource SFX;
+    public GameObject deadText;
 
     [SerializeField] List<GameObject> weaponPickUpList = new List<GameObject>();
 
@@ -77,9 +78,16 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isDead) return;
-
-        timechecker += Time.deltaTime;
+        if (isDead)
+        {
+            deadText.SetActive(true);
+            return;
+        }
+        else
+        {
+            deadText.SetActive(false);
+        }
+            timechecker += Time.deltaTime;
 
 
         PlayerMove();

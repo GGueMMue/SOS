@@ -9,6 +9,7 @@ public class ScoreCalculator : MonoBehaviour
     int possible_max_score;
 
     public Score_Printer printer;
+    public bool isInit = false;
 
     Text text;
 
@@ -36,6 +37,8 @@ public class ScoreCalculator : MonoBehaviour
         {
             text.enabled = true;
             text.text = ReturningPlayerRank();
+            isInit = true;
+
         }
     }
 }

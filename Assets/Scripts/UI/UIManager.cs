@@ -9,7 +9,9 @@ public class UIManager : MonoBehaviour
     public Text bulletText;
     [SerializeField] bool isGunNull = true;
     Gun gun;
+    public GameObject pause;
 
+    [SerializeField] bool pauseChecker = false;
     public bool playerDeadChecker = false;
 
     //public Canvas canvas;
@@ -21,14 +23,37 @@ public class UIManager : MonoBehaviour
     {
 
     }
+    public void ToMainBtn()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("StartScene");
+    }
 
+    public void ReturnToGameBtn()
+    {
+        pauseChecker = false;
+        Time.timeScale = 1.0f;
+        pause.SetActive(false);
+    }
   
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseChecker = !pauseChecker;
+            if(pauseChecker)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+            pause.SetActive(pauseChecker);
+        }
 
         if (GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Gun>() != null)
         {
@@ -70,5 +95,5 @@ public class UIManager : MonoBehaviour
         text.transform.rotation = Quaternion.identity;
 
         Destroy(text, .5f);        
-    } // ¾÷µ¥ÀÌÆ®¿¡¼­ ÁøÇàÇØ¾ß ÇÒ °Í °°À½. ½Ç½Ã°£À¸·Î ¿òÁ÷ÀÌÁú ¾ÊÀ½.
+    } // ì—…ë°ì´íŠ¸ì—ì„œ ì§„í–‰í•´ì•¼ í•  ê²ƒ ê°™ìŒ. ì‹¤ì‹œê°„ìœ¼ë¡œ ì›€ì§ì´ì§ˆ ì•ŠìŒ.
 }
