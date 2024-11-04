@@ -49,7 +49,11 @@ Windows
                                   |                 X                 |
                                 FIND               ㅡㅡ             ATTACK
 
+
+                                
+
 ---------
+
 
 
 
