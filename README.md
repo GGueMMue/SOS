@@ -45,9 +45,9 @@ Windows
 
 상태머신 진행도
 
-                        IDLE (OR IDLE_PATROL)      ㅡ             ROAMER
-                                  |                 X                |
-                                FIND               ㅡ             ATTACK
+                        IDLE (OR IDLE_PATROL)      ㅡㅡ             ROAMER
+                                  |                 X                 |
+                                FIND               ㅡㅡ             ATTACK
 
 ---------
 
