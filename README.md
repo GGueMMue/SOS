@@ -159,5 +159,20 @@ Start될 때, 모든 적들에 대한 정보를 List로 받아온 뒤, 유저가
 
 해당 포인트는 라인렌더러로 그려진 오브젝트이며, 포인트를 가리키는 화살표는 해당 포인트가 유저의 화면에 보이게 되면 사라지게 됩니다.
 
+각 스테이지 이미지
+----------
+
+![스테이지1](https://github.com/user-attachments/assets/511de825-98ef-4c94-83fa-0894e83c5e6d)
+[스테이지1]
+
+![스테이지2](https://github.com/user-attachments/assets/d4cdb49c-226f-4e42-86a4-95b4a5bfc94f)
+[스테이지2]
+
+![스테이지3](https://github.com/user-attachments/assets/312e863d-6595-4a05-a42c-d847f10d2776)
+[스테이지3]
+
+![스테이지4](https://github.com/user-attachments/assets/a26b4bf0-4f0c-4b3a-bbc7-be7eaacae060)
+[스테이지4]
+
 
 
