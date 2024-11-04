@@ -17,6 +17,14 @@ Windows
 
 ---------
 
+플레이어 목표
+---------
+[최소 목표]적을 사살하고 클리어 포인트로 향할 것.
+
+[확장 목표]최대한 고득점을 하여 게임을 클리어할 것.
+
+---------
+
 조작키
 --------
 |입력키|설명|
@@ -49,11 +57,334 @@ Windows
                                   |                 X                 |
                                 FIND               ㅡㅡ             ATTACK
 
+FSM Switch문
+-------
+```
+        switch (state)
+        {
+            /*********************  IDLE *********************/
 
-                                
+            case STATE.IDLE:
+
+                if (animator != null)
+                {
+                    animator.SetInteger("State", 0);
+                }
+                else
+                {
+                    Debug.LogError("Animator is null in Update!");
+                }
+                rotationTimer += Time.deltaTime;
+
+                nav.SetDestination(startPoint);
+
+                float dis = Vector3.Distance(this.transform.position, startPoint);
+
+                if (dis > 1f)
+                {
+                    animator.SetInteger("State", 1);
+                    RotationEnemy(startPoint);
+                }
+                else animator.SetInteger("State", 0);
+
+
+                if (isRotateEnemy)
+                    RotationIdle();
+
+                break;
+
+
+
+
+            /*********************  IDLE_PATROL *********************/
+
+            case STATE.IDLE_PATROL:
+                animator.SetInteger("State", 0);
+                if (!isPatrol)
+                {
+                    state = STATE.IDLE;
+                }
+                else
+                {
+                    animator.SetBool("isPatrol", true);
+                    state = STATE.IDLE_PATROL;
+                }
+                //PatrolEnemy(patrolPoints);
+                nav.autoBraking = true;
+                nav.speed = 5f;
+                nav.velocity = nav.desiredVelocity;
+                if (nav.destination != null) RotationEnemy(nav.destination);
+                if (nullChecker)
+                {
+                    nav.SetDestination(startpos);
+                    //Debug.Log(nav.destination);
+                    if (Vector3.Distance(startpos, this.transform.position) < 1.5f)
+                    {
+                        Debug.Log(nav.destination);
+
+                        curnode = backupNode;
+                        nullChecker = false;
+                    }
+                }
+
+                else
+                {
+
+                    if (curnode.next_Node == null)
+                    {
+                        nav.SetDestination(curnode.Get_Now_Node());
+
+                        if (Vector3.Distance(curnode.Get_Now_Node(), this.transform.position) < 0.3f)
+                        {
+                            nullChecker = true;
+                        }
+                    }
+
+                    else
+                    {
+                        nextpos = curnode.Get_Next_Node();
+
+                        nav.SetDestination(nextpos);
+
+                        if (Vector3.Distance(nextpos, this.transform.position) < 0.3f)
+                        {
+                            curnode = curnode.next_Node;
+                            nextpos = curnode.Get_Now_Node();
+                        }
+                    }
+                }
+
+
+                break;
+
+
+
+
+            /*********************  ROAMER *********************/
+
+            case STATE.ROAMER:
+                animator.SetInteger("State", 1);
+
+                if (nav.destination != null) RotationEnemy(nav.destination);
+
+                roamerTimer += Time.deltaTime;
+                bugCountDown += Time.deltaTime;
+                if (bugCountDown > 1.5f)
+                {
+                    SetroamerDestination();
+                }
+
+                // ROAMER 상태일 때, 도착을 하지 못했을 경우 실행.
+                // 1.5초가 넘게 되면 새로운 경로를 찾도록 SetRoamerDestination() 함수를 호출함.
+
+                if (roamerCount < 10 || roamerTimer <= 8f)
+                {
+                    if (roamerCount == 0)
+                    {
+                        SetroamerDestination();
+                    }
+                    else
+                    {
+                        if (IsReachedroamerDestination())
+                        {
+                            SetroamerDestination();
+                        }
+                    }
+                }
+                else
+                {
+                    if (isPatrol) state = STATE.IDLE_PATROL;
+                    else state = STATE.IDLE;
+                }
+
+                break;
+
+
+
+            /*********************  FIND *********************/
+
+            case STATE.FIND:
+                animator.SetInteger("State", 1);
+
+                if (!lostUser)
+                {
+                    if (canShot)
+                    {
+                        this.state = STATE.ATTACK;
+                    }
+                    follow_Spare_Time = 0;
+
+                    es.RotateToUser();
+                    es.FollowUser();
+                }
+                else
+                {
+                    follow_Spare_Time += Time.deltaTime;
+                    if (follow_Spare_Time <= 3.5f)
+                    {
+                        es.RotateToUser();
+                        es.FollowUser();
+                    }
+                    else
+                    {
+                        state = STATE.ROAMER;
+                    }
+                }
+
+                break;
+
+
+
+
+
+            /*********************  ATTACT  *********************/
+
+            case STATE.ATTACK:
+
+                // gun class를 상속하고, start 또는 awake 함수에서 getcomponentchild로 컴포넌트를 초기화한다.
+                // gun class에서 gunName을 가져온다.
+                // switch 문에서 gunName을 사용해 무기를 설정.
+
+
+                //this.transform.LookAt(player);
+
+                //fireChecker += Time.deltaTime;
+                //nav.isStopped = true;
+
+                if (lostUser) state = STATE.FIND;
+
+                switch (gun.gunName)
+                {
+                    case "SMG":  //SMG
+
+                        if (!canShot)
+                        {
+
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if(es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
+                            StartCoroutine(gun.Enemy_fire());
+                        }
+
+                        //if(gun.Enemy_Fire(fireChecker)) fireChecker = 0;
+
+                        break; 
+
+
+                    case "Rifle":  // �������� ��
+
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if (es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
+                            StartCoroutine(gun.Enemy_fire());
+                        }
+                        break;
+
+
+                    case "HandGun":
+
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if (es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
+                            StartCoroutine(gun.Enemy_fire());
+                        }
+                        break;
+
+
+                    case "Shotgun": 
+
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if (es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+                            RotationEnemy(player.transform.position);
+                            StartCoroutine(gun.Enemy_Shotgun_Fire());
+                        }
+                        break;
+
+
+                    default: 
+
+                        if (!canShot)
+                        {
+                            this.state = STATE.FIND;
+                            break;
+                        }
+                        else if (es.SearchUser())
+                        {
+                            animator.SetInteger("State", 2);
+
+                            StartCoroutine(MeeleAttack());
+                        }                     
+
+
+                        break;
+                }
+
+                break;
+
+
+
+
+            /*********************  DEAD  *********************/
+
+            case STATE.DEAD:
+                //animator.SetBool("isDead", true);
+
+                //this.gameObject.transform.Rotate(90, 0, 0);
+                Destroy(range.gameObject);
+                AlertImDead();
+
+                if (GetComponent<Rigidbody>() == null)
+                {
+                    gameObject.AddComponent<Rigidbody>();
+                    GameObject blood = Instantiate(bloodEffect);
+                    blood.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 1f, this.transform.position.z);
+                    blood.transform.rotation = Quaternion.identity;
+
+                    DropGun();
+                    //this.gameObject.GetComponent<Rigidbody>().mass = 3;
+                    this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    this.gameObject.GetComponent<CapsuleCollider>().radius = 1.5f;
+                    SFX.PlayOneShot(deadSound);
+                    nav.enabled = false;
+
+                    clear.RemoveListEnemy(this.gameObject);
+                }
+                //this.GetComponent<Rigidbody>(). = true;
+
+                //return;
+
+                break;
+            default:
+                break;
+        }
+```
 
 ---------
 
-
+적의 상태머신
+--------
 
 
