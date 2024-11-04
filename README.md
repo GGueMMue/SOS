@@ -50,6 +50,19 @@ Windows
         |______________________________________________________________|____________________________________________________|
 ```
 
+시작화면
+-------
+![시작화면](https://github.com/user-attachments/assets/c1d4e768-6e79-440d-b338-40b2f00c4cfe)
+
+[Start 버튼]을 눌렀을 경우, Stage 1번으로 넘어가 진행하게 됩니다.
+[Exit 버튼]을 눌렀을 경우, 게임이 종료됩니다.
+
+![1Con](https://github.com/user-attachments/assets/d594c2a1-8e8e-4ad6-aab5-e8643e1ccb79)
+
+[Continue 버튼]을 눌렀을 경우 보이는 창
+큰 패널 내 4개의 스테이지 상자는 그 자체로 버튼이며, Json에 클리어 기록이 있는 경우, 버튼이 활성화됩니다.
+
+
 적의 상태머신
 --------
 
@@ -70,7 +83,7 @@ Windows
 
 ---------
 
-적의 추격 조건
+적의 추격 및 공격 조건
 --------
 
 ![range](https://github.com/user-attachments/assets/564a408f-d3b7-4ec3-9f34-d754adb63afc)
@@ -80,5 +93,6 @@ Windows
 
 이때, 적 유닛의 Raycast의 hit이 user가 아닌 벽이라면, 정면이 아니니 계속해서 IDLE 상태를 유지합니다.
 
-
+Attack 범위에 들어오게 되면, 적 유닛은 Find 오브젝트를 끄고, Attack 상태로 전환합니다.
+Attack 범위에 다시 벗어나게 되면, Find로 전환합니다.
 
