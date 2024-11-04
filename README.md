@@ -387,4 +387,5 @@ FSM Switch문
 적의 추격 조건
 --------
 
+![range](https://github.com/user-attachments/assets/564a408f-d3b7-4ec3-9f34-d754adb63afc)
 
