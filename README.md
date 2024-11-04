@@ -182,3 +182,21 @@ Start될 때, 모든 적들에 대한 정보를 List로 받아온 뒤, 유저가
 |------|---|
 |노랑|현재 플레이어가 들고 있는 무기의 총알을 보여주는 UI입니다. 밀리 공격 무기인 경우, - / -로 고정됩니다.|
 |빨강|현재 점수입니다. 플레이어가 현재까지 획득한 점수를 보여주는 UI입니다.|
+
+
+무기 스텟
+----------
+![AR](https://github.com/user-attachments/assets/c4fe893b-0511-4a22-b4e6-b718e0ddf947)
+![HG](https://github.com/user-attachments/assets/398df35a-1e75-4a8b-a40b-0544270f91ea)
+![SG](https://github.com/user-attachments/assets/26b5ae61-04bf-458b-a477-00f5f9fb890b)
+![SMG](https://github.com/user-attachments/assets/e891b7b9-5f40-4dbd-86a2-98d3d6312a52)
+
+|무기명|설명|
+|------|---|
+|AR| 최대 장전 가능 탄약량 25발, 연사력 0.25초에 한 발|
+|HG| 최대 장전 가능 탄약량 12발, 연사력 0.35초에 한 발.|
+|SG| 최대 장전 가능 탄약량 6발, 연사력 1초에 한 발, 산탄|
+|SMG| 최대 장전 가능 탄약량 30발, 연사력 0.125초에 한 발|
+
+무기는 주웠을 때, 재장전이 불가능하며, 한 총 당 주워지는 탄약의 양은 1 ~ 최대 장전 가능 탄약량까지이다.
+
