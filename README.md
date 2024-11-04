@@ -174,5 +174,11 @@ Start될 때, 모든 적들에 대한 정보를 List로 받아온 뒤, 유저가
 ![스테이지4](https://github.com/user-attachments/assets/a26b4bf0-4f0c-4b3a-bbc7-be7eaacae060)
 [스테이지4]
 
+인 게임 UI
+-----------
+![UI_](https://github.com/user-attachments/assets/beaa2a90-8515-4b23-b4e3-757f2d1e4908)
 
-
+|박스 색상|설명|
+|------|---|
+|노랑|현재 플레이어가 들고 있는 무기의 총알을 보여주는 UI입니다. 밀리 공격 무기인 경우, - / -로 고정됩니다.|
+|빨강|현재 점수입니다. 플레이어가 현재까지 획득한 점수를 보여주는 UI입니다.|
