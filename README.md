@@ -389,3 +389,9 @@ FSM Switch문
 
 ![range](https://github.com/user-attachments/assets/564a408f-d3b7-4ec3-9f34-d754adb63afc)
 
+[SMG 적의 판정 기준]
+적 유닛은 파란색으로 마크 쳐진 Find 범위에 유저가 들어 섰을 때, 유저를 향해 Raycast를 쏩니다.
+
+이때, 적 유닛의 Raycast의 hit이 user가 아닌 벽이라면, 정면이 아니니 계속해서 IDLE 상태를 유지합니다.
+
+
